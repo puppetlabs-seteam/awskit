@@ -1,7 +1,9 @@
 ---
 devhops::key_name: 'dimitri.tischenko-eu-west-2'
-devhops::create_master::instance_type: 't2.xlarge'
+devhops::create_master::instance_type: 't2.large'
 devhops::create_agents::instance_type: 't2.micro'
+devhops::create_discovery::instance_type: 't2.small'
+
 devhops::vpc: 'default'
 devhops::tags:
   description: 'DevHops Infrastructure'
