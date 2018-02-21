@@ -9,7 +9,12 @@
 
 ## Description
 
-DevHops Workshops Infrastructure module
+This module helps deploying infrastructure for DevHops Workshops in various regions.
+
+It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
+
+The module uses module-level hiera to store all configuration. Global configuration goes into `data/common.yaml`, 
+region-specific configuration lives in `data/${your_region}.yaml`.
 
 ## Setup
 
@@ -30,17 +35,18 @@ puppet module install puppetlabs/aws
 
 ### Provision the master
 
-First, provision the master in your preferred region.
 - cd to the module dir
 - create the file `data/${your_region}.yaml`
-- configure the aws variables in `data/$your_region.yaml`
+- configure the aws variables in `data/${your_region}.yaml`. 
+  Make sure to copy the devhops::tags value from common.yaml and configure accordingly for the region
 - run `puppet apply -e 'include create_master' --modulepath ..`
 
 ### Provision the agents
 
-- configure the aws variables in `data/$your_region.yaml`. Make sure to configure the number of windows and centos agents.
+- configure the aws variables in `data/${your_region}.yaml`. Make sure to configure the number of windows and centos agents.
 - run `puppet apply -e 'include create_agents' --modulepath ..`
 
 ## Limitations
 
-The Puppetmaster AMI is not available in all regions yet.
+The Puppetmaster AMI is only available in us-west-2 and eu-west-2 regions.
+AMIs will become available in all relevant regions soon.
