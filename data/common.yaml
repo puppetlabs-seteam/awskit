@@ -1,0 +1,30 @@
+---
+devhops::key_name: 'dimitri.tischenko-eu-west-2'
+devhops::create_master::instance_type: 't2.xlarge'
+devhops::create_agents::instance_type: 't2.micro'
+devhops::vpc: 'default'
+devhops::tags:
+  description: 'DevHops Infrastructure'
+  created_by: 'dimitri.tischenko@puppetlabs.com'
+  department: 'TSE'
+  project: 'DevHops workshops'
+
+devhops::create_agents::centos_user_data: |
+  #! /bin/bash
+  echo "<%= $master_ip %> master.inf.puppet.vm master" >> /etc/hosts
+  #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
+  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
+
+devhops::create_agents::windows_user_data: |
+  <powershell>
+  $hosts = "$env:windir\System32\drivers\etc\hosts"
+  "<%= $master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  $webClient = New-Object System.Net.WebClient; 
+  $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
+  .\install.ps1 main:certname="winhops-<%= $i %>"
+  </powershell>
+
+devhops::create_agents::centos_count: 2
+devhops::create_agents::windows_count: 2
+  
