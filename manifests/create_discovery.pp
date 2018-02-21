@@ -9,5 +9,6 @@
 class devhops::create_discovery (
   $centos_ami,
   $instance_type,
+  $centos_user_data,
 ) {
 }
