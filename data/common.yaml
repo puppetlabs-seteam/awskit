@@ -27,4 +27,16 @@ devhops::create_agents::windows_user_data: |
 
 devhops::create_agents::centos_count: 2
 devhops::create_agents::windows_count: 2
-  
+
+devhops::create_discovery::centos_user_data: |
+  #! /bin/bash
+  #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
+  yum install -y yum-utils device-mapper-persistent-data lvm2
+  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  yum install -y docker-ce
+  systemctl enable docker
+  systemctl start docker
+  curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/108a15a/darwin-amd64/puppet-discovery
+  chmod a+x ~/puppet-discovery
+  ~/puppet-discovery init --with-dev-password puppet
+  ~/puppet-discovery start
