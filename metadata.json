@@ -4,7 +4,7 @@
   "author": "Dimitri Tischenko",
   "summary": "DevHops tools",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "n/a",
   "dependencies": [
     {
       "name": "puppetlabs/aws",

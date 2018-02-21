@@ -5,7 +5,7 @@
 # @summary A short summary of the purpose of this class
 #
 # @example
-#   include devhops::create
+#   include devhops::create_agents
 class devhops::create_agents (
   $instance_type,
   $master_ip,

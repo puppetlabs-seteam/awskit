@@ -1,11 +1,11 @@
-# devhops::create
+# devhops::create_master
 #
-# A description of what this class does
+# Provision a Puppetmaster in AWS
 #
-# @summary A short summary of the purpose of this class
+# @summary Provision a Puppetmaster in AWS
 #
 # @example
-#   include devhops::create
+#   include devhops::create_master
 class devhops::create_master (
   $pm_ami,
   $instance_type,
@@ -42,10 +42,7 @@ class devhops::create_master (
     ensure          => running,
     image_id        => $pm_ami,
     instance_type   => $instance_type,
-    # If a subnet is specified, creatin of ec2 instance fails.
-    # possible reason: https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet          => $devhops::subnet,
-    # security_groups => ['Puppet Enterprise -BYOL--2017-2-1 BYOL-AutogenByAWSMP-1', 'pe-gogs'],
     security_groups => ['devhops-master'],
     tags            => $devhops::tags,
     require         => Ec2_securitygroup['devhops-master'],

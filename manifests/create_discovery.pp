@@ -11,9 +11,10 @@ class devhops::create_discovery (
   $instance_type,
   $centos_user_data,
 ) {
-include devhops
 
-  ec2_instance {
+  include devhops
+
+  Ec2_instance {
     instance_type     => $instance_type,
     region            => $devhops::region,
     availability_zone => $devhops::availability_zone,
@@ -28,7 +29,7 @@ include devhops
     ensure      => 'present',
     region      => $devhops::region,
     vpc         => $devhops::vpc,
-    description => 'ssh and http(s) ingress for DevHops agent',
+    description => 'ssh and http(s) ingress for DevHops discovery',
     ingress     => [
       { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
@@ -36,8 +37,8 @@ include devhops
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
-  
-  ec2_instance { "discohops-1":
+
+  ec2_instance { 'discohops-1':
     ensure    => running,
     image_id  => $centos_ami,
     user_data => inline_epp($centos_user_data),
