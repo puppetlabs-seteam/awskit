@@ -32,8 +32,8 @@ class devhops::create_discovery (
     description => 'ssh and http(s) ingress for DevHops discovery',
     ingress     => [
       { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
-      { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
-      { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8443, cidr => '0.0.0.0/0', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
