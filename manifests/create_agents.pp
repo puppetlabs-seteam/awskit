@@ -46,6 +46,8 @@ class devhops::create_agents (
       { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
+      { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
+      { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
       { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
