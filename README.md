@@ -28,6 +28,7 @@ export AWS_REGION $your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region $your_region # needed for hiera
 sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries # needed by the aws module
 puppet module install puppetlabs/aws
+puppet module install puppetlabs/stdlib
 ```
 
 ## Usage
