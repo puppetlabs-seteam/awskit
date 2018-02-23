@@ -1,5 +1,6 @@
 ---
 devhops::region: 'eu-west-2'
+devhops::key_name: 'dimitri.tischenko-eu-west-2'
 devhops::availability_zone: 'eu-west-2a'
 devhops::subnet: 'subnet-default-2a'
 devhops::create_master::pm_ami: 'ami-08051f6c'
