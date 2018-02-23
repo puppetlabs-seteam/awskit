@@ -24,18 +24,25 @@ Next, install AWS pre-requisites:
 ```bash
 brew install awscli
 aws configure # needed for your AWS access
-export AWS_REGION $your_region # speeds up puppet aws module tremendously
-export FACTER_aws_region $your_region # needed for hiera
-sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries # needed by the aws module
+export AWS_REGION=$your_region # speeds up puppet aws module tremendously
+export FACTER_aws_region=$your_region # needed for hiera
+sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries
+/opt/puppetlabs/puppet/bin/gem install aws-sdk retries #run again with sudo when on MacOS, ignore error messages
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
 
 ## Usage
 
+### Clone the devhops repo to the same module folder as where you installed puppetlabs/aws & puppetlabs/stdlib
+```bash
+cd /Users/$(whoami)/.puppetlabs/etc/code/modules   #on MacOS, on Linux it would be /etc/puppetlabs/code/modules
+git clone https://github.com/puppetlabs-seteam/devhops.git
+```
+
 ### Provision the master
 
-- cd to the module dir
+- cd to the module dir (cd devhops)
 - create the file `data/${your_region}.yaml`
 - reserve a static IP for the master by doing: 
   `aws ec2 allocate-address --region ${your_region}`
