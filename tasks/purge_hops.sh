@@ -6,5 +6,6 @@ nodes=$(puppet cert list --all|grep hops|cut -d \" -f 2)
 if [ "$PT_force" == "true" ] ; then
   puppet node purge $nodes
 else
-  echo "Nodes that would be purged:\n${nodes}"
+  echo "Nodes that would be purged:"
+  echo $nodes
 fi
