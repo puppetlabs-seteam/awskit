@@ -7,7 +7,8 @@
 # @example
 #   include devhops::create_agents
 class devhops::create_agents (
-  $instance_type,
+  $instance_type_lin,
+  $instance_type_win,
   $centos_ami,
   $windows_ami,
   $centos_count,
@@ -19,7 +20,6 @@ class devhops::create_agents (
   include devhops
 
   Ec2_instance {
-    instance_type     => $instance_type,
     region            => $devhops::region,
     availability_zone => $devhops::availability_zone,
     # need to specify subnet (although it's documented as optional)
@@ -56,9 +56,10 @@ class devhops::create_agents (
 
   range(1,$centos_count).each | $i | {
     ec2_instance { "linhops-${i}":
-      ensure    => running,
-      image_id  => $centos_ami,
-      user_data => inline_epp($centos_user_data),
+      ensure        => running,
+      image_id      => $centos_ami,
+      instance_type => $instance_type_lin,
+      user_data     => inline_epp($centos_user_data),
     }
   }
 
@@ -66,9 +67,10 @@ class devhops::create_agents (
 
   range(1,$windows_count).each | $i | {
     ec2_instance { "winhops-${i}":
-      ensure    => running,
-      image_id  => $windows_ami,
-      user_data => inline_epp($windows_user_data),
+      ensure        => running,
+      image_id      => $windows_ami,
+      instance_type => $instance_type_win,
+      user_data     => inline_epp($windows_user_data),
     }
   }
 }

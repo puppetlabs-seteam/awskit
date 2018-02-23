@@ -1,7 +1,8 @@
 ---
 devhops::key_name: 'dimitri.tischenko-eu-west-2'
 devhops::create_master::instance_type: 't2.large'
-devhops::create_agents::instance_type: 't2.micro'
+devhops::create_agents::instance_type_lin: 't2.micro'
+devhops::create_agents::instance_type_win: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
 
 devhops::vpc: 'default'
