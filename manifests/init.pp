@@ -13,5 +13,6 @@ class devhops(
   $availability_zone,
   $subnet,
   $tags,
+  $master_ip,
   ) {
 }

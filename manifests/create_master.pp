@@ -48,4 +48,10 @@ class devhops::create_master (
     require         => Ec2_securitygroup['devhops-master'],
   }
 
+  ec2_elastic_ip { $devhops::master_ip:
+    ensure   => 'attached',
+    instance => 'pm-devhops',
+    region   => $devhops::region,
+  }
+
 }

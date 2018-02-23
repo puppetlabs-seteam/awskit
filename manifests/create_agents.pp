@@ -8,7 +8,6 @@
 #   include devhops::create_agents
 class devhops::create_agents (
   $instance_type,
-  $master_ip,
   $centos_ami,
   $windows_ami,
   $centos_count,

@@ -13,14 +13,14 @@ devhops::tags:
 
 devhops::create_agents::centos_user_data: |
   #! /bin/bash
-  echo "<%= $master_ip %> master.inf.puppet.vm master" >> /etc/hosts
+  echo "<%= $devhops::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
 
 devhops::create_agents::windows_user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 

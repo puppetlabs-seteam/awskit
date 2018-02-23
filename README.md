@@ -36,7 +36,9 @@ puppet module install puppetlabs/aws
 
 - cd to the module dir
 - create the file `data/${your_region}.yaml`
-- configure the aws variables in `data/${your_region}.yaml`.
+- reserve a static IP for the master by doing: 
+  `aws ec2 allocate-address --region ${your_region}`
+- configure the aws variables in `data/${your_region}.yaml`, including the master IP
   Make sure to copy the devhops::tags value from common.yaml and configure accordingly for the region
 - run `puppet apply -e 'include create_master' --modulepath ..`
 
