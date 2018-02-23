@@ -25,6 +25,7 @@ devhops::create_agents::windows_user_data: |
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   .\install.ps1 main:certname="winhops-<%= $i %>"
+  winrm quickconfig -force
   </powershell>
 
 devhops::create_agents::centos_count: 2
