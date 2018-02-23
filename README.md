@@ -40,17 +40,17 @@ puppet module install puppetlabs/aws
   `aws ec2 allocate-address --region ${your_region}`
 - configure the aws variables in `data/${your_region}.yaml`, including the master IP
   Make sure to copy the devhops::tags value from common.yaml and configure accordingly for the region
-- run `puppet apply -e 'include create_master' --modulepath ..`
+- run `puppet apply -e 'include devhops::create_master' --modulepath ..`
 
 ### Provision the agents
 
 - configure the aws variables in `data/${your_region}.yaml`. Make sure to configure the number of windows and centos agents.
-- run `puppet apply -e 'include create_agents' --modulepath ..`
+- run `puppet apply -e 'include devhops::create_agents' --modulepath ..`
 
 ### Provision the Puppet Discovery VM
 
 - configure the ami in `data/${your_region}.yaml`
-- run `puppet apply -e 'include create_discovery' --modulepath ..`
+- run `puppet apply -e 'include devhops::create_discovery' --modulepath ..`
 
 ## Limitations
 
