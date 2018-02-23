@@ -1,0 +1,11 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "purges all nodes with 'hops' in the name. Use with caution!",
+  "parameters": {
+    "force": {
+      "description": "If true, nodes are really purged",
+      "type": "Enum['true', 'false']"
+     }
+  }
+}
