@@ -7,11 +7,13 @@
 # @example
 #   include devhops::create_master
 class devhops::create_master (
-  $pm_ami,
   $instance_type,
+  #$pm_ami,
 ) {
 
   include devhops
+
+  $pm_ami = $devhops::pm_ami
 
   Ec2_instance {
     region            => $devhops::region,

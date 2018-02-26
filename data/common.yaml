@@ -42,3 +42,19 @@ devhops::create_discovery::centos_user_data: |
   curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/108a15a/linux-amd64/puppet-discovery
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery init --with-dev-password puppet
+
+devhops::amis:
+  us-west-2: # US/Canada
+    pm: ami-6209801a
+  eu-west-2: # London
+    pm:       ami-9604e0f1 # 2017.3.5
+    centos:   ami-ee6a718a # centos 7
+    windows:  ami-9f677cfb # windows 2012
+  eu-west-3: # Paris
+    pm: ami-de73c5a3
+  eu-central-1: # (Frankfurt):
+    pm: ami-86761be9
+  ap-southeast-2: # (Sydney)
+    pm: ami-a6995fc4
+  ap-southeast-1: # (Singapore)
+    pm: ami-3b93db47

@@ -14,5 +14,10 @@ class devhops(
   $subnet,
   $tags,
   $master_ip,
+  $amis,
   ) {
+
+    $pm_ami       = $amis[$region]['pm']
+    $centos_ami   = $amis[$region]['centos']
+    $windows_ami  = $amis[$region]['windows']
 }
