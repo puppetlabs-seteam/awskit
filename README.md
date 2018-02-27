@@ -1,6 +1,6 @@
 # devhops
 
-#### Table of Contents
+## Table of Contents
 
 1. [Description](#description)
 2. [Setup](#setup)
@@ -35,6 +35,7 @@ puppet module install puppetlabs/stdlib
 ## Usage
 
 ### Clone the devhops repo to the same module folder as where you installed puppetlabs/aws & puppetlabs/stdlib
+
 ```bash
 cd /Users/$(whoami)/.puppetlabs/etc/code/modules   #on MacOS, on Linux it would be /etc/puppetlabs/code/modules
 git clone https://github.com/puppetlabs-seteam/devhops.git
@@ -44,7 +45,7 @@ git clone https://github.com/puppetlabs-seteam/devhops.git
 
 - cd to the module dir (cd devhops)
 - create the file `data/${your_region}.yaml`
-- reserve a static IP for the master by doing: 
+- reserve a static IP for the master by doing:
   `aws ec2 allocate-address --region ${your_region}`
 - configure the aws variables in `data/${your_region}.yaml`, including the master IP
   Make sure to copy the devhops::tags value from common.yaml and configure accordingly for the region
