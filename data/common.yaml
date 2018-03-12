@@ -43,6 +43,17 @@ devhops::create_discovery::centos_user_data: |
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery init --with-dev-password puppet
 
+devhops::create_windc::windows_user_data: |
+  <powershell>
+  $hosts = "$env:windir\System32\drivers\etc\hosts"
+  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  $webClient = New-Object System.Net.WebClient; 
+  $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
+  .\install.ps1 main:certname="windchops-1.inf.puppet.vm"
+  winrm quickconfig -force
+  </powershell>
+
 devhops::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a
