@@ -32,8 +32,8 @@ class devhops::create_windc (
     description => 'RDP ingress for DevHops Windows DC',
     ingress     => [
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',             , security_group => 'devhops-agent', },
-      { protocol => 'udp',             , security_group => 'devhops-agent', },
+      { protocol => 'tcp',               security_group => 'devhops-agent', },
+      { protocol => 'udp',               security_group => 'devhops-agent', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
