@@ -17,7 +17,9 @@ class devhops(
   $amis,
   ) {
 
-    $pm_ami       = $amis[$region]['pm']
-    $centos_ami   = $amis[$region]['centos']
-    $windows_ami  = $amis[$region]['windows']
+    $pm_ami         = $amis[$region]['pm']
+    $centos_ami     = $amis[$region]['centos']
+    $windows_ami    = $amis[$region]['windows']
+    $discovery_ami  = $amis[$region]['discovery']
+    $windc_ami      = $amis[$region]['windc']
 }

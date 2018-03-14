@@ -9,8 +9,6 @@
 class devhops::create_agents (
   $instance_type_lin,
   $instance_type_win,
-  $centos_ami,
-  $windows_ami,
   $centos_count,
   $centos_user_data,
   $windows_count,
@@ -20,6 +18,9 @@ class devhops::create_agents (
 ){
 
   include devhops
+
+  $centos_ami   = $devhops::centos_ami
+  $windows_ami  = $devhops::windows_ami
 
   Ec2_instance {
     region            => $devhops::region,

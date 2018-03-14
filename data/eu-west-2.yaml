@@ -1,7 +1,0 @@
----
-devhops::region: 'eu-west-2'
-devhops::availability_zone: 'eu-west-2a'
-devhops::subnet: 'subnet-default-2a'
-devhops::create_agents::centos_ami: 'ami-ee6a718a'
-devhops::create_agents::windows_ami: 'ami-9f677cfb'
-devhops::create_discovery::centos_ami: 'ami-ee6a718a'

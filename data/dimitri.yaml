@@ -13,6 +13,6 @@ devhops::create_master::instance_name: dimitri-devhops-pm
 devhops::create_agents::instance_name_lin: dimitri-linhops
 devhops::create_agents::instance_name_win: dimitri-winhops
 devhops::create_discovery::instance_name: dimitri-discohops
+devhops::create_windc::instance_name: dimitri-windc
 
 devhops::master_ip: '35.177.92.181'
-devhops::key_name: 'dimitri.tischenko-eu-west-2'

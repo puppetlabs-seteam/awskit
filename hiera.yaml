@@ -5,11 +5,14 @@ defaults:
   data_hash: yaml_data
 
 hierarchy:
+  - name: "AWS region-level user-level data"
+    path: "%{::aws_region}/%{::user}.yaml"
+
   - name: "User-level data"
     path: "%{::user}.yaml"
 
   - name: "AWS region-level data"
-    path: "%{::aws_region}.yaml"
+    path: "%{::aws_region}/common.yaml"
 
   - name: "Common data"
     path: "common.yaml"

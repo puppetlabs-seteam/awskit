@@ -7,6 +7,7 @@ devhops::create_master::instance_type: 't2.large'
 devhops::create_agents::instance_type_lin: 't2.micro'
 devhops::create_agents::instance_type_win: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
+devhops::create_windc::instance_type: 't2.small'
 
 devhops::tags:
   description: 'DevHops Infrastructure'
@@ -64,13 +65,26 @@ devhops::create_master::user_data: |
 
 devhops::create_master::control_repo: https://github.com/timidri/control-repo
   
+devhops::create_windc::windows_user_data: |
+  <powershell>
+  $hosts = "$env:windir\System32\drivers\etc\hosts"
+  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  $webClient = New-Object System.Net.WebClient; 
+  $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
+  .\install.ps1 main:certname="windchops-1.inf.puppet.vm"
+  winrm quickconfig -force
+  </powershell>
+
 devhops::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a
   eu-west-2: # London
-    pm:       ami-9604e0f1 # 2017.3.5
-    centos:   ami-ee6a718a # centos 7
-    windows:  ami-9f677cfb # windows 2012
+    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
+    centos:    ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windows:   ami-9f677cfb # Windows_Server-2012-R2_RTM-English-64Bit-Base-2018.01.12
+    discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris
     pm: ami-de73c5a3
   eu-central-1: # (Frankfurt):
