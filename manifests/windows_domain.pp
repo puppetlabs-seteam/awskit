@@ -14,7 +14,7 @@ class devhops::windows_domain(
   # resources
   user {'Administrator':
     ensure   => present,
-    password => Sensitive($localadminpw)
+    password => Sensitive("$localadminpw")
   }
 
   file { 'Active Directory NTDS':
@@ -32,11 +32,11 @@ class devhops::windows_domain(
     dsc_domainname                    => $domainname,
     dsc_domainadministratorcredential => {
       'user'     => 'Administrator',
-      'password' => Sensitive($localadminpw)
+      'password' => Sensitive("$localadminpw")
     },
     dsc_safemodeadministratorpassword => {
       'user'     => 'safemode',
-      'password' => Sensitive($safemodepw)
+      'password' => Sensitive("$safemodepw")
     },
     dsc_databasepath                  => $ntdspath,
     dsc_logpath                       => $ntdspath,
