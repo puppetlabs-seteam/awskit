@@ -4,7 +4,7 @@
 class devhops::windows_domain(
   $dn,
   $localadminpw,
-  $name,
+  $domainname,
   $ntdspath,
   $safemodepw,
 ){
@@ -26,7 +26,7 @@ class devhops::windows_domain(
   }
 
   dsc_xADDomain { 'DevHops Domain':
-    dsc_domainname                    => $name,
+    dsc_domainname                    => $domainname,
     dsc_domainadministratorcredential => {
       'user'     => 'Administrator',
       'password' => Sensitive($localadminpw)
@@ -58,7 +58,7 @@ class devhops::windows_domain(
 
   dsc_xaduser {'ADUser_DevHops1':
     dsc_ensure      => 'Present',
-    dsc_domainname  => $name,
+    dsc_domainname  => $domainname,
     dsc_username    => 'DevHops1',
     dsc_description => 'DevHops User 1',
     dsc_path        => join(['OU=DevHops', $dn],','),
