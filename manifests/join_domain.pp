@@ -3,7 +3,7 @@ class devhops::join_domain {
   # mod 'trlinkin/domain_membership', '1.1.2'
   # 
   class { 'domain_membership':
-    domain       => 'devhops.local',
+    domain       => lookup('devhops::domain_name'),
     username     => lookup('devhops::join_domain_user'),
     password     => lookup('devhops::join_domain_password'),
     join_options => '3',
