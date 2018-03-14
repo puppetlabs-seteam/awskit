@@ -5,16 +5,15 @@ class devhops::windows_domain(
   $dn,
   $localadminpw,
   $domainname,
+  $domainnbname,
   $ntdspath,
   $safemodepw,
 ){
 
-  notify { "debug: ${localadminpw}": }
-
   # resources
   user {'Administrator':
     ensure   => present,
-    password => Sensitive("$localadminpw")
+    password => Sensitive($localadminpw)
   }
 
   file { 'Active Directory NTDS':
@@ -32,11 +31,11 @@ class devhops::windows_domain(
     dsc_domainname                    => $domainname,
     dsc_domainadministratorcredential => {
       'user'     => 'Administrator',
-      'password' => Sensitive("$localadminpw")
+      'password' => Sensitive($localadminpw)
     },
     dsc_safemodeadministratorpassword => {
       'user'     => 'safemode',
-      'password' => Sensitive("$safemodepw")
+      'password' => Sensitive($safemodepw)
     },
     dsc_databasepath                  => $ntdspath,
     dsc_logpath                       => $ntdspath,
@@ -52,35 +51,37 @@ class devhops::windows_domain(
     when    => 'pending',
   }
 
-  dsc_xadorganizationalunit { 'OU_DevHops':
-    dsc_ensure => 'Present',
-    dsc_name   => 'DevHops',
-    dsc_path   => $dn,
-    require    => Dsc_xADDomain['DevHops Domain']
-  }
+  unless $facts['id'] =~ /^WORKGROUP\\/ {
+    dsc_xadorganizationalunit { 'OU_DevHops':
+      dsc_ensure => 'Present',
+      dsc_name   => 'DevHops',
+      dsc_path   => $dn,
+      require    => Dsc_xADDomain['DevHops Domain']
+    }
 
-  dsc_xaduser {'ADUser_DevHops1':
-    dsc_ensure      => 'Present',
-    dsc_domainname  => $domainname,
-    dsc_username    => 'DevHops1',
-    dsc_description => 'DevHops User 1',
-    dsc_path        => join(['OU=DevHops', $dn],','),
-    dsc_password    => {
-      'user'     => 'DevHops1',
-      'password' => Sensitive('PuppetD3vh0ps1!')
-    },
-    require         => Dsc_xadorganizationalunit['OU_DevHops'],
-  }
+    dsc_xaduser {'ADUser_DevHops1':
+      dsc_ensure      => 'Present',
+      dsc_domainname  => $domainname,
+      dsc_username    => 'DevHops1',
+      dsc_description => 'DevHops User 1',
+      dsc_path        => join(['OU=DevHops', $dn],','),
+      dsc_password    => {
+        'user'     => 'DevHops1',
+        'password' => Sensitive('PuppetD3vh0ps1!')
+      },
+      require         => Dsc_xadorganizationalunit['OU_DevHops'],
+    }
 
-  dsc_xadgroup { 'ADGroup_DevHopsers':
-    dsc_ensure           => 'Present',
-    dsc_groupname        => 'DevHopsers',
-    dsc_path             => join(['OU=DevHops', $dn],','),
-    dsc_memberstoinclude => 'DevHops1',
-    require              => [
-      Dsc_xadorganizationalunit['OU_DevHops'],
-      Dsc_xaduser['ADUser_DevHops1']
-    ]
+    dsc_xadgroup { 'ADGroup_DevHopsers':
+      dsc_ensure           => 'Present',
+      dsc_groupname        => 'DevHopsers',
+      dsc_path             => join(['OU=DevHops', $dn],','),
+      dsc_memberstoinclude => 'DevHops1',
+      require              => [
+        Dsc_xadorganizationalunit['OU_DevHops'],
+        Dsc_xaduser['ADUser_DevHops1']
+      ]
+    }
   }
 
 }
