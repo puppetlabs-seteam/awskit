@@ -1,15 +1,21 @@
 ---
+lookup_options:
+  devhops::tags:
+    merge: deep
+
 devhops::create_master::instance_type: 't2.large'
 devhops::create_agents::instance_type_lin: 't2.micro'
 devhops::create_agents::instance_type_win: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
 
-devhops::vpc: 'default'
 devhops::tags:
   description: 'DevHops Infrastructure'
-  created_by: 'dimitri.tischenko@puppetlabs.com'
   department: 'TSE'
   project: 'DevHops workshops'
+  lifetime: 10w
+  Schedule: '-21:00'
+  
+devhops::vpc: 'default'
 
 devhops::create_agents::centos_user_data: |
   #! /bin/bash
@@ -43,6 +49,21 @@ devhops::create_discovery::centos_user_data: |
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery init --with-dev-password puppet
 
+devhops::create_master::user_data: |
+  #! /bin/bash
+  sleep 120 # give time for startup
+  cd /tmp
+  git clone <%= $control_repo %> control-repo
+  cd control-repo
+  git remote add gogs git@localhost:puppet/control-repo.git
+  git push gogs production
+  <% $gogs_ssh_keys.each |$title| { -%>
+  curl -u puppet:puppetlabs -X POST -H "Content-Type: application/json" -d \
+  '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
+  <% } -%>
+
+devhops::create_master::control_repo: https://github.com/timidri/control-repo
+  
 devhops::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a

@@ -15,6 +15,8 @@ class devhops::create_agents (
   $centos_user_data,
   $windows_count,
   $windows_user_data,
+  $instance_name_lin = 'linhops',
+  $instance_name_win = 'winhops',
 ){
 
   include devhops
@@ -55,7 +57,7 @@ class devhops::create_agents (
   # create $centos_count CentOS nodes
 
   range(1,$centos_count).each | $i | {
-    ec2_instance { "linhops-${i}":
+    ec2_instance { "${instance_name_lin}-${i}":
       ensure        => running,
       image_id      => $centos_ami,
       instance_type => $instance_type_lin,
@@ -66,7 +68,7 @@ class devhops::create_agents (
   # create $windows_count Windows nodes
 
   range(1,$windows_count).each | $i | {
-    ec2_instance { "winhops-${i}":
+    ec2_instance { "${instance_name_win}-${i}":
       ensure        => running,
       image_id      => $windows_ami,
       instance_type => $instance_type_win,

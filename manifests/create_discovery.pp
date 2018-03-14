@@ -10,6 +10,7 @@ class devhops::create_discovery (
   $centos_ami,
   $instance_type,
   $centos_user_data,
+  $instance_name = 'discohops',
 ) {
 
   include devhops
@@ -38,7 +39,7 @@ class devhops::create_discovery (
     ],
   }
 
-  ec2_instance { 'discohops-1':
+  ec2_instance { "${instance_name}-1":
     ensure    => running,
     image_id  => $centos_ami,
     user_data => inline_epp($centos_user_data),
