@@ -70,7 +70,7 @@ devhops::create_master::user_data: |
   '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
   <% } -%>
 
-devhops::create_master::control_repo: https://github.com/timidri/control-repo
+devhops::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-devhops
   
 devhops::create_windc::windows_user_data: |
   <powershell>

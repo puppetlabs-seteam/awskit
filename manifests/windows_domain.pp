@@ -8,6 +8,9 @@ class devhops::windows_domain(
   $ntdspath,
   $safemodepw,
 ){
+
+  notify { "debug: ${localadminpw}": }
+
   # resources
   user {'Administrator':
     ensure   => present,
