@@ -7,7 +7,6 @@ class devhops::windows_domain(
   $name,
   $ntdspath,
   $safemodepw,
-  
 ){
   # resources
   user {'Administrator':
