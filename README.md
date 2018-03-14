@@ -26,6 +26,7 @@ brew install awscli
 aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
+export FACTER_user=$your_user_name # needed for hiera
 sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries
 /opt/puppetlabs/puppet/bin/gem install aws-sdk retries #run again with sudo when on MacOS, ignore error messages
 puppet module install puppetlabs/aws
