@@ -13,7 +13,21 @@ This module helps deploying infrastructure for DevHops Workshops in various regi
 
 It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
 
-The module uses module-level hiera to store all configuration. Global configuration goes into `data/common.yaml`, region-specific configuration lives in `data/${your_region}.yaml`.
+The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
+
+```yaml
+  - name: "AWS region-level user-level data"
+    path: "%{::aws_region}/%{::user}.yaml"
+
+  - name: "User-level data"
+    path: "%{::user}.yaml"
+
+  - name: "AWS region-level data"
+    path: "%{::aws_region}/common.yaml"
+
+  - name: "Common data"
+    path: "common.yaml"
+```
 
 ## Setup
 
