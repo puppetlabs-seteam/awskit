@@ -35,34 +35,34 @@ puppet module install puppetlabs/stdlib
 
 ## Usage
 
-### Clone the devhops repo to the same module folder as where you installed puppetlabs/aws & puppetlabs/stdlib
+### Clone the devhops repo
 
 ```bash
-cd /Users/$(whoami)/.puppetlabs/etc/code/modules   #on MacOS, on Linux it would be /etc/puppetlabs/code/modules
 git clone https://github.com/puppetlabs-seteam/devhops.git
 ```
 
+### Configure hiera
+
+- cd to the module dir `cd devhops`
+- Configure region-specific AMI ids in the hash `devhops::amis` in the `data/common.yaml` file
+- If not done yet, create the file `data/${FACTER_aws_region}/common.yaml` and configure
+  region-specific AWS variables
+- If not done yet, reserve a static IP for your master by doing:
+  `aws ec2 allocate-address --region ${FACTER_aws_region}`
+- Create the file `data/${FACTER_aws_region}/${FACTER_user}.yaml` and add
+  your `devhops::key_name` and `devhops::master_ip`
+- Create the file `data/${FACTER_user}.yaml` and configure user-specific variabls (such as tags)
+
 ### Provision the master
 
-- cd to the module dir (cd devhops)
-- create the file `data/${your_region}.yaml`
-- reserve a static IP for the master by doing:
-  `aws ec2 allocate-address --region ${your_region}`
-- configure the aws variables in `data/${your_region}.yaml`, including the master IP
-  Make sure to copy the devhops::tags value from common.yaml and configure accordingly for the region
 - run `puppet apply -e 'include devhops::create_master' --modulepath ..`
 
 ### Provision the agents
 
-- configure the aws variables in `data/${your_region}.yaml`. Make sure to configure the number of windows and centos agents.
 - run `puppet apply -e 'include devhops::create_agents' --modulepath ..`
 
 ### Provision the Puppet Discovery VM
 
-- configure the ami in `data/${your_region}.yaml`
 - run `puppet apply -e 'include devhops::create_discovery' --modulepath ..`
 
 ## Limitations
-
-The Puppetmaster AMI is only available in us-west-2 and eu-west-2 regions.
-AMIs will become available in all relevant regions soon.
