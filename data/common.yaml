@@ -92,7 +92,7 @@ devhops::amis:
   eu-west-2: # London
     pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
     centos:    ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
-    windows:   ami-9f677cfb # Windows_Server-2012-R2_RTM-English-64Bit-Base-2018.01.12
+    windows:   ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
     discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris

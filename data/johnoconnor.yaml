@@ -1,0 +1,18 @@
+---
+lookup_options:
+  devhops::tags:
+    merge: deep
+
+devhops::tags:
+  created_by: 'john.oconnor@puppetlabs.com'
+
+devhops::create_master::gogs_ssh_keys:
+  'johnoconnor@puppetmac': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWPBN/AaoHRfvPeyZNifOcrg/3xgw8ZY7bHFJiFjg9MnCqoOPizLxRND9VvBDm46h1X6c5rXS8s6y8NwJIxOKVE6RE2iwJH0VyFaQq4y0Mg+FmTgVPjtR00EvOICctteQKTvQfr2bgqlEcEcrIxF/IBZ90UqNFuw6dAshCHDhAQGDcrJlquOa2q/m2Yh6sv4npdi3kzRdMAptAio8mhLiAnDwiklCQ6WPnRWTGnu46EMUfsOBZbjk+1hr9aO4ngRTv51tw8OQEBGcHZKq7JnwBIfkaSfu7ZePJZaUDKFhDTDqNg9NZ1e5XBDhVk/7YaBUYwGNy+b7Oihh9YvxagRLQfYdLrC+sI72WqhwSLcN9He8br1Lr27kNj7Z6Q42Zw8sYtaCU3mGeZ5NEmqIQX2ZZdzi8QZxWmNiiJVc1rrLwIfVmpgM2E6TwT1a+HJNTHy0wh3CtjuTGs+YmkDWmppXy08k1apThLP/M+D5nC/Gzg85f/+9LCtD0yDja+w+OpuU4PaXXfG6/sohMkgxJuoMFKaD0jugAoXkK9rQldV7XYj1bDekRqUl0aX3F60duvQxb9Vww+Hr9/07KGXbRsIXoDAg75fa+GFAg1bAqcZwuFtS+i82JqtxP2WRjNiOIQG9XZKRuMuM6RxZjvoS2Pkny9nQkqU9hophI5w+eLNz/Gw==
+
+devhops::create_master::instance_name: johnoconnor-devhops-pm
+devhops::create_agents::instance_name_lin: johnoconnor-linhops
+devhops::create_agents::instance_name_win: johnoconnor-winhops
+devhops::create_discovery::instance_name: johnoconnor-discohops
+devhops::create_windc::instance_name: johnoconnor-windc
+
+devhops::master_ip: '35.177.8.154'
