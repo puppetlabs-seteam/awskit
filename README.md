@@ -31,9 +31,14 @@ The module uses module-level hiera to store all configuration. The hierarchy is 
 
 ## Setup
 
-First, make sure you have your AWS credentials (Access key and Secret key).
+### AWS setup
 
-Next, install AWS pre-requisites:
+1. Make sure you have your AWS credentials (Access key and Secret key).
+2. If you don't already have one, make sure you create an SSH keypair in the region you are going to use.
+
+(To create a keypair, go to <https://console.aws.amazon.com/ec2/v2/home#KeyPairs>)
+
+### Setup on your Mac
 
 ```bash
 brew install awscli
@@ -41,8 +46,7 @@ aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
 export FACTER_user=$your_user_name # needed for hiera
-sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries
-/opt/puppetlabs/puppet/bin/gem install aws-sdk retries #run again with sudo when on MacOS, ignore error messages
+sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
