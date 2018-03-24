@@ -4,8 +4,8 @@ lookup_options:
     merge: deep
 
 devhops::create_master::instance_type: 't2.large'
-devhops::create_agents::instance_type_lin: 't2.micro'
-devhops::create_agents::instance_type_win: 't2.small'
+devhops::create_linux_node::instance_type: 't2.micro'
+devhops::create_windows_node::instance_type: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
 devhops::create_windc::instance_type: 't2.small'
 devhops::windows_domain::dn: 'DC=devhops,DC=local'
@@ -26,13 +26,13 @@ devhops::tags:
   
 devhops::vpc: 'default'
 
-devhops::create_agents::centos_user_data: |
+devhops::create_linux_node::user_data: |
   #! /bin/bash
   echo "<%= $devhops::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
 
-devhops::create_agents::windows_user_data: |
+devhops::create_windows_node::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
   "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
@@ -43,10 +43,10 @@ devhops::create_agents::windows_user_data: |
   winrm quickconfig -force
   </powershell>
 
-devhops::create_agents::centos_count: 2
-devhops::create_agents::windows_count: 2
+devhops::create_linux_node::count: 2
+devhops::create_windows_node::count: 2
 
-devhops::create_discovery::centos_user_data: |
+devhops::create_discovery::user_data: |
   #! /bin/bash
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -73,7 +73,7 @@ devhops::create_master::user_data: |
 
 devhops::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-devhops
   
-devhops::create_windc::windows_user_data: |
+devhops::create_windc::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
   "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts

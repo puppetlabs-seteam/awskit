@@ -8,13 +8,13 @@
 #   include devhops::create_windc
 class devhops::create_windc (
   $instance_type,
-  $windows_user_data,
+  $user_data,
   $instance_name = 'windchops-1',
 ) {
 
   include devhops
 
-  $windc_ami = $devhops::windc_ami
+  $ami = $devhops::windc_ami
 
   Ec2_instance {
     instance_type     => $instance_type,
@@ -42,7 +42,7 @@ class devhops::create_windc (
 
   ec2_instance { $instance_name:
     ensure    => running,
-    image_id  => $windc_ami,
-    user_data => inline_epp($windows_user_data),
+    image_id  => $ami,
+    user_data => inline_epp($user_data),
   }
 }

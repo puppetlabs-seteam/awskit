@@ -1,0 +1,15 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": true,
+  "description": "Provisions demo Puppet infrastructure",
+  "parameters": {
+    "type": {
+      "description": "Instance type to create",
+        "type": "Enum[master, linux_node, windows_node, discovery, windc]"
+      },
+    "count": {
+      "description": "Number of instances to create",
+        "type": "Integer"
+      }
+    }
+}
