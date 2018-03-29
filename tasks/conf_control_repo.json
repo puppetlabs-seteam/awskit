@@ -1,0 +1,19 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": true,
+  "description": "Configures control repo",
+  "parameters": {
+    "control_repo": {
+      "description": "Url of the control repo to push to local GOGS",
+      "type": "String"
+    },
+    "public_key_name": {
+      "description": "Name of the public key to configure for GOGS",
+      "type": "String"
+    },
+    "public_key_value": {
+      "description": "Name of the public key to configure for GOGS",
+      "type": "String"
+    }
+  }
+}
