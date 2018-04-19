@@ -95,9 +95,9 @@ devhops::amis:
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris
     pm: ami-de73c5a3
-  eu-central-1: # (Frankfurt):
+  eu-central-1: # Frankfurt
     pm: ami-86761be9
-  ap-southeast-2: # (Sydney)
+  ap-southeast-2: # Sydney
     pm: ami-a6995fc4
-  ap-southeast-1: # (Singapore)
+  ap-southeast-1: # Singapore
     pm: ami-3b93db47
