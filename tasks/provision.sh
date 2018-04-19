@@ -51,6 +51,7 @@ else
   fi
 fi
 if [ ! -z ${2+x} ]; then PT_count=$2; fi
+[[ $PT_count =~ "^[0-9]+$" ]] || { usage }
 if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
 
 case $PT_type in
@@ -63,8 +64,6 @@ case $PT_type in
     usage 
     ;;
 esac
-
-[[ $PT_count =~ "^[0-9]+$" ]] || { usage }
 
 class="devhops::create_$PT_type"
 
