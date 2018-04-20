@@ -59,7 +59,7 @@ if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
 # Validate type
 # Reset count to 1 if more than 1 instance of the type is not supported
 case $PT_type in
-  master) PT_count=1;;
+  master) PT_count=1 ;;
   linux_node) ;;
   windows_node) ;;
   discovery) PT_count=1 ;;
