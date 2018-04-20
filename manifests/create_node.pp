@@ -10,7 +10,7 @@ define devhops::create_node (
   $ami,
   $instance_type,
   $user_data,
-  $install_puppet = true,
+  $install_puppet = false,
 ){
 
   include devhops

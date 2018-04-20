@@ -73,23 +73,23 @@ git clone https://github.com/puppetlabs-seteam/devhops.git
 
 ### Provision the master
 
-- run `tasks/provision master`
+- run `tasks/provision.sh master`
 
 ### Provision count linux agents
 
-- run `tasks/provision linux_node count`
+- run `tasks/provision.sh linux_node count`
 
 ### Provision count windows agents
 
-- run `tasks/provision windows_node count`
+- run `tasks/provision.sh windows_node count`
 
 ### Provision the Puppet Discovery VM
 
-- run `tasks/provision discovery`
+- run `tasks/provision.sh discovery`
 
 ### Provision the Windows Domain Controller
 
-- run `tasks/provision windc`
+- run `tasks/provision.sh windc`
 
 ### Configure the control repo
 

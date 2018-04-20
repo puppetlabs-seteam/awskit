@@ -15,7 +15,7 @@ Usage in task mode:
 
 [_noop="yes"] [PT_count=<count>] PT_type=<type> $0
 
-- type should be one of: ['master', 'linux_node', 'windows_node', 'discovery', 'windc']
+- type should be one of: ['master', 'linux_node', 'windows_node', 'discovery', 'windc', 'wsus']
 - count should be an integer, default: value configured in hiera
 
 Examples:
@@ -64,6 +64,7 @@ case $PT_type in
   windows_node) ;;
   discovery) PT_count=1 ;;
   windc) PT_count=1 ;;
+  wsus) PT_count=1 ;;
   *) 
     echo "unknown type $PT_type specified."
     usage 
