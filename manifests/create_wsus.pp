@@ -6,7 +6,7 @@
 #
 # @example
 #   include devhops::create_agents
-class devhops::create_windows_node (
+class devhops::create_wsus (
   $instance_type,
   $user_data,
   $count         = 1,
