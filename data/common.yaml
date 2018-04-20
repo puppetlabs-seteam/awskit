@@ -8,6 +8,7 @@ devhops::create_linux_node::instance_type: 't2.micro'
 devhops::create_windows_node::instance_type: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
 devhops::create_windc::instance_type: 't2.small'
+devhops::create_wsus::instance_type: 't2.small'
 devhops::windows_domain::dn: 'DC=devhops,DC=local'
 devhops::windows_domain::localadminpw: 'PuppetD3vh0ps!'
 devhops::windows_domain::domainname: 'devhops.local'
@@ -74,7 +75,7 @@ devhops::create_master::user_data: |
   <% } -%>
 
 devhops::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-devhops
-  
+
 devhops::create_windc::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
@@ -83,6 +84,19 @@ devhops::create_windc::user_data: |
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   .\install.ps1 main:certname="windchops-1.inf.puppet.vm"
+  winrm quickconfig -force
+  </powershell>
+
+devhops::create_wsus::user_data: |
+  <powershell>
+  $hosts = "$env:windir\System32\drivers\etc\hosts"
+  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  $webClient = New-Object System.Net.WebClient; 
+  Install-WindowsFeature -Name UpdateServices -IncludeManagementTools;
+  New-Item -Path C: -Name WSUS -ItemType Directory;
+  $WSUSTools = "C:\Program Files\Update Services\Tools";
+  $WSUSTools\wsusutil.exe postinstall CONTENT_DIR=C:\WSUS
   winrm quickconfig -force
   </powershell>
 
@@ -95,6 +109,7 @@ devhops::amis:
     windows:   ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
     discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
+    wsus:      ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris
     pm: ami-de73c5a3
   eu-central-1: # Frankfurt

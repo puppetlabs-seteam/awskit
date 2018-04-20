@@ -14,5 +14,6 @@ devhops::create_agents::instance_name_lin: johnoconnor-linhops
 devhops::create_agents::instance_name_win: johnoconnor-winhops
 devhops::create_discovery::instance_name: johnoconnor-discohops
 devhops::create_windc::instance_name: johnoconnor-windc
+devhops::create_wsus::instance_name: johnoconnor-wsus
 
 devhops::master_ip: '35.177.8.154'
