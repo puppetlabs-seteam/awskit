@@ -8,7 +8,7 @@ devhops::create_linux_node::instance_type: 't2.micro'
 devhops::create_windows_node::instance_type: 't2.small'
 devhops::create_discovery::instance_type: 't2.small'
 devhops::create_windc::instance_type: 't2.small'
-devhops::create_wsus::instance_type: 't2.small'
+devhops::create_wsus::instance_type: 't2.medium'
 devhops::windows_domain::dn: 'DC=devhops,DC=local'
 devhops::windows_domain::localadminpw: 'PuppetD3vh0ps!'
 devhops::windows_domain::domainname: 'devhops.local'
@@ -33,11 +33,18 @@ devhops::create_linux_node::user_data: |
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
 
+# Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
 devhops::create_windows_node::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
   "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  net user admin "Devops!" /add ;
+  net localgroup Administrators admin /add ;
+  wmic USERACCOUNT WHERE "Name='admin'" set PasswordExpires=FALSE ;
+  Set-ExecutionPolicy Bypass -Scope Process -Force;
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+  choco install --yes notepadplusplus.install 7zip.install procexp ;
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   .\install.ps1 main:certname="winhops-<%= $i %>"
@@ -92,11 +99,41 @@ devhops::create_wsus::user_data: |
   $hosts = "$env:windir\System32\drivers\etc\hosts"
   "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  $webClient = New-Object System.Net.WebClient; 
+  net user admin "Devops!" /add ;
+  net localgroup Administrators admin /add ;
+  wmic USERACCOUNT WHERE "Name='admin'" set PasswordExpires=FALSE ;
+  Set-ExecutionPolicy Bypass -Scope Process -Force;
   Install-WindowsFeature -Name UpdateServices -IncludeManagementTools;
   New-Item -Path C: -Name WSUS -ItemType Directory;
-  $WSUSTools = "C:\Program Files\Update Services\Tools";
-  $WSUSTools\wsusutil.exe postinstall CONTENT_DIR=C:\WSUS
+  & "C:\Program Files\Update Services\Tools\wsusutil.exe" postinstall CONTENT_DIR=C:\WSUS
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+  choco install --yes notepadplusplus.install 7zip.install procexp
+  # Further WSUS Configuration
+  $wsus = Get-WSUSServer;
+  $wsusConfig = $wsus.GetConfiguration();
+  # Set to download updates from Microsoft Updates
+  Set-WsusServerSynchronization –SyncFromMU;
+  # Set Update Languages to English and save configuration settings
+  $wsusConfig.AllUpdateLanguagesEnabled = $false;
+  $wsusConfig.SetEnabledUpdateLanguages("en");
+  $wsusConfig.Save();
+  # Get WSUS Subscription and perform initial synchronization to get latest categories
+  $subscription = $wsus.GetSubscription();
+  $subscription.StartSynchronizationForCategoryOnly();
+  While ($subscription.GetSynchronizationStatus() -ne 'NotProcessing') { Write-Host "." -NoNewline; Start-Sleep -Seconds 5 ;};
+  Write-Host "Sync is done.";
+  # Configure the Platforms that we want WSUS to receive updates
+  Get-WsusProduct | where-Object { $_.Product.Title -in ('Windows 10', 'Windows Server 2016','Windows Server 2012 R2') } | Set-WsusProduct;
+  # Configure the Classifications
+  Get-WsusClassification | Where-Object { $_.Classification.Title -in ('Update Rollups', 'Security Updates', 'Critical Updates', 'Service Packs', 'Updates') } | Set-WsusClassification;
+  # Configure Synchronizations
+  $subscription.SynchronizeAutomatically=$true;
+  # Set synchronization scheduled for midnight each night
+  $subscription.SynchronizeAutomaticallyTimeOfDay= (New-TimeSpan -Hours 0);
+  $subscription.NumberOfSynchronizationsPerDay=1;
+  $subscription.Save();
+  # Kick off a synchronization
+  $subscription.StartSynchronization();
   winrm quickconfig -force
   </powershell>
 
