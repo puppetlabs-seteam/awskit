@@ -22,6 +22,7 @@ class devhops(
     $windows_ami    = $amis[$region]['windows']
     $discovery_ami  = $amis[$region]['discovery']
     $windc_ami      = $amis[$region]['windc']
+    $wsus_ami       = $amis[$region]['wsus']
 
     ec2_securitygroup { 'devhops-master':
       ensure      => 'present',
