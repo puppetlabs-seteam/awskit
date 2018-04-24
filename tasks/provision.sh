@@ -49,6 +49,8 @@ else
   fi
 fi
 
+PT_count=1
+
 # Second argument (or $PT_count) is the number of servers to deploy
 if [ ! -z ${2+x} ]; then PT_count=$2; fi
 if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
@@ -73,10 +75,8 @@ esac
 
 class="devhops::create_$PT_type"
 
-puppet_params=""
-if [[ ! -z ${PT_count+x} && ${PT_count} -gt 1 ]]; then
-  puppet_params="count => ${PT_count},"
-fi
+puppet_params="count => ${PT_count},"
+
 read -r -d '' manifest <<EOM
 class { $class:
   ${puppet_params}
