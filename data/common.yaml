@@ -41,6 +41,8 @@ devhops::create_windows_node::user_data: |
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   .\install.ps1 main:certname="winhops-<%= $i %>"
   winrm quickconfig -force
+  net user admin "Devops!" /add
+  net localgroup Administrators admin /add
   </powershell>
 
 devhops::create_linux_node::count: 2
