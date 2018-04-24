@@ -11,6 +11,7 @@ class devhops::create_master (
   $user_data,
   $control_repo,
   $gogs_ssh_keys,
+  $count         = 1,
   $instance_name = 'pm-devhops',
 ) {
 
@@ -19,24 +20,33 @@ class devhops::create_master (
   $pm_ami = $devhops::pm_ami
 
   # puppetmaster
-  ec2_instance { $instance_name:
-    ensure            => running,
-    region            => $devhops::region,
-    availability_zone => $devhops::availability_zone,
-    key_name          => $devhops::key_name,
-    image_id          => $pm_ami,
-    instance_type     => $instance_type,
-    subnet            => $devhops::subnet,
-    security_groups   => ['devhops-master'],
-    tags              => $devhops::tags,
-    user_data         => inline_epp($user_data),
-    require           => Ec2_securitygroup['devhops-master'],
+  # ec2_instance { $instance_name:
+  #   ensure            => running,
+  #   region            => $devhops::region,
+  #   availability_zone => $devhops::availability_zone,
+  #   key_name          => $devhops::key_name,
+  #   image_id          => $pm_ami,
+  #   instance_type     => $instance_type,
+  #   subnet            => $devhops::subnet,
+  #   security_groups   => ['devhops-master'],
+  #   tags              => $devhops::tags,
+  #   user_data         => inline_epp($user_data),
+  #   require           => Ec2_securitygroup['devhops-master'],
+  # }
+
+  # create puppetmaster instance
+  devhops::create_node { $instance_name:
+    ami             => $pm_ami,
+    instance_type   => $instance_type,
+    user_data       => inline_epp($user_data),
+    security_groups => ['devhops-master'],
+    require         => Ec2_securitygroup['devhops-master'],
   }
 
-  ec2_elastic_ip { $devhops::master_ip:
-    ensure   => 'attached',
-    instance => $instance_name,
-    region   => $devhops::region,
-  }
+  # ec2_elastic_ip { $devhops::master_ip:
+  #   ensure   => 'attached',
+  #   instance => $instance_name,
+  #   region   => $devhops::region,
+  # }
 
 }

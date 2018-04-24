@@ -10,12 +10,13 @@ define devhops::create_node (
   $ami,
   $instance_type,
   $user_data,
-  $install_puppet = false,
+  $install_puppet  = false,
+  $security_groups = ['devhops-agent'],
 ){
 
   include devhops
 
-  # create $count CentOS nodes
+  # create $count nodes
 
   ec2_instance { $name:
     ensure            => running,
@@ -29,11 +30,21 @@ define devhops::create_node (
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet            => $devhops::subnet,
     image_id          => $ami,
-    security_groups   => ['devhops-agent'],
+    security_groups   => $security_groups,
     key_name          => $devhops::key_name,
     tags              => $devhops::tags,
     instance_type     => $instance_type,
     user_data         => inline_epp($user_data),
     require           => Ec2_securitygroup['devhops-agent'],
+  }
+
+  $public_ip = lookup("devhops::elastic_ips.${name}", String, 'first', '')
+
+  if $public_ip != '' {
+    ec2_elastic_ip { $public_ip:
+      ensure   => 'attached',
+      instance => $name,
+      region   => $devhops::region,
+    }
   }
 }
