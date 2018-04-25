@@ -95,7 +95,12 @@ git clone https://github.com/puppetlabs-seteam/devhops.git
 
 First, make sure to install bolt.
 
-Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$puppet_ip:3000). Optionally, you can add your own public key to GOGS so you can start pusing your changes to the PM riectly.
+Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$puppet_ip:3000). Optionally, you can add your own public key to GOGS so you can start pushing your changes to the PM riectly.
+
+Note:
+
+- $public_key_name can be any string - gogs will register this public key under this name.
+- $public_key_value should contain your public key string
 
 ```bash
 bolt task run devhops::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-devhops.git" public_key_name=$key_name public_key_value="${your_pub_key}" -u root -p #--debug --verbose
