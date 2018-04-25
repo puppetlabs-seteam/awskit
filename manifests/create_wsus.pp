@@ -15,35 +15,30 @@ class devhops::create_wsus (
 
   include devhops
 
-  $ami = $devhops::wsus_ami
+  $wsus_ami = $devhops::wsus_ami
 
-  Ec2_instance {
-    instance_type     => $instance_type,
-    region            => $devhops::region,
-    availability_zone => $devhops::availability_zone,
-    subnet            => $devhops::subnet,
-    security_groups   => ['devhops-wsus'],
-    key_name          => $devhops::key_name,
-    tags              => $devhops::tags,
-    require           => Ec2_securitygroup['devhops-wsus'],
+  # create puppetmaster instance
+  devhops::create_node { $instance_name:
+    ami             => $wsus_ami,
+    instance_type   => $instance_type,
+    user_data       => inline_epp($user_data),
+    security_groups => ['devhops-wsus'],
+    require         => Ec2_securitygroup['devhops-wsus'],
   }
 
   ec2_securitygroup { 'devhops-wsus':
     ensure      => 'present',
     region      => $devhops::region,
     vpc         => $devhops::vpc,
-    description => 'RDP ingress for DevHops Windows DC',
+    description => 'RDP ingress for DevHops Windows WSUS',
     ingress     => [
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8530, cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8531, cidr => '0.0.0.0/0', },
       { protocol => 'tcp',               security_group => 'devhops-agent', },
       { protocol => 'udp',               security_group => 'devhops-agent', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
 
-  ec2_instance { $instance_name:
-    ensure    => running,
-    image_id  => $ami,
-    user_data => inline_epp($user_data),
-  }
 }
