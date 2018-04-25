@@ -15,6 +15,7 @@ class devhops(
   $tags,
   $master_ip,
   $amis,
+  $wsus_ip = undef,
   ) {
 
     $pm_ami         = $amis[$region]['pm']
