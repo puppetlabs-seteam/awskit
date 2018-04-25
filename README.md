@@ -98,6 +98,22 @@ First, make sure to install bolt.
 Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$puppet_ip:3000). Optionally, you can add your own public key to GOGS so you can start pusing your changes to the PM riectly.
 
 ```bash
-bolt task run devhops::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-devhops.git" public_key_name=$key_name public_key_value="$($your_pub_key)" -u root -p #--debug --verbose
+bolt task run devhops::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-devhops.git" public_key_name=$key_name public_key_value="${your_pub_key}" -u root -p #--debug --verbose
 ```
+
+After this, you can add a remote to your local devhops control repo clone:
+
+```bash
+git clone https://github.com/puppetlabs-seteam/control-repo-devhops.git
+cd control-repo-devhops
+git remote add devhops git@${master_ip}:puppet/control-repo.git
+```
+
+Now, you can push your changes directly to the master's gogs server (which lives at http://${master_ip}):
+
+```bash
+git commit -m "some commit"
+git push devhops production
+```
+
 ## Limitations
