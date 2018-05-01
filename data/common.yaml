@@ -23,7 +23,7 @@ devhops::tags:
   department: 'TSE'
   project: 'DevHops workshops'
   lifetime: 10w
-#  Schedule: '-21:00'
+  Schedule: '-21:00'
   
 devhops::vpc: 'default'
 
