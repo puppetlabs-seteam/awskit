@@ -1,6 +1,8 @@
 ---
 devhops::key_name: 'dimitri.tischenko-eu-west-2'
 devhops::master_ip: '35.177.92.181'
+devhops::wsus_ip: '35.178.35.215'
 devhops::elastic_ips:
   dimitri-linhops-1: '35.178.79.49'
   dimitri-devhops-pm: '35.177.92.181'
+  dimitri-wsus: '35.178.35.215'

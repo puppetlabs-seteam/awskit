@@ -14,5 +14,6 @@ devhops::create_linux_node::instance_name: dimitri-linhops
 devhops::create_windows_node::instance_name: dimitri-winhops
 devhops::create_discovery::instance_name: dimitri-discohops
 devhops::create_windc::instance_name: dimitri-windc
+devhops::create_wsus::instance_name: dimitri-wsus
 
 devhops::master_ip: '35.177.92.181'

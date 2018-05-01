@@ -49,6 +49,7 @@ devhops::create_windows_node::user_data: |
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   .\install.ps1 main:certname="winhops-<%= $i %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
+  puppet agent -t
   winrm quickconfig -force
   </powershell>
 
