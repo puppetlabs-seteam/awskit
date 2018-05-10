@@ -10,6 +10,7 @@ class devhops::create_windc (
   $instance_type,
   $user_data,
   $instance_name = 'windchops-1',
+  $count = 1,
 ) {
 
   include devhops
