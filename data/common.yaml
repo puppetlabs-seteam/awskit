@@ -144,7 +144,8 @@ devhops::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a
   eu-west-2: # London
-    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
+    pm:        ami-0569abdae7c422b45 # tse-master-vmware-2018.1.0-v0.0.8.ova
+#    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
     centos:    ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windows:   ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
     discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
