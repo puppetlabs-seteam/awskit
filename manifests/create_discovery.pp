@@ -1,37 +1,27 @@
-# devhops::create_discovery
+# awskit::create_discovery
 #
 # This class creates an instance in AWS for Puppet Discovery to be installed on
 #
 # @summary Installs AWS instance for Puppet Discovery installation
 #
 # @example
-#   include devhops::create_discovery
-class devhops::create_discovery (
+#   include awskit::create_discovery
+class awskit::create_discovery (
   $instance_type,
   $user_data,
-  $instance_name = 'discohops',
+  $count         = 1,
+  $instance_name = 'awskit-disco',
 ) {
 
-  include devhops
+  include awskit
 
-  $ami = $devhops::discovery_ami
+  $ami = $awskit::discovery_ami
 
-  Ec2_instance {
-    instance_type     => $instance_type,
-    region            => $devhops::region,
-    availability_zone => $devhops::availability_zone,
-    subnet            => $devhops::subnet,
-    security_groups   => ['devhops-discovery'],
-    key_name          => $devhops::key_name,
-    tags              => $devhops::tags,
-    require           => Ec2_securitygroup['devhops-discovery'],
-  }
-
-  ec2_securitygroup { 'devhops-discovery':
+  ec2_securitygroup { 'awskit-discovery':
     ensure      => 'present',
-    region      => $devhops::region,
-    vpc         => $devhops::vpc,
-    description => 'ssh and http(s) ingress for DevHops discovery',
+    region      => $awskit::region,
+    vpc         => $awskit::vpc,
+    description => 'ssh and http(s) ingress for awskit discovery',
     ingress     => [
       { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
@@ -40,9 +30,12 @@ class devhops::create_discovery (
     ],
   }
 
-  ec2_instance { "${instance_name}-1":
-    ensure    => running,
-    image_id  => $ami,
-    user_data => inline_epp($user_data),
+  awskit::create_host { $instance_name:
+    ami             => $ami,
+    instance_type   => $instance_type,
+    user_data       => inline_epp($user_data),
+    security_groups => ['awskit-discovery'],
+    require         => Ec2_securitygroup['awskit-discovery'],
   }
+
 }

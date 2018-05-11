@@ -1,12 +1,13 @@
-# devhops
+# awskit
 #
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
+# Provides a central place to configure parameters using hiera.
+# Also selects the right AMI ids based on current region
+# 
+# @summary Placeholder for hiera parameters
 #
 # @example
-#   include devhops
-class devhops(
+#   include awskit
+class awskit(
   $key_name,
   $region,
   $vpc,
@@ -25,11 +26,11 @@ class devhops(
     $windc_ami      = $amis[$region]['windc']
     $wsus_ami       = $amis[$region]['wsus']
 
-    ec2_securitygroup { 'devhops-master':
+    ec2_securitygroup { 'awskit-master':
       ensure      => 'present',
-      region      => $devhops::region,
-      vpc         => $devhops::vpc,
-      description => 'SG for DevHops Master',
+      region      => $awskit::region,
+      vpc         => $awskit::vpc,
+      description => 'SG for awskit Master',
       ingress     => [
         { protocol => 'tcp',  port => 22,        cidr => '0.0.0.0/0', },
         { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
@@ -43,11 +44,11 @@ class devhops(
       ],
     }
 
-    ec2_securitygroup { 'devhops-agent':
+    ec2_securitygroup { 'awskit-agent':
       ensure      => 'present',
-      region      => $devhops::region,
-      vpc         => $devhops::vpc,
-      description => 'ssh and http(s) ingress for DevHops agent',
+      region      => $awskit::region,
+      vpc         => $awskit::vpc,
+      description => 'ssh and http(s) ingress for awskit agent',
       ingress     => [
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },

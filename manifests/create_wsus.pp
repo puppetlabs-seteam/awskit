@@ -1,42 +1,42 @@
-# devhops::create
+# awskit::create
 #
 # A description of what this class does
 #
 # @summary A short summary of the purpose of this class
 #
 # @example
-#   include devhops::create_agents
-class devhops::create_wsus (
+#   include awskit::create_agents
+class awskit::create_wsus (
   $instance_type,
   $user_data,
   $count         = 1,
-  $instance_name = 'wsus',
+  $instance_name = 'awskit-wsus',
 ){
 
-  include devhops
+  include awskit
 
-  $wsus_ami = $devhops::wsus_ami
+  $wsus_ami = $awskit::wsus_ami
 
   # create puppetmaster instance
-  devhops::create_node { $instance_name:
+  awskit::create_host { $instance_name:
     ami             => $wsus_ami,
     instance_type   => $instance_type,
     user_data       => inline_epp($user_data),
-    security_groups => ['devhops-wsus'],
-    require         => Ec2_securitygroup['devhops-wsus'],
+    security_groups => ['awskit-wsus'],
+    require         => Ec2_securitygroup['awskit-wsus'],
   }
 
-  ec2_securitygroup { 'devhops-wsus':
+  ec2_securitygroup { 'awskit-wsus':
     ensure      => 'present',
-    region      => $devhops::region,
-    vpc         => $devhops::vpc,
-    description => 'RDP ingress for DevHops Windows WSUS',
+    region      => $awskit::region,
+    vpc         => $awskit::vpc,
+    description => 'RDP ingress for awskit Windows WSUS',
     ingress     => [
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 8530, cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 8531, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',               security_group => 'devhops-agent', },
-      { protocol => 'udp',               security_group => 'devhops-agent', },
+      { protocol => 'tcp',               security_group => 'awskit-agent', },
+      { protocol => 'udp',               security_group => 'awskit-agent', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }

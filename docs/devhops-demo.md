@@ -1,4 +1,4 @@
-# DevHops P4C
+# awskit P4C
 
 ## Meltdown module
 
@@ -95,7 +95,7 @@ puppet query 'inventory[certname] {facts.meltdown.CVE-2017-5754.vulnerable = tru
 - add container webapp, docker branch
 - add stage to namespace webapp
 - click 'autopromote on image event' and explain
-- now change _version.py to 'DevHops London'
+- now change _version.py to 'awskit London'
 - commit and push
 - look at the pipeline screen
 - when ready, reload browser

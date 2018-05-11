@@ -1,49 +1,41 @@
-# devhops::create_windc
+# awskit::create_windc
 #
 # This class creates an instance in AWS for a Windows Domain Controller to be installed on
 #
 # @summary Installs AWS instance for Windows Domain Controller installation
 #
 # @example
-#   include devhops::create_windc
-class devhops::create_windc (
+#   include awskit::create_windc
+class awskit::create_windc (
   $instance_type,
   $user_data,
-  $instance_name = 'windchops-1',
+  $instance_name = 'awskit-windc',
   $count = 1,
 ) {
 
-  include devhops
+  include awskit
 
-  $ami = $devhops::windc_ami
+  $ami = $awskit::windc_ami
 
-  Ec2_instance {
-    instance_type     => $instance_type,
-    region            => $devhops::region,
-    availability_zone => $devhops::availability_zone,
-    subnet            => $devhops::subnet,
-    security_groups   => ['devhops-windc'],
-    key_name          => $devhops::key_name,
-    tags              => $devhops::tags,
-    require           => Ec2_securitygroup['devhops-windc'],
-  }
-
-  ec2_securitygroup { 'devhops-windc':
+  ec2_securitygroup { 'awskit-windc':
     ensure      => 'present',
-    region      => $devhops::region,
-    vpc         => $devhops::vpc,
-    description => 'RDP ingress for DevHops Windows DC',
+    region      => $awskit::region,
+    vpc         => $awskit::vpc,
+    description => 'RDP ingress for awskit Windows DC',
     ingress     => [
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',               security_group => 'devhops-agent', },
-      { protocol => 'udp',               security_group => 'devhops-agent', },
+      { protocol => 'tcp',               security_group => 'awskit-agent', },
+      { protocol => 'udp',               security_group => 'awskit-agent', },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
 
-  ec2_instance { $instance_name:
-    ensure    => running,
-    image_id  => $ami,
-    user_data => inline_epp($user_data),
+  awskit::create_host { $instance_name:
+    ami             => $ami,
+    instance_type   => $instance_type,
+    user_data       => inline_epp($user_data),
+    security_groups => ['awskit-windc'],
+    require         => Ec2_securitygroup['awskit-windc'],
   }
+
 }

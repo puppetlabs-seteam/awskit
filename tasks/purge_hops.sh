@@ -1,8 +1,10 @@
 #!/bin/sh
 
 # purges all nodes with 'hops' in the name.
+# FIXME: completely untested
+# FIXME: the puppetmaster needs to be excluded from the purge
 
-nodes=$(puppet cert list --all|grep hops|cut -d \" -f 2)
+nodes=$(puppet cert list --all|grep awskit|cut -d \" -f 2)
 if [ "$PT_force" == "true" ] ; then
   puppet node purge $nodes
 else

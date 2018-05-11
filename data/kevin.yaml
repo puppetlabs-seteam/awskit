@@ -1,10 +1,10 @@
 ---
 lookup_options:
-  devhops::tags:
+  awskit::tags:
     merge: deep
 
-devhops::tags:
+awskit::tags:
   created_by: 'kevin.reeuwijk@puppetlabs.com'
 
-#devhops::create_master::gogs_ssh_keys:
+#awskit::create_master::gogs_ssh_keys:
 #  'key_name': key_value

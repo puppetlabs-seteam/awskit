@@ -1,44 +1,44 @@
 ---
 lookup_options:
-  devhops::tags:
+  awskit::tags:
     merge: deep
 
-devhops::create_master::instance_type: 't2.large'
-devhops::create_linux_node::instance_type: 't2.micro'
-devhops::create_windows_node::instance_type: 't2.small'
-devhops::create_discovery::instance_type: 't2.small'
-devhops::create_windc::instance_type: 't2.small'
-devhops::create_wsus::instance_type: 't2.medium'
-devhops::windows_domain::dn: 'DC=devhops,DC=local'
-devhops::windows_domain::localadminpw: 'PuppetD3vh0ps!'
-devhops::windows_domain::domainname: 'devhops.local'
-devhops::windows_domain::domainnbname: 'DEVHOPS'
-devhops::windows_domain::ntdspath: 'C:\\NTDS'
-devhops::windows_domain::safemodepw: 'PuppetD3vh0ps!'
-devhops::windows_domain::join_user: 'Administrator'
-devhops::windows_domain::join_password: 'PuppetD3vh0ps!'
+awskit::create_master::instance_type: 't2.large'
+awskit::create_linux_node::instance_type: 't2.micro'
+awskit::create_windows_node::instance_type: 't2.small'
+awskit::create_discovery::instance_type: 't2.small'
+awskit::create_windc::instance_type: 't2.small'
+awskit::create_wsus::instance_type: 't2.medium'
+awskit::windows_domain::dn: 'DC=awskit,DC=local'
+awskit::windows_domain::localadminpw: 'PuppetD3vh0ps!'
+awskit::windows_domain::domainname: 'awskit.local'
+awskit::windows_domain::domainnbname: 'awskit'
+awskit::windows_domain::ntdspath: 'C:\\NTDS'
+awskit::windows_domain::safemodepw: 'PuppetD3vh0ps!'
+awskit::windows_domain::join_user: 'Administrator'
+awskit::windows_domain::join_password: 'PuppetD3vh0ps!'
 
-devhops::tags:
-  description: 'DevHops Infrastructure'
+awskit::tags:
+  description: 'awskit Infrastructure'
   department: 'TSE'
-  project: 'DevHops workshops'
+  project: 'awskit workshops'
   lifetime: 10w
   Schedule: '-21:00'
   
-devhops::vpc: 'default'
+awskit::vpc: 'default'
 
-devhops::create_linux_node::user_data: |
+awskit::create_linux_node::user_data: |
   #! /bin/bash
-  echo "<%= $devhops::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
+  echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
 
 # Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
-devhops::create_windows_node::user_data: |
+awskit::create_windows_node::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts;
-  "<%= $devhops::wsus_ip %> wsus.info.puppet.vm wsus" | Add-Content -PassThru $hosts;
+  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts;
+  "<%= $awskit::wsus_ip %> wsus.info.puppet.vm wsus" | Add-Content -PassThru $hosts;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   net user admin "Devops!" /add ;
   net localgroup Administrators admin /add ;
@@ -54,10 +54,10 @@ devhops::create_windows_node::user_data: |
   winrm quickconfig -force
   </powershell>
 
-devhops::create_linux_node::count: 2
-devhops::create_windows_node::count: 2
+awskit::create_linux_node::count: 2
+awskit::create_windows_node::count: 2
 
-devhops::create_discovery::user_data: |
+awskit::create_discovery::user_data: |
   #! /bin/bash
   #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
   yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -69,7 +69,7 @@ devhops::create_discovery::user_data: |
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery init --with-dev-password puppet
 
-devhops::create_master::user_data: |
+awskit::create_master::user_data: |
   #! /bin/bash
   sleep 120 # give time for startup
   cd /tmp
@@ -82,12 +82,12 @@ devhops::create_master::user_data: |
   '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
   <% } -%>
 
-devhops::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-devhops
+awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-awskit
 
-devhops::create_windc::user_data: |
+awskit::create_windc::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
@@ -95,10 +95,10 @@ devhops::create_windc::user_data: |
   winrm quickconfig -force
   </powershell>
 
-devhops::create_wsus::user_data: |
+awskit::create_wsus::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $devhops::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   net user admin "Devops!" /add ;
   net localgroup Administrators admin /add ;
@@ -140,7 +140,7 @@ devhops::create_wsus::user_data: |
   winrm quickconfig -force
   </powershell>
 
-devhops::amis:
+awskit::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a
   eu-west-2: # London

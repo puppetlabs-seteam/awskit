@@ -73,7 +73,7 @@ case $PT_type in
     ;;
 esac
 
-class="devhops::create_$PT_type"
+class="awskit::create_$PT_type"
 
 puppet_params="count => ${PT_count},"
 

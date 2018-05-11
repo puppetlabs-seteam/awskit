@@ -1,7 +1,7 @@
-# Class: devhops::windows_domain
+# Class: awskit::windows_domain
 # Builds a Windows domain controller and provisions AD resources
 #
-class devhops::windows_domain(
+class awskit::windows_domain(
   $dn,
   $localadminpw,
   $domainname,
@@ -27,7 +27,7 @@ class devhops::windows_domain(
     installmanagementtools => true,
   }
 
-  dsc_xADDomain { 'DevHops Domain':
+  dsc_xADDomain { 'awskit Domain':
     dsc_domainname                    => $domainname,
     dsc_domainadministratorcredential => {
       'user'     => 'Administrator',
@@ -52,34 +52,34 @@ class devhops::windows_domain(
   }
 
   unless $facts['id'] =~ /^WORKGROUP\\/ {
-    dsc_xadorganizationalunit { 'OU_DevHops':
+    dsc_xadorganizationalunit { 'OU_awskit':
       dsc_ensure => 'Present',
-      dsc_name   => 'DevHops',
+      dsc_name   => 'awskit',
       dsc_path   => $dn,
-      require    => Dsc_xADDomain['DevHops Domain']
+      require    => Dsc_xADDomain['awskit Domain']
     }
 
-    dsc_xaduser {'ADUser_DevHops1':
+    dsc_xaduser {'ADUser_awskit1':
       dsc_ensure      => 'Present',
       dsc_domainname  => $domainname,
-      dsc_username    => 'DevHops1',
-      dsc_description => 'DevHops User 1',
-      dsc_path        => join(['OU=DevHops', $dn],','),
+      dsc_username    => 'awskit1',
+      dsc_description => 'awskit User 1',
+      dsc_path        => join(['OU=awskit', $dn],','),
       dsc_password    => {
-        'user'     => 'DevHops1',
+        'user'     => 'awskit1',
         'password' => Sensitive('PuppetD3vh0ps1!')
       },
-      require         => Dsc_xadorganizationalunit['OU_DevHops'],
+      require         => Dsc_xadorganizationalunit['OU_awskit'],
     }
 
-    dsc_xadgroup { 'ADGroup_DevHopsers':
+    dsc_xadgroup { 'ADGroup_awskiters':
       dsc_ensure           => 'Present',
-      dsc_groupname        => 'DevHopsers',
-      dsc_path             => join(['OU=DevHops', $dn],','),
-      dsc_memberstoinclude => 'DevHops1',
+      dsc_groupname        => 'awskiters',
+      dsc_path             => join(['OU=awskit', $dn],','),
+      dsc_memberstoinclude => 'awskit1',
       require              => [
-        Dsc_xadorganizationalunit['OU_DevHops'],
-        Dsc_xaduser['ADUser_DevHops1']
+        Dsc_xadorganizationalunit['OU_awskit'],
+        Dsc_xaduser['ADUser_awskit1']
       ]
     }
   }

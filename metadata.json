@@ -1,8 +1,8 @@
 {
-  "name": "timidri-devhops",
-  "version": "0.1.0",
+  "name": "timidri-awskit",
+  "version": "0.2.0",
   "author": "Dimitri Tischenko",
-  "summary": "DevHops tools",
+  "summary": "Toolkit for setting up and managing SE Demo instrastructure in AWS",
   "license": "Apache-2.0",
   "source": "n/a",
   "dependencies": [

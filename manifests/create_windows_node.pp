@@ -1,25 +1,25 @@
-# devhops::create
+# awskit::create_windows_node
 #
-# A description of what this class does
+# @summary Creates a number of Windows nodes
 #
-# @summary A short summary of the purpose of this class
+# @summary Creates $count of Windows nodes
 #
 # @example
-#   include devhops::create_agents
-class devhops::create_windows_node (
+#   include awskit::create_agents
+class awskit::create_windows_node (
   $instance_type,
   $user_data,
   $count         = 1,
-  $instance_name = 'winhops',
+  $instance_name = 'awskit-windows',
 ){
 
-  include devhops
+  include awskit
 
   # create $count Windows nodes
 
   range(1,$count).each | $i | {
-    devhops::create_node { "${instance_name}-${i}":
-      ami           => $devhops::windows_ami,
+    awskit::create_host { "${instance_name}-${i}":
+      ami           => $awskit::windows_ami,
       instance_type => $instance_type,
       user_data     => inline_epp($user_data),
     }

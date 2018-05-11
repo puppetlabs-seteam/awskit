@@ -1,28 +1,28 @@
-# devhops::create_node
+# awskit::create_linux_node
 #
-# Create an agent
+# Creates a number of Linux nodes
 #
-# @summary Creates a machine with or without a puppet agent
+# @summary Creates $count Linux nodes
 #
 # @example
-#   include devhops::create_agents
-class devhops::create_linux_node (
+#   include awskit::create_agents
+class awskit::create_linux_node (
   $instance_type,
   $user_data,
-  $instance_name  = 'linhops',
+  $instance_name  = 'awskit-linux',
   $count          = 1,
 ){
 
-  include devhops
+  include awskit
 
   # create $count CentOS nodes
 
   range(1,$count).each | $i | {
-    devhops::create_node { "${instance_name}-${i}":
-      ami           => $devhops::centos_ami,
+    awskit::create_host { "${instance_name}-${i}":
+      ami           => $awskit::centos_ami,
       instance_type => $instance_type,
       user_data     => inline_epp($user_data),
-      require       => Ec2_securitygroup['devhops-agent'],
+      require       => Ec2_securitygroup['awskit-agent'],
     }
   }
 }

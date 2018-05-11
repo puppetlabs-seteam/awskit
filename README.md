@@ -1,4 +1,4 @@
-# devhops
+# awskit
 
 ## Table of Contents
 
@@ -9,7 +9,7 @@
 
 ## Description
 
-This module helps deploying infrastructure for DevHops Workshops in various regions.
+This module helps deploying SE demo infrastructure in AWS in various regions.
 
 It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
 
@@ -53,22 +53,22 @@ puppet module install puppetlabs/stdlib
 
 ## Usage
 
-### Clone the devhops repo
+### Clone the awskit repo
 
 ```bash
-git clone https://github.com/puppetlabs-seteam/devhops.git
+git clone https://github.com/puppetlabs-seteam/awskit.git
 ```
 
 ### Configure hiera
 
-- cd to the module dir `cd devhops`
-- Configure region-specific AMI ids in the hash `devhops::amis` in the `data/common.yaml` file
+- cd to the module dir `cd awskit`
+- Configure region-specific AMI ids in the hash `awskit::amis` in the `data/common.yaml` file
 - If not done yet, create the file `data/${FACTER_aws_region}/common.yaml` and configure
   region-specific AWS variables
 - If not done yet, reserve a static IP for your master by doing:
   `aws ec2 allocate-address --region ${FACTER_aws_region}`
 - Create the file `data/${FACTER_aws_region}/${FACTER_user}.yaml` and add
-  your `devhops::key_name` and `devhops::master_ip`
+  your `awskit::key_name` and `awskit::master_ip`
 - Create the file `data/${FACTER_user}.yaml` and configure user-specific variabls (such as tags)
 
 ### Provision the master
@@ -103,22 +103,22 @@ Note:
 - $public_key_value should contain your public key string
 
 ```bash
-bolt task run devhops::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-devhops.git" public_key_name=$key_name public_key_value="${your_pub_key}" -u root -p #--debug --verbose
+bolt task run awskit::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-awskit.git" public_key_name=$key_name public_key_value="${your_pub_key}" -u root -p #--debug --verbose
 ```
 
-After this, you can add a remote to your local devhops control repo clone:
+After this, you can add a remote to your local awskit control repo clone:
 
 ```bash
-git clone https://github.com/puppetlabs-seteam/control-repo-devhops.git
-cd control-repo-devhops
-git remote add devhops git@${master_ip}:puppet/control-repo.git
+git clone https://github.com/puppetlabs-seteam/control-repo-awskit.git
+cd control-repo-awskit
+git remote add awskit git@${master_ip}:puppet/control-repo.git
 ```
 
 Now, you can push your changes directly to the master's gogs server (which lives at http://${master_ip}):
 
 ```bash
 git commit -m "some commit"
-git push devhops production
+git push awskit production
 ```
 
 ## Limitations

@@ -1,8 +1,8 @@
 ---
-devhops::key_name: 'john.oconnor-eu-west-2'
-devhops::master_ip: '35.177.8.154'
-devhops::wsus_ip: '35.178.89.242'
+awskit::key_name: 'john.oconnor-eu-west-2'
+awskit::master_ip: '35.177.8.154'
+awskit::wsus_ip: '35.178.89.242'
 
-devhops::elastic_ips:
+awskit::elastic_ips:
   johnoconnor-wsus: '35.178.89.242'
-  johnoconnor-devhops-pm: '35.177.8.154'
+  johnoconnor-awskit-pm: '35.177.8.154'
