@@ -6,5 +6,14 @@ lookup_options:
 devhops::tags:
   created_by: 'kevin.reeuwijk@puppetlabs.com'
 
-#devhops::create_master::gogs_ssh_keys:
-#  'key_name': key_value
+devhops::create_master::gogs_ssh_keys:
+  'kevin.reeuwijk@kevin.reeuwijk-C02TP0A7G8WL': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC//2h2VK4NYWLQirTcOT2kFpH7BnRaKkiJ8wsKf5Afl5ENnfmBvBXU6wfsV8Yid3lZRRopjhGRiyJzHNXBPRxcPFwX+gE63YJ0ALebR0x+PIpf+j62JpzGs6xbfiQbYKiMWUQLShO8m0ID0wqgGUqzzX/fOe4szQgWsqPg+oSrzz1mzmN4/Y93AW4ouiRAFCAXhMphzhNiZ6W/9FkbwXkZqFAnev4jOTHGinjR617kFNVTzu/PHtGiLiOK+o44D9pfGkw0tcXbDGV9pK1kvaosXx7AFJsqA/AmLbL7Ry6x+7L5svKiy+zC93HphSQsYnOnIIbAmykqTpCCpo06Tw6t
+
+devhops::create_master::instance_name: kevin-2018.1.0-pm
+devhops::create_linux_node::instance_name: kevin-linhops
+devhops::create_windows_node::instance_name: kevin-winhops
+devhops::create_discovery::instance_name: kevin-discohops
+devhops::create_windc::instance_name: kevin-windc
+devhops::create_wsus::instance_name: kevin-wsus
+
+devhops::master_ip: '35.177.92.181'
