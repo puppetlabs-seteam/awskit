@@ -1,9 +1,8 @@
 ---
 devhops::key_name: 'kevin.reeuwijk.key-eu-west-2'
 devhops::master_ip: '35.177.92.181'
-
-devhops::create_master::instance_name: kevin-devhops-pm
-devhops::create_agents::instance_name_lin: kevin-linhops
-devhops::create_agents::instance_name_win: kevin-winhops
-devhops::create_discovery::instance_name: kevin-discohops
-devhops::create_windc::instance_name: kevin-windchops
+devhops::wsus_ip: '35.178.35.215'
+devhops::elastic_ips:
+  kevin-linhops-1: '35.178.79.49'
+  kevin-devhops-pm: '35.177.92.181'
+  kevin-wsus: '35.178.35.215'
