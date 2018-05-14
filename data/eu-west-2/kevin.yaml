@@ -1,9 +1,0 @@
----
-awskit::key_name: 'kevin.reeuwijk.key-eu-west-2'
-awskit::master_ip: '35.177.92.181'
-
-awskit::create_master::instance_name: kevin-awskit-pm
-awskit::create_agents::instance_name_lin: kevin-linhops
-awskit::create_agents::instance_name_win: kevin-winhops
-awskit::create_discovery::instance_name: kevin-discohops
-awskit::create_windc::instance_name: kevin-windchops
