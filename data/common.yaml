@@ -65,9 +65,9 @@ devhops::create_discovery::user_data: |
   yum install -y docker-ce
   systemctl enable docker
   systemctl start docker
-  curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/108a15a/linux-amd64/puppet-discovery
+  curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/production/latest/linux-amd64/puppet-discovery
   chmod a+x ~/puppet-discovery
-  ~/puppet-discovery init --with-dev-password puppet
+  ~/puppet-discovery demo
 
 devhops::create_master::user_data: |
   #! /bin/bash
