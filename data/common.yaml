@@ -30,15 +30,18 @@ awskit::vpc: 'default'
 awskit::create_linux_node::user_data: |
   #! /bin/bash
   echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
-  #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
-  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>"
+  install_args=""
+  <% unless $run_agent == true { -%>
+  $install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
+  <% } -%>
+  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>" $install_args
 
 # Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
 awskit::create_windows_node::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
   "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts;
-  "<%= $awskit::wsus_ip %> wsus.info.puppet.vm wsus" | Add-Content -PassThru $hosts;
+  "<%= $awskit::wsus_ip %> wsus.inf.puppet.vm wsus" | Add-Content -PassThru $hosts;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   net user admin "Devops!" /add ;
   net localgroup Administrators admin /add ;
@@ -50,7 +53,11 @@ awskit::create_windows_node::user_data: |
   choco install --yes notepadplusplus.install 7zip.install procexp ;
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
-  .\install.ps1 main:certname="winhops-<%= $i %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
+  $install_args = ""
+  <% unless $run_agent == true { -%>
+  $install_args = " -PuppetServiceEnsure stopped -PuppetServiceEnable false"
+  <% } -%>
+  .\install.ps1 main:certname="winhops-<%= $i %>" $install_args
   winrm quickconfig -force
   </powershell>
 
@@ -80,6 +87,9 @@ awskit::create_master::user_data: |
   <% $gogs_ssh_keys.each |$title| { -%>
   curl -u puppet:puppetlabs -X POST -H "Content-Type: application/json" -d \
   '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
+  <% } -%>
+  <% unless $ssh_key =~ Undef { -%>
+  echo "<%= $ssh_key %>" >> /root/.ssh/authorized_keys
   <% } -%>
 
 awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-awskit
@@ -144,7 +154,7 @@ awskit::amis:
   us-west-2: # US/Canada
     pm: ami-6209801a
   eu-west-2: # London
-    pm:        ami-0569abdae7c422b45 # tse-master-vmware-2018.1.0-v0.0.8.ova
+    pm:        ami-0dfaef6ffe4e87622 # tse-master-vmware-2018.1.0-v0.0.9.ova
 #    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
     centos:    ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windows:   ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
