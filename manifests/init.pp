@@ -17,6 +17,7 @@ class awskit(
   $master_ip,
   $amis,
   $wsus_ip = undef,
+  $ssh_ingress_ips = ['0.0.0.0/0'],
   ) {
 
     $pm_ami         = $amis[$region]['pm']
@@ -26,12 +27,7 @@ class awskit(
     $windc_ami      = $amis[$region]['windc']
     $wsus_ami       = $amis[$region]['wsus']
 
-    ec2_securitygroup { 'awskit-master':
-      ensure      => 'present',
-      region      => $awskit::region,
-      vpc         => $awskit::vpc,
-      description => 'SG for awskit Master',
-      ingress     => [
+    $default_ingress = [
         { protocol => 'tcp',  port => 22,        cidr => '0.0.0.0/0', },
         { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
         { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', },
@@ -40,8 +36,25 @@ class awskit(
         { protocol => 'tcp',  port => 8143,      cidr => '0.0.0.0/0', },
         { protocol => 'tcp',  port => 8170,      cidr => '0.0.0.0/0', },
         { protocol => 'tcp',  port => 61613,     cidr => '0.0.0.0/0', },
-        { protocol => 'icmp',                    cidr => '0.0.0.0/0', },
-      ],
+        { protocol => 'icmp',                    cidr => '0.0.0.0/0', }
+      ]
+
+    $ssh_ingress = $ssh_ingress_ips.map | $ssh_rule | {
+      { protocol => 'tcp',  port => 22, cidr => $ssh_rule }
+    }
+
+    notice($ssh_ingress)
+
+    $ingress = flatten([$default_ingress, $ssh_ingress])
+
+    notice($ingress)
+
+    ec2_securitygroup { 'awskit-master':
+      ensure      => 'present',
+      region      => $awskit::region,
+      vpc         => $awskit::vpc,
+      description => 'SG for awskit Master',
+      ingress     => $ingress,
     }
 
     ec2_securitygroup { 'awskit-agent':
