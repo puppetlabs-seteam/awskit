@@ -34,7 +34,7 @@ awskit::create_linux_node::user_data: |
   <% unless $run_agent == true { -%>
   $install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
   <% } -%>
-  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="linhops-<%= $i %>" $install_args
+  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash | bash -s agent:certname="<%= $name %>" $install_args
 
 # Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
 awskit::create_windows_node::user_data: |
@@ -57,7 +57,7 @@ awskit::create_windows_node::user_data: |
   <% unless $run_agent == true { -%>
   $install_args = " -PuppetServiceEnsure stopped -PuppetServiceEnable false"
   <% } -%>
-  .\install.ps1 main:certname="winhops-<%= $i %>" $install_args
+  .\install.ps1 main:certname="<%= $name %>" $install_args
   winrm quickconfig -force
   </powershell>
 

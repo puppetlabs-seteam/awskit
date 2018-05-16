@@ -21,7 +21,7 @@ class awskit::create_linux_node (
     awskit::create_host { "${instance_name}-${i}":
       ami           => $awskit::centos_ami,
       instance_type => $instance_type,
-      user_data     => inline_epp($user_data),
+      user_data     => $user_data,
       require       => Ec2_securitygroup['awskit-agent'],
     }
   }

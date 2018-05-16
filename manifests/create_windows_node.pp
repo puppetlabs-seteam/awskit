@@ -21,7 +21,7 @@ class awskit::create_windows_node (
     awskit::create_host { "${instance_name}-${i}":
       ami           => $awskit::windows_ami,
       instance_type => $instance_type,
-      user_data     => inline_epp($user_data),
+      user_data     => $user_data,
     }
   }
 }
