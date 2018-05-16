@@ -17,7 +17,7 @@ class awskit(
   $master_ip,
   $amis,
   $wsus_ip = undef,
-  $ssh_ingress_ips = ['0.0.0.0/0'],
+  $ssh_ingress_cidrs = ['0.0.0.0/0'],
   ) {
 
     $pm_ami         = $amis[$region]['pm']
@@ -39,7 +39,7 @@ class awskit(
       { protocol => 'icmp',                    cidr => '0.0.0.0/0', }
     ]
 
-    $ssh_ingress = $ssh_ingress_ips.map | $ssh_rule | {
+    $ssh_ingress = $ssh_ingress_cidrs.map | $ssh_rule | {
       { protocol => 'tcp',  port => 22, cidr => $ssh_rule }
     }
 
