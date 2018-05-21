@@ -11,9 +11,9 @@ awskit::create_master::gogs_ssh_keys:
 
 awskit::create_master::instance_name: dimitri-2018_1_0-pm
 awskit::create_master::ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDGTHfSvlecJoCqEw/gPZjiR4JfLxEdcEBx5EglPyNYK3ac4SPjqGTrrdq9YZwNMjwYwWSfMqFF7mNZkP9yzogWXHZkOcDotz9Myn5JpnM7FeiQ+sRb52Ovy2Bw1W037uC74a+gP9NLiZXGYafOlUMhdCmUHS94anWSFvg39JIjpC8BQr9qCzU4Libi6eLBfbT0kuHdET9+6qH76VDg41W7M3yLWzdTYzEK+b2zSiNg+hfCntcmc4DBQc6+9ptRx/HThY7SiIZt4U1wSRlsiwGkHCHpjufrwiroJVj8sUqie5T6o77hMloN0dJn10c9wJkDcWqD3liAP+4k+S1h+hyR9zsUuWTKrBLyDQ6m1P1O4ZJNRrZ9nQcwaWCfzz+1M6aYNdUq9YTJ+ssa8HBF9SUGOSZPNaRzlJnuf8tpPDjdTqefdsGbD/+4e7nOaNpdoPWqG2BKpnA6nrScZ/13tuRcobZSET6oIIjn51usWSm+kFwbL6obvQfpt2etfVoxnDvb9ymjfrd/EnY822xJ36z9tDEuwuft6kfjxK3BW/oqrVR5LfKMrLGA/Ent+6Y4HWvMjKixBOmC+PvxAD6uDnjCGVsVwcAs/Wq1CEuaS544dFJ/4/AjlFPhMGG37qeDtEJHZgXae7V6PGQ8te4hkvFry61N/CO7lu3PhUGz7pBecQ== dimitri.tischenko@dimitri.tischenko-C02V71QBG8WL
-awskit::create_linux_node::instance_name: dimitri-linhops
-awskit::create_windows_node::instance_name: dimitri-winhops
-awskit::create_discovery::instance_name: dimitri-discohops
+awskit::create_linux_node::instance_name: dimitri-linux
+awskit::create_windows_node::instance_name: dimitri-windows
+awskit::create_discovery::instance_name: dimitri-disco
 awskit::create_windc::instance_name: dimitri-windc
 awskit::create_wsus::instance_name: dimitri-wsus
 
