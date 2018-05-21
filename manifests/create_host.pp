@@ -32,6 +32,12 @@ define awskit::create_host (
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
 
+  if $host_config['instance_type'] {
+    $_instance_type = $host_config['instance_type']
+  } else {
+    $_instance_type = $instance_type
+  }
+
   ec2_instance { $name:
     ensure            => running,
     region            => $awskit::region,
@@ -47,13 +53,15 @@ define awskit::create_host (
     security_groups   => $security_groups,
     key_name          => $awskit::key_name,
     tags              => $awskit::tags,
-    instance_type     => $instance_type,
+    instance_type     => $_instance_type,
     user_data         => inline_epp($user_data),
     require           => Ec2_securitygroup['awskit-agent'],
   }
 
   # $public_ip = lookup("awskit::elastic_ips.${name}", String, 'first', '')
-  $public_ip = $host_config['ip']
+  $public_ip = $host_config['public_ip']
+
+  notice($host_config)
 
   if $public_ip {
     ec2_elastic_ip { $public_ip:
