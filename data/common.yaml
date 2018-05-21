@@ -53,11 +53,11 @@ awskit::create_windows_node::user_data: |
   choco install --yes notepadplusplus.install 7zip.install procexp ;
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
-  $install_args = ""
-  <% unless $run_agent == true { -%>
-  $install_args = " -PuppetServiceEnsure stopped -PuppetServiceEnable false"
+  <% if $run_agent == true { -%>
+  .\install.ps1 main:certname="<%= $name %>"
+  <% } else { -%>
+  .\install.ps1 main:certname="<%= $name %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
   <% } -%>
-  .\install.ps1 main:certname="<%= $name %>" $install_args
   winrm quickconfig -force
   </powershell>
 
