@@ -43,11 +43,7 @@ class awskit(
       { protocol => 'tcp',  port => 22, cidr => $ssh_rule }
     }
 
-    notice($ssh_ingress)
-
     $ingress = flatten([$default_ingress, $ssh_ingress])
-
-    notice($ingress)
 
     ec2_securitygroup { 'awskit-master':
       ensure      => 'present',
@@ -66,10 +62,12 @@ class awskit(
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
+        { protocol => 'tcp', port => 3306, security_group => 'awskit-agent', }, # MySQL
         { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
         { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
         { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
         { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
+        { protocol => 'tcp', port => 8888, security_group => 'awskit-agent', }, # rgbank webhead
         { protocol => 'icmp',              cidr => '0.0.0.0/0', },
       ],
     }
