@@ -18,4 +18,4 @@ awskit::create_windc::instance_name: dimitri-windc
 awskit::create_wsus::instance_name: dimitri-wsus
 
 awskit::master_ip: '35.177.92.181'
-awskit::ssh_ingress_cidrs: ['82.217.18.213/32']
+awskit::ssh_ingress_cidrs: ['82.217.18.213/32', '0.0.0.0/0']
