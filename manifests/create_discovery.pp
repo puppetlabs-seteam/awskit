@@ -33,7 +33,7 @@ class awskit::create_discovery (
   awskit::create_host { $instance_name:
     ami             => $ami,
     instance_type   => $instance_type,
-    user_data       => inline_epp($user_data),
+    user_data       => $user_data,
     security_groups => ['awskit-discovery'],
     require         => Ec2_securitygroup['awskit-discovery'],
   }
