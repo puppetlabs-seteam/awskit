@@ -1,0 +1,15 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "purges all nodes with names matching pattern. Use with caution!",
+  "parameters": {
+    "pattern": {
+      "description": "The grep pattern of node names to be purged",
+      "type": "String"
+     },
+    "force": {
+      "description": "If true, nodes are really purged",
+      "type": "Enum['true', 'false']"
+     }
+  }
+}
