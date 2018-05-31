@@ -1,0 +1,8 @@
+---
+awskit::key_name: 'marc.mckinley-eu-west-2'
+awskit::master_ip: '35.177.8.159'
+awskit::wsus_ip: '35.178.89.249'
+
+awskit::host_config:
+  marc-wsus: '35.178.89.249'
+  marc-demo-pm: '35.177.8.159'
