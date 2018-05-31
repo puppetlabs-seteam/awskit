@@ -1,0 +1,19 @@
+---
+lookup_options:
+  devhops::tags:
+    merge: deep
+
+devhops::tags:
+  created_by: 'marc@puppet.com'
+
+devhops::create_master::gogs_ssh_keys:
+  'marc.mckinley@puppetmac': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwPqldQhYoW26qt2sxaA7q7vsu72kl5oFbnI/bcAL8KTl7YiXQ+eGoDDQSplx68QQxqKtdrpj4o27C0QKtZZJAkMWOGHnISd8VV+f7YfnPcJsPmDSsO423TnW+NvrpgUonuCgr8AK6ZRJCiI1ji28f58LQAMfG6ruFyePJ0pemoSs92DFKpQD4d4CL+bW0aMenfUtqf9hHhlxbqUv6zJSxZ9gnOVTmXp5eZQkdsXVJT5S4cr/hqB96zZlbOfNFftQcgF6mv/nuAL1+6GKTIJzkUfsIjF9yQFl0lIff5U8Q2kX1ee1EMTYOLDLZxA+95kdok3K4QPyN4r4A7eeKNSz9
+
+devhops::create_master::instance_name: marc-demo-pm
+devhops::create_agents::instance_name_lin: marc-linux
+devhops::create_agents::instance_name_win: marc-windows
+devhops::create_discovery::instance_name: marc-disco
+devhops::create_windc::instance_name: marc-windc
+devhops::create_wsus::instance_name: marc-wsus
+
+devhops::master_ip: '35.177.8.159'
