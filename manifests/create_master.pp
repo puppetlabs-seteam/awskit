@@ -9,8 +9,8 @@
 class awskit::create_master (
   $instance_type,
   $user_data,
-  $control_repo,
-  $gogs_ssh_keys,
+  # $control_repo,
+  # $gogs_ssh_keys,
   $ssh_key       = undef,
   $count         = 1,
   $instance_name = 'awskit-pm',
