@@ -23,7 +23,9 @@ awskit::tags:
   department: 'TSE'
   project: 'awskit workshops'
   lifetime: 10w
-  Schedule: '-21:00'
+  termination_date: '2018-07-19T11:03:05.626507+00:00'
+
+#Schedule: '-21:00'
   
 awskit::vpc: 'default'
 
@@ -76,21 +78,22 @@ awskit::create_discovery::user_data: |
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery demo
 
-awskit::create_master::user_data: |
-  #! /bin/bash
-  sleep 120 # give time for startup
-  cd /tmp
-  git clone <%= $control_repo %> control-repo
-  cd control-repo
-  git remote add gogs git@localhost:puppet/control-repo.git
-  git push gogs production
-  <% $gogs_ssh_keys.each |$title| { -%>
-  curl -u puppet:puppetlabs -X POST -H "Content-Type: application/json" -d \
-  '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
-  <% } -%>
-  <% unless $ssh_key =~ Undef { -%>
-  echo "<%= $ssh_key %>" >> /root/.ssh/authorized_keys
-  <% } -%>
+# doesn't work since master doesn't run cloud-init
+# awskit::create_master::user_data: |
+#   #! /bin/bash
+#   sleep 120 # give time for startup
+#   cd /tmp
+#   git clone <%= $control_repo %> control-repo
+#   cd control-repo
+#   git remote add gogs git@localhost:puppet/control-repo.git
+#   git push gogs production
+#   <% $gogs_ssh_keys.each |$title| { -%>
+#   curl -u puppet:puppetlabs -X POST -H "Content-Type: application/json" -d \
+#   '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
+#   <% } -%>
+#   <% unless $ssh_key =~ Undef { -%>
+#   echo "<%= $ssh_key %>" >> /root/.ssh/authorized_keys
+#   <% } -%>
 
 awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-awskit
 
