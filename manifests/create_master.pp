@@ -8,7 +8,7 @@
 #   include awskit::create_master
 class awskit::create_master (
   $instance_type,
-  $user_data,
+  $user_data     = '',
   $count         = 1,
   $instance_name = 'awskit-pm',
 ) {
