@@ -68,7 +68,7 @@ gcompute_disk { 'instance-test-os-1':
   size_gb      => 50,
   source_image =>
     'projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts',
-  zone         => 'us-central1-a',
+  zone         => 'europe-west2-a',
   project      => 'pipelines-for-containers',
   credential   => 'mycred',
 }
@@ -84,7 +84,7 @@ gcompute_network { 'default':
   credential => 'mycred',
 }
 
-gcompute_region { 'us-central1':
+gcompute_region { 'europe-west2':
   project    => 'pipelines-for-containers',
   credential => 'mycred',
 }
@@ -93,7 +93,7 @@ gcompute_region { 'us-central1':
 # only once per catalog as it is shared to any objects that use the
 # 'n1-standard-1' defined below.
 gcompute_machine_type { 'n1-standard-1':
-  zone       => 'us-central1-a',
+  zone       => 'europe-west2-a',
   project    => 'pipelines-for-containers',
   credential => 'mycred',
 }
@@ -101,7 +101,7 @@ gcompute_machine_type { 'n1-standard-1':
 # Ensures the 'instance-test-ip' external IP address exists. If it does not
 # exist it will allocate an ephemeral one.
 gcompute_address { 'instance-test-ip':
-  region     => 'us-central1',
+  region     => 'europe-west2',
   project    => 'pipelines-for-containers',
   credential => 'mycred',
 }
@@ -132,7 +132,7 @@ gcompute_instance { 'instance-test':
       ],
     }
   ],
-  zone               => 'us-central1-a',
+  zone               => 'europe-west2-a',
   project            => 'pipelines-for-containers',
   credential         => 'mycred',
 }
