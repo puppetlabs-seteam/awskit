@@ -4,7 +4,14 @@
   $role          = 'sample_website'
   $master_ip     = '35.177.92.181'
   $master_url    = 'https://master.inf.puppet.vm:8140/packages/current/install.bash'
-  $instance_name = 'awskit-demo-host'
+  $instance_name = 'aws-demo-host'
+  $tags          =  {
+    description      => 'awskit Infrastructure',
+    department       => 'TSE',
+    project          => 'devhops workshops',
+    lifetime         => '10w',
+    termination_date => '2018-07-19T11:03:05.626507+00:00',
+  }
 
   $user_data = @("USERDATA"/L)
     #! /bin/bash
@@ -22,4 +29,5 @@
     key_name          => 'dimitri.tischenko-eu-west-2',
     instance_type     => 't2.micro',
     user_data         => $user_data,
+    tags              => $tags,
   }
