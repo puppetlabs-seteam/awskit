@@ -27,6 +27,8 @@ class awskit(
     $windc_ami      = $amis[$region]['windc']
     $wsus_ami       = $amis[$region]['wsus']
 
+    notify { "tags: ${tags}": }
+
     $default_ingress = [
       { protocol => 'tcp',  port => 22,        cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
