@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release 0.1.0
+## Release 0.2.0
 
 **Features**
 
@@ -14,3 +14,7 @@ All notable changes to this project will be documented in this file.
 
 * tasks/provision.sh UX is awkward
 * cloud provisioning demo manifests are not parametrized
+
+## Release 0.1.0
+
+Initial "release"
