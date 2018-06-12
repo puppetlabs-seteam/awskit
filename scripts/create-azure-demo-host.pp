@@ -53,6 +53,46 @@ azure_network_security_group { $nsg :
   resource_group_name => $rg,
   location            => $location,
   properties          => {
+    securityRules => [
+      { name       => 'http',
+        properties => {
+          protocol                 => 'Tcp',
+          sourcePortRange          => '*',
+          destinationPortRange     => '8080',
+          sourceAddressPrefix      => '*',
+          destinationAddressPrefix => '*',
+          access                   => 'Allow',
+          priority                 => 100,
+          direction                => 'Inbound',
+        },
+      },
+      { name       => 'ssh',
+        properties => {
+          description              => 'Allow SSH',
+          protocol                 => 'Tcp',
+          sourcePortRange          => '*',
+          destinationPortRange     => '22',
+          sourceAddressPrefix      => '*',
+          destinationAddressPrefix => '*',
+          access                   => 'Allow',
+          priority                 => 201,
+          direction                => 'Inbound',
+        },
+      },
+      { name       => 'https',
+        properties => {
+          description              => 'MCollective',
+          protocol                 => 'Tcp',
+          sourcePortRange          => '*',
+          destinationPortRange     => '443',
+          sourceAddressPrefix      => '*',
+          destinationAddressPrefix => '*',
+          access                   => 'Allow',
+          priority                 => 103,
+          direction                => 'Inbound',
+        },
+      },
+    ]
   }
 }
 
@@ -163,7 +203,7 @@ azure_virtual_machine { "${vm_base_name}":
     osProfile       => {
       computerName       => "${vm_base_name}",
       adminUsername      => 'notAdmin',
-      adminPassword      => 'P!!xxW00d',
+      adminPassword      => 'Devops!',
       linuxConfiguration => {
         disablePasswordAuthentication => false
       }
