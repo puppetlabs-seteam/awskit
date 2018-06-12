@@ -77,11 +77,11 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 
 ### Provision count linux agents
 
-- run `tasks/provision.sh linux_node count`
+- run `tasks/provision.sh linux_node <count>`
 
 ### Provision count windows agents
 
-- run `tasks/provision.sh windows_node count`
+- run `tasks/provision.sh windows_node <count>`
 
 ### Provision the Puppet Discovery VM
 
@@ -90,6 +90,10 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 ### Provision the Windows Domain Controller
 
 - run `tasks/provision.sh windc`
+
+### Provision the CD4PE host
+
+- run `tasks/provision.sh cd4pe`
 
 ### Configure the control repo
 
