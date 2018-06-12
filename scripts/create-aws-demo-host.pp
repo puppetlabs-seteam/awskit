@@ -9,8 +9,8 @@
     description      => 'awskit Infrastructure',
     department       => 'TSE',
     project          => 'devhops workshops',
-    lifetime         => '10w',
-    termination_date => '2018-07-19T11:03:05.626507+00:00',
+    lifetime         => '1d',
+    #termination_date => '2018-07-19T11:03:05.626507+00:00',
   }
 
   $user_data = @("USERDATA"/L)
