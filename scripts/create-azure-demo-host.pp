@@ -174,7 +174,7 @@ azure_network_interface { $nic_base_name:
   }
 }
 
-azure_virtual_machine { "${vm_base_name}":
+azure_virtual_machine { $vm_base_name:
   ensure              => 'present',
   parameters          => {},
   location            => $location,
@@ -191,7 +191,7 @@ azure_virtual_machine { "${vm_base_name}":
         version   => 'latest'
       },
       osDisk         => {
-        name         => "${vm_base_name}",
+        name         => $vm_base_name,
         createOption => 'FromImage',
         caching      => 'None',
         vhd          => {
@@ -201,7 +201,7 @@ azure_virtual_machine { "${vm_base_name}":
       dataDisks      => []
     },
     osProfile       => {
-      computerName       => "${vm_base_name}",
+      computerName       => $vm_base_name,
       adminUsername      => 'notAdmin',
       adminPassword      => 'Devops!',
       linuxConfiguration => {
