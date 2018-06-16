@@ -30,7 +30,6 @@ class awskit(
     notify { "tags: ${tags}": }
 
     $default_ingress = [
-      { protocol => 'tcp',  port => 22,        cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 8140,      cidr => '0.0.0.0/0', },
@@ -48,7 +47,7 @@ class awskit(
     $ingress = flatten([$default_ingress, $ssh_ingress])
 
     ec2_securitygroup { 'awskit-master':
-      ensure      => 'present',
+      ensure      => present,
       region      => $awskit::region,
       vpc         => $awskit::vpc,
       description => 'SG for awskit Master',
