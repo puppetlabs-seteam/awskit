@@ -5,7 +5,8 @@
 1. [Description](#description)
 2. [Setup](#setup)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
+4. [References - class documentation](#references)
+5. [Limitations - OS compatibility, etc.](#limitations)
 
 ## Description
 
@@ -124,5 +125,9 @@ Now, you can push your changes directly to the master's gogs server (which lives
 git commit -m "some commit"
 git push awskit production
 ```
+
+## References
+
+Please see [Class Documentation](docs/_index.html)
 
 ## Limitations

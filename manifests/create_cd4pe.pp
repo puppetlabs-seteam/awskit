@@ -1,11 +1,19 @@
 # awskit::create_cd4pe
 #
-# This class creates an instance in AWS for hosting a cd4pe docker host
+# This class creates an instance in AWS for hosting a cd4pe docker host.
 #
-# @summary Installs AWS instance for CD4PE installation
+# @summary Installs AWS instance for CD4PE installation. Auto-configures
+#   the role `cd4pe` which needs to be available in the control repo.
 #
-# @example
+# **NOTE**: At this moment (June 16 2018), you need this control repo and branch:
+#   https://github.com/timidri/controlrepo-cd4pe-hol/tree/aws_updates
+#   to use CD4PE in AWS successfully.    
+# 
+# @example Using in a manifest
 #   include awskit::create_cd4pe
+# @example Using with provision.sh task
+#   tasks/provision.sh cd4pe
+#  
 class awskit::create_cd4pe (
   $instance_type,
   $user_data = lookup('awskit::create_linux_node::user_data'),
