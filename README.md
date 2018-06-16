@@ -5,7 +5,7 @@
 1. [Description](#description)
 2. [Setup](#setup)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [References - class documentation](REFERENCE.md)
+4. [Reference - class documentation](REFERENCE.md)
 5. [Limitations - OS compatibility, etc.](#limitations)
 
 ## Description

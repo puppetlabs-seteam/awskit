@@ -5,7 +5,7 @@
 # @summary Installs AWS instance for CD4PE installation. Auto-configures
 #   the role `cd4pe` which needs to be available in the control repo.
 #
-# ## NOTE
+# ### NOTE
 # 
 #   At this moment (June 16 2018), you need this control repo and branch:
 #   https://github.com/timidri/controlrepo-cd4pe-hol/tree/aws_updates
