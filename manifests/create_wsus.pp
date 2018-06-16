@@ -21,7 +21,7 @@ class awskit::create_wsus (
   awskit::create_host { $instance_name:
     ami             => $wsus_ami,
     instance_type   => $instance_type,
-    user_data       => inline_epp($user_data),
+    user_data       => $user_data,
     security_groups => ['awskit-wsus'],
     require         => Ec2_securitygroup['awskit-wsus'],
   }

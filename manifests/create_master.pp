@@ -21,7 +21,7 @@ class awskit::create_master (
   awskit::create_host { $instance_name:
     ami             => $pm_ami,
     instance_type   => $instance_type,
-    user_data       => inline_epp($user_data),
+    user_data       => $user_data,
     security_groups => ['awskit-master'],
     require         => Ec2_securitygroup['awskit-master'],
   }

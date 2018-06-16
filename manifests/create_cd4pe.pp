@@ -36,8 +36,9 @@ class awskit::create_cd4pe (
 
   awskit::create_host { $instance_name:
     ami             => $ami,
+    role            => 'cd4pe',
     instance_type   => $instance_type,
-    user_data       => inline_epp($user_data),
+    user_data       => $user_data,
     security_groups => ['awskit-cd4pe'],
     require         => Ec2_securitygroup['awskit-cd4pe'],
   }
