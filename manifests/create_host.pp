@@ -26,6 +26,7 @@ define awskit::create_host (
   $user_data,
   $security_groups = ['awskit-agent'],
   $run_agent       = true,
+  $role            = undef,
 ){
 
   include awskit
