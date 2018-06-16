@@ -126,7 +126,7 @@ awskit::create_cd4pe
 
 This class creates an instance in AWS for hosting a cd4pe docker host.
 
--- NOTE
+== NOTE
 
 **NOTE**: At this moment (June 16 2018), you need this control repo and branch:
   https://github.com/timidri/controlrepo-cd4pe-hol/tree/aws_updates

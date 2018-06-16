@@ -5,7 +5,7 @@
 1. [Description](#description)
 2. [Setup](#setup)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [References - class documentation](#references)
+4. [References - class documentation](REFERENCE.md)
 5. [Limitations - OS compatibility, etc.](#limitations)
 
 ## Description
@@ -128,6 +128,6 @@ git push awskit production
 
 ## References
 
-Please see [Class Documentation](docs/_index.html)
+Please see [Class Documentation](REFERENCE.md)
 
 ## Limitations
