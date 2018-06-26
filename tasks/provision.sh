@@ -87,4 +87,4 @@ EOM
 echo "applying manifest:"
 echo "$manifest"
 
-echo "$manifest" | puppet apply --modulepath .. $noop
+echo "$manifest" | puppet apply --modulepath "..:$(puppet config print basemodulepath)" $noop
