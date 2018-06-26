@@ -50,6 +50,7 @@ class awskit(
     notify { "tags: ${tags}": }
 
     $default_ingress = [
+      { protocol => 'tcp', port => 81,         security_group => 'awskit-agent', }, # PE fileserver
       { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', },
       { protocol => 'tcp',  port => 8140,      cidr => '0.0.0.0/0', },
@@ -82,7 +83,6 @@ class awskit(
       ingress     => [
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
-        { protocol => 'tcp', port => 81,   security_group => 'awskit-agent', }, # PE fileserver
         { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 3306, security_group => 'awskit-agent', }, # MySQL
         { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
