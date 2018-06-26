@@ -36,7 +36,7 @@ class awskit(
   Hash $tags,
   String $master_ip,
   Hash $amis,
-  String $wsus_ip = undef,
+  String $wsus_ip = '',
   Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
   ) {
 
@@ -82,6 +82,7 @@ class awskit(
       ingress     => [
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
+        { protocol => 'tcp', port => 81,   security_group => 'awskit-agent', }, # PE fileserver
         { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 3306, security_group => 'awskit-agent', }, # MySQL
         { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
