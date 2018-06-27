@@ -8,7 +8,7 @@
 # ### NOTE
 # 
 #   At this moment (June 16 2018), you need this control repo and branch:
-#   https://github.com/timidri/controlrepo-cd4pe-hol/tree/aws_updates
+#   https://github.com/puppetlabs/controlrepo-cd4pe-hol
 #   to use CD4PE in AWS successfully.    
 # 
 # @example Using in a manifest
