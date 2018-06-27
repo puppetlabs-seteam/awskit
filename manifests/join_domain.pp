@@ -1,3 +1,4 @@
+# class to make a windows host join a AD domain
 class awskit::join_domain {
   # this requires the following module to be set in the Puppetfile:
   # mod 'trlinkin/domain_membership', '1.1.2'

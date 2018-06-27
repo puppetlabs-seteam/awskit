@@ -161,7 +161,7 @@ azure_network_interface { $nic_base_name:
           id         => "/subscriptions/${subscription_id}/resourceGroups/${rg}/providers/Microsoft.Network/publicIPAddresses/${publicip}",
         },
         subnet                    => {
-          id         => "/subscriptions/${subscription_id}/resourceGroups/${rg}/providers/Microsoft.Network/virtualNetworks/${vnet}/subnets/${subnet}",
+          id         => "/subscriptions/${subscription_id}/resourceGroups/${rg}/providers/Microsoft.Network/virtualNetworks/${vnet}/subnets/${subnet}", # lint:ignore:140chars
           properties => {
             addressPrefix     => '10.0.0.0/24',
             provisioningState => 'Succeeded'
@@ -211,7 +211,7 @@ azure_virtual_machine { $vm_base_name:
     networkProfile  => {
       networkInterfaces => [
         {
-          id      => "/subscriptions/${subscription_id}/resourceGroups/${rg}/providers/Microsoft.Network/networkInterfaces/${nic_base_name}",
+          id      => "/subscriptions/${subscription_id}/resourceGroups/${rg}/providers/Microsoft.Network/networkInterfaces/${nic_base_name}", # lint:ignore:140chars
           primary => true
         }]
     },
