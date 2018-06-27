@@ -134,3 +134,4 @@ Please see [Class Documentation](REFERENCE.md)
 Lots and lots. 
 Commit one. 
 Commit two.
+Commit three.
