@@ -1,0 +1,20 @@
+awskit::key_name: some_key_name
+awskit::region: eu-west-2
+awskit::availability_zone: some_availability_zone_name
+awskit::subnet: some_subnet_name
+awskit::master_ip: some_master_ip
+awskit::amis:
+  us-west-2: # Oregon
+    pm:        ami-0cc4fd611a2b7b399 # tse-master-vmware-2018.1.0-v0.0.9d.ova
+    centos:    ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows:   ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    discovery: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    windc:     ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    wsus:      ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
+  eu-west-2: # London
+    pm:        ami-0dfaef6ffe4e87622 # tse-master-vmware-2018.1.0-v0.0.9.ova
+    centos:    ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windows:   ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
+    discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
+    wsus:      ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
