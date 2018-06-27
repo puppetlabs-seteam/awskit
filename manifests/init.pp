@@ -49,15 +49,19 @@ class awskit(
 
     notify { "tags: ${tags}": }
 
+#TODO: make this more secure
+
     $default_ingress = [
-      { protocol => 'tcp', port => 81,         security_group => 'awskit-agent', }, # PE fileserver
-      { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 8140,      cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 8142,      cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 8143,      cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 8170,      cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',  port => 61613,     cidr => '0.0.0.0/0', },
+      { protocol => 'tcp',  port => 81,        security_group => 'awskit-agent', }, # PE fileserver
+      { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', }, # PE Console
+      { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', }, # Gogs
+      { protocol => 'tcp',  port => 4433,      cidr => '0.0.0.0/0', }, # PE Classifier
+      { protocol => 'tcp',  port => 8081,      cidr => '0.0.0.0/0', }, # PuppetDB
+      { protocol => 'tcp',  port => 8140,      cidr => '0.0.0.0/0', }, # Puppet Server
+      { protocol => 'tcp',  port => 8142,      cidr => '0.0.0.0/0', }, # PE Orchestrator
+      { protocol => 'tcp',  port => 8143,      cidr => '0.0.0.0/0', }, # PE Orchestrator
+      { protocol => 'tcp',  port => 8170,      cidr => '0.0.0.0/0', }, # PE Code Manager
+      { protocol => 'tcp',  port => 61613,     cidr => '0.0.0.0/0', }, # MCollective
       { protocol => 'icmp',                    cidr => '0.0.0.0/0', }
     ]
 
