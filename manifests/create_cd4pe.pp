@@ -5,7 +5,7 @@
 # @summary Installs AWS instance for CD4PE installation. Auto-configures
 #   the role `cd4pe` which needs to be available in the control repo.
 #
-# ### NOTE
+# @note
 # 
 #   At this moment (June 16 2018), you need this control repo and branch:
 #   https://github.com/puppetlabs/controlrepo-cd4pe-hol
