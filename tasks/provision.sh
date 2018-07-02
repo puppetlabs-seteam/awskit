@@ -86,5 +86,5 @@ EOM
 
 echo "applying manifest:"
 echo "$manifest"
-
-echo "$manifest" | puppet apply --modulepath "..:$(puppet config print basemodulepath)" $noop
+TASKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "$manifest" | puppet apply --modulepath "${TASKDIR}/../..:$(puppet config print basemodulepath)" $noop
