@@ -39,6 +39,10 @@ define awskit::create_host (
     $_instance_type = $instance_type
   }
 
+  # notice("role: ${role}")
+  # notice('user data:')
+  # notice(inline_epp($user_data))
+
   ec2_instance { $name:
     ensure            => running,
     region            => $awskit::region,

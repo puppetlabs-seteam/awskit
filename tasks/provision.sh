@@ -33,7 +33,7 @@ EOU
 exit -2
 }
 
-if [ $(whoami) == "root" ]; then
+if [ "$(whoami)" == "root" ]; then
    echo "Please run this as a non-root user."
    exit -3
 fi
@@ -68,6 +68,7 @@ if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
 case $PT_type in
   master) PT_count=1 ;;
   linux_node) ;;
+  linux_role) ;;
   windows_node) ;;
   discovery) PT_count=1 ;;
   windc) PT_count=1 ;;
@@ -82,6 +83,9 @@ esac
 class="awskit::create_$PT_type"
 
 puppet_params="count => ${PT_count},"
+if [ ! -z ${PT_role+x} ]; then
+  puppet_params="${puppet_params} role => ${PT_role},"
+fi
 
 read -r -d '' manifest <<EOM
 class { $class:

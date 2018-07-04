@@ -33,12 +33,11 @@ awskit::create_linux_node::user_data: |
   #! /bin/bash
   echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
   install_args=""
-  role=""
   <% unless $run_agent == true { -%>
   $install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
   <% } -%>
   <% if $role != "" { -%>
-  role_args="extension_requests:pp_role=${role}"
+  role_args="extension_requests:pp_role=<%= $role %>"
   <% } -%>
   curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash \
   | bash -s agent:certname="<%= $name %>" \
