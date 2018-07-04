@@ -14,9 +14,11 @@
 #   Also recommended to set the `AWS_REGION` enviroinment variable to the same 
 #   region since this speeds up the puppetlabs/aws module considerably)
 # @param vpc The VPC the instances should go into. awskit currently does not create VPCs or subnets,
-#   these should be present in the region and configured in `%{::aws_region}/common.yaml`.
+#   these should be present in the region and configured in `%{::aws_region}/common.yaml`. Note that the VPC
+#   in AWS needs to have a name so if it doesn't, you need to provide that using the AWS console. 
 # @param availability_zone The availability zone the instances should go into. Should be
-#   configured in `%{::aws_region}/common.yaml`.
+#   configured in `%{::aws_region}/common.yaml`. Note that the availability zone in AWS needs to have a name
+#   so if it doesn't you need to provide that using the AWS console.
 # @param subnet The subnet the instances should go into. Should be
 #   configured in `%{::aws_region}/common.yaml`.
 # @param tags AWS instance tags. Provided in common.yaml. The created_by tag can be provided
