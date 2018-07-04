@@ -14,22 +14,6 @@ This module helps deploying SE demo infrastructure in AWS in various regions.
 
 It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
 
-The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
-
-```yaml
-  - name: "AWS region-level user-level data"
-    path: "%{::aws_region}/%{::user}.yaml"
-
-  - name: "User-level data"
-    path: "%{::user}.yaml"
-
-  - name: "AWS region-level data"
-    path: "%{::aws_region}/common.yaml"
-
-  - name: "Common data"
-    path: "common.yaml"
-```
-
 ## Setup
 
 ### AWS setup
@@ -41,7 +25,10 @@ The module uses module-level hiera to store all configuration. The hierarchy is 
 
 ### Setup on your Mac
 
+First, make sure you don't have rvm (Ruby Version Manager) enabled (see https://stackoverflow.com/questions/5660605/disable-rvm-or-use-ruby-which-was-installed-without-rvm).
+
 ```bash
+xcode-select --install # install XCode build tools
 brew install awscli
 aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
@@ -62,14 +49,38 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 
 ### Configure hiera
 
+The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
+
+```yaml
+  - name: "AWS region-level user-level data"
+    path: "%{::aws_region}/%{::user}.yaml"
+
+  - name: "User-level data"
+    path: "%{::user}.yaml"
+
+  - name: "AWS region-level data"
+    path: "%{::aws_region}/common.yaml"
+
+  - name: "Common data"
+    path: "common.yaml"
+```
+
 - cd to the module dir `cd awskit`
 - Configure region-specific AMI ids in the hash `awskit::amis` in the `data/common.yaml` file
 - If not done yet, create the file `data/${FACTER_aws_region}/common.yaml` and configure
   region-specific AWS variables
 - If not done yet, reserve a static IP for your master by doing:
-  `aws ec2 allocate-address --region ${FACTER_aws_region}`
+  `aws ec2 allocate-address --region ${FACTER_aws_region} --domain vpc`
 - Create the file `data/${FACTER_aws_region}/${FACTER_user}.yaml` and add
   your `awskit::key_name` and `awskit::master_ip`
+- Add the static ip address to the master machine config in the `data/${FACTER_aws_region}/${FACTER_user}.yaml` as follows:
+
+```yaml
+  awskit::host_config:
+    <master-instance-name>:
+      public_ip: '<static ip>'
+```
+
 - Create the file `data/${FACTER_user}.yaml` and configure user-specific variabls (such as tags)
 
 ### Provision the master
