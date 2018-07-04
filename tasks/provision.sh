@@ -33,6 +33,11 @@ EOU
 exit -2
 }
 
+if [ $(whoami) == "root" ]; then
+   echo "Please run this as a non-root user."
+   exit -3
+fi
+
 # set default values of FACTER_USER and FACTER_aws_region
 if [ -z ${FACTER_user+x} ]; then FACTER_user=$USER; fi
 if [ -z ${FACTER_aws_region+x} ]; then FACTER_aws_region=$AWS_REGION; fi
