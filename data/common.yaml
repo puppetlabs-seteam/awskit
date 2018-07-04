@@ -59,6 +59,7 @@ awskit::create_windows_node::user_data: |
   Set-ExecutionPolicy Bypass -Scope Process -Force;
   iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
   choco install --yes notepadplusplus.install 7zip.install procexp ;
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
   <% if $run_agent == true { -%>
