@@ -17,10 +17,10 @@
 #   these should be present in the region and configured in `%{::aws_region}/common.yaml`. Note that the VPC
 #   in AWS needs to have a name so if it doesn't, you need to provide that using the AWS console. 
 # @param availability_zone The availability zone the instances should go into. Should be
-#   configured in `%{::aws_region}/common.yaml`. Note that the availability zone in AWS needs to have a name
-#   so if it doesn't you need to provide that using the AWS console.
-# @param subnet The subnet the instances should go into. Should be
 #   configured in `%{::aws_region}/common.yaml`.
+# @param subnet The subnet the instances should go into. Should be configured 
+#   in `%{::aws_region}/common.yaml`. Note that the subnet in AWS needs to have a name
+#   so if it doesn't you need to provide that using the AWS console.
 # @param tags AWS instance tags. Provided in common.yaml. The created_by tag can be provided
 #   in `%{::user}.yaml` and deep merged.
 # @param master_ip AWS PM master IP address. Since this address should not change across
