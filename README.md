@@ -103,23 +103,38 @@ The module uses module-level hiera to store all configuration. The hierarchy is 
 
 - run `tasks/provision.sh windc`
 
+### Provision the WSUS server
+
+- run `tasks/provision.sh wsus`
+
 ### Provision the CD4PE host
 
 - run `tasks/provision.sh cd4pe`
 
 ### Configure the control repo
 
+Out of the box, the Puppetmasters come with a running Gogs git server with a demo control repo configured: https://github.com/puppetlabs-seteam/control-repo. You can clone this control repo to your local machine, customize it and push to Gogs. Alternatively, you can push a totally different control repo to Gogs.
+
+For doing this, you will need to add your public key to Gogs to be able to push changes easily.
+
+#### Add your public key to Gogs through the GUI
+
+# Navigate to http://$master_ip:3000
+# Click <somewhere> #TODO
+
+#### Use bolt and a task to add your public key and push
+
 First, make sure to install bolt.
 
-Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$puppet_ip:3000). Optionally, you can add your own public key to GOGS so you can start pushing your changes to the PM riectly.
+Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$master_ip:3000). Optionally, you can add your own public key to GOGS so you can start pushing your changes to the PM directly.
 
 Note:
 
-- $public_key_name can be any string - gogs will register this public key under this name.
-- $public_key_value should contain your public key string
+- `public_key_name` can be any string - gogs will register this public key under this name.
+- `public_key_value` should contain your public key string
 
 ```bash
-bolt task run awskit::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-awskit.git" public_key_name=$key_name public_key_value="${your_pub_key}" -u root -p #--debug --verbose
+bolt task run awskit::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-awskit.git" public_key_name=$FACTER_user public_key_value="$(cat ~/.ssh/id_rsa.pub)" -u root -p #--debug --verbose
 ```
 
 After this, you can add a remote to your local awskit control repo clone:
@@ -130,7 +145,7 @@ cd control-repo-awskit
 git remote add awskit git@${master_ip}:puppet/control-repo.git
 ```
 
-Now, you can push your changes directly to the master's gogs server (which lives at http://${master_ip}):
+Now, you can push your changes directly to the master's gogs server:
 
 ```bash
 git commit -m "some commit"
