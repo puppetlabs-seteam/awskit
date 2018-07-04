@@ -3,6 +3,7 @@ awskit::region: eu-west-2
 awskit::availability_zone: some_availability_zone_name
 awskit::subnet: some_subnet_name
 awskit::master_ip: some_master_ip
+awskit::create_linux_role::role: myrole
 awskit::amis:
   us-west-2: # Oregon
     pm:        ami-0cc4fd611a2b7b399 # tse-master-vmware-2018.1.0-v0.0.9d.ova
