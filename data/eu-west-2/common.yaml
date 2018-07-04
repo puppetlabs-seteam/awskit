@@ -2,3 +2,4 @@
 awskit::region: 'eu-west-2'
 awskit::availability_zone: 'eu-west-2a'
 awskit::subnet: 'subnet-default-2a'
+awskit::vpc: 'default'
