@@ -7,7 +7,7 @@
 #
 # @note
 # 
-#   At this moment (June 16 2018), you need this control repo and branch:
+#   At this moment (June 16 2018), you need this control repo:
 #   https://github.com/puppetlabs/controlrepo-cd4pe-hol
 #   to use CD4PE in AWS successfully.    
 # 
