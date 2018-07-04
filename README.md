@@ -39,6 +39,40 @@ puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
 
+### AWS bastion / role setup
+
+If you have a bastion account and a role, the setup is a bit different.
+You will need to configure 2 different *profiles* in your aws configuration, namely the _bastion_ and the _tse_ profile.
+
+First, configure your `bastion` profile with the bastion credentials:
+```bash
+aws configure --profile bastion
+```
+
+Next, configure your `tse` profile by adding the following to the file `~/.aws/config`:
+
+```bash
+[profile tse]
+region = eu-west-2
+role_arn = arn:aws:iam::221643363539:role/Engineer
+source_profile = bastion
+mfa_serial = arn:aws:iam::103716600232:mfa/$your_aws_IAM_user
+```
+
+After having done this, every time you open a shell to work with awskit, you first need to run this
+
+```bash
+. scripts/exportcreds.sh
+```
+
+This script will make sure you are properly logged in (it will ask your MFA token if needed) and it will initialise AWS environment variables with temporary credentials.
+
+You can test whether the script actually provided correct credentials by doing:
+1. `aws s3 ls`
+2. `puppet resource s3_bucket`
+
+Both commands 1 and 2 should display the list of s3 buckets in your TSE account.
+
 ## Usage
 
 ### Clone the awskit repo

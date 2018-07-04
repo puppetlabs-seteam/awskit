@@ -10,6 +10,7 @@
 the role `cd4pe` which needs to be available in the control repo.
 * [`awskit::create_discovery`](#awskitcreate_discovery): Installs AWS instance for Puppet Discovery installation
 * [`awskit::create_linux_node`](#awskitcreate_linux_node): Creates $count Linux nodes
+* [`awskit::create_linux_role`](#awskitcreate_linux_role): Creates $count Linux nodes with a role
 * [`awskit::create_master`](#awskitcreate_master): Provision a Puppetmaster in AWS
 * [`awskit::create_windc`](#awskitcreate_windc): Installs AWS instance for Windows Domain Controller installation
 * [`awskit::create_windows_node`](#awskitcreate_windows_node): Creates a number of Windows nodes
@@ -128,7 +129,7 @@ awskit::create_cd4pe
 
 This class creates an instance in AWS for hosting a cd4pe docker host.
 
-* **Note** At this moment (June 16 2018), you need this control repo and branch:
+* **Note** At this moment (June 16 2018), you need this control repo:
 https://github.com/puppetlabs/controlrepo-cd4pe-hol
 to use CD4PE in AWS successfully.
 
@@ -237,7 +238,7 @@ Creates a number of Linux nodes
 ##### 
 
 ```puppet
-include awskit::create_agents
+include awskit::create_linux_node
 ```
 
 #### Parameters
@@ -255,6 +256,62 @@ Data type: `Any`
 Data type: `Any`
 
 
+
+##### `instance_name`
+
+Data type: `Any`
+
+
+
+Default value: 'awskit-linux'
+
+##### `count`
+
+Data type: `Any`
+
+
+
+Default value: 1
+
+### awskit::create_linux_role
+
+awskit::create_linux_role
+
+Creates a number of Linux nodes with a role
+
+#### Examples
+
+##### 
+
+```puppet
+include awskit::create_linux_role
+```
+
+#### Parameters
+
+The following parameters are available in the `awskit::create_linux_role` class.
+
+##### `role`
+
+Data type: `Any`
+
+
+
+##### `instance_type`
+
+Data type: `Any`
+
+
+
+Default value: lookup('awskit::create_linux_node::instance_type')
+
+##### `user_data`
+
+Data type: `Any`
+
+
+
+Default value: lookup('awskit::create_linux_node::user_data')
 
 ##### `instance_name`
 
@@ -375,7 +432,7 @@ awskit::create_windows_node
 ##### 
 
 ```puppet
-include awskit::create_agents
+include awskit::create_windows_node
 ```
 
 #### Parameters
