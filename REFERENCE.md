@@ -70,7 +70,8 @@ region since this speeds up the puppetlabs/aws module considerably)
 Data type: `String`
 
 The VPC the instances should go into. awskit currently does not create VPCs or subnets,
-these should be present in the region and configured in `%{::aws_region}/common.yaml`.
+these should be present in the region and configured in `%{::aws_region}/common.yaml`. Note that the VPC
+in AWS needs to have a name so if it doesn't, you need to provide that using the AWS console.
 
 ##### `availability_zone`
 
@@ -83,8 +84,9 @@ configured in `%{::aws_region}/common.yaml`.
 
 Data type: `String`
 
-The subnet the instances should go into. Should be
-configured in `%{::aws_region}/common.yaml`.
+The subnet the instances should go into. Should be configured
+in `%{::aws_region}/common.yaml`. Note that the subnet in AWS needs to have a name
+so if it doesn't you need to provide that using the AWS console.
 
 ##### `tags`
 
