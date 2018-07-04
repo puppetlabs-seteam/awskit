@@ -5,7 +5,7 @@
 # @summary Creates $count of Windows nodes
 #
 # @example
-#   include awskit::create_agents
+#   include awskit::create_windows_node
 class awskit::create_windows_node (
   $instance_type,
   $user_data,

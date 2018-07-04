@@ -5,7 +5,7 @@
 # @summary Creates $count Linux nodes
 #
 # @example
-#   include awskit::create_agents
+#   include awskit::create_linux_node
 class awskit::create_linux_node (
   $instance_type,
   $user_data,
