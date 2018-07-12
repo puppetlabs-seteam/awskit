@@ -1,7 +1,8 @@
 #!/bin/bash
 profile=tse
 
-# make sure we have a token
+# make sure we have a temporary token
+# This will also request your MFA token if needed
 echo "Requesting identity with profile $profile"
 aws sts get-caller-identity --profile $profile
 
