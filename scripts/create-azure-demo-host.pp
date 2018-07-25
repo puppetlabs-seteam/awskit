@@ -1,6 +1,14 @@
 
 # Demo script for quickly spinning up a Linux node 
 # which is auto-classified with role "sample_website"
+# 
+# Prerequisites:
+# 1. install azure_arm module (puppet install puppetlabs/azure_arm)
+# 2. export the following environment variables with proper values for authentication:
+#    azure_subscription_id
+#    azure_tenant_id
+#    azure_client_id
+#    azure_client_secret
 
   $role          = 'sample_website'
   $master_ip     = '35.177.8.154'
