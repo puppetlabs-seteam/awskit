@@ -1,6 +1,6 @@
 {
   "name": "timidri-awskit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Dimitri Tischenko",
   "summary": "Toolkit for setting up and managing SE Demo instrastructure in AWS",
   "license": "Apache-2.0",
@@ -63,7 +63,7 @@
       "version_requirement": ">= 4.7.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.6.0",
+  "pdk-version": "1.6.1",
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.6.0-0-gf5564c0"
+  "template-ref": "1.6.1-0-g6b0d497"
 }
