@@ -27,6 +27,7 @@ define awskit::create_host (
   $security_groups = ['awskit-agent'],
   $run_agent       = true,
   $role            = undef,
+  $public_ip       = undef,
 ){
 
   include awskit
@@ -63,13 +64,13 @@ define awskit::create_host (
     require           => Ec2_securitygroup['awskit-agent'],
   }
 
-  # $public_ip = lookup("awskit::elastic_ips.${name}", String, 'first', '')
-  $public_ip = $host_config['public_ip']
+  $_public_ip = $public_ip ? {
+    undef   => $host_config['public_ip'],
+    default => $public_ip,
+  }
 
-  notice($host_config)
-
-  if $public_ip {
-    ec2_elastic_ip { $public_ip:
+  if $_public_ip {
+    ec2_elastic_ip { $_public_ip:
       ensure   => 'attached',
       instance => $name,
       region   => $awskit::region,

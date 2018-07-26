@@ -2,7 +2,10 @@ awskit::key_name: some_key_name
 awskit::region: eu-west-2
 awskit::availability_zone: some_availability_zone_name
 awskit::subnet: some_subnet_name
-awskit::master_ip: some_master_ip
+awskit::master_ip: '1.2.3.4'
+awskit::host_config:
+  my_host:
+    public_ip: '2.3.4.5'
 awskit::create_linux_role::role: myrole
 awskit::amis:
   us-west-2: # Oregon

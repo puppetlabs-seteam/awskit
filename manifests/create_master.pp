@@ -17,12 +17,15 @@ class awskit::create_master (
 
   $pm_ami = $awskit::pm_ami
 
+  $public_ip = lookup('awskit::master_ip', { default_value => undef })
+
   # create puppetmaster instance
   awskit::create_host { $instance_name:
     ami             => $pm_ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
     security_groups => ['awskit-master'],
+    public_ip       => $public_ip,
     require         => Ec2_securitygroup['awskit-master'],
   }
 
