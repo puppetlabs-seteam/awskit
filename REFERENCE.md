@@ -616,6 +616,14 @@ Data type: `Any`
 
 Default value: `undef`
 
+##### `public_ip`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
 ## Tasks
 
 ### conf_control_repo

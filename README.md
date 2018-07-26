@@ -106,12 +106,14 @@ The module uses module-level hiera to store all configuration. The hierarchy is 
 - If not done yet, reserve a static IP for your master by doing:
   `aws ec2 allocate-address --region ${FACTER_aws_region} --domain vpc`
 - Create the file `data/${FACTER_aws_region}/${FACTER_user}.yaml` and add
-  your `awskit::key_name` and `awskit::master_ip`
-- Add the static ip address to the master machine config in the `data/${FACTER_aws_region}/${FACTER_user}.yaml` as follows:
+  your `awskit::key_name` and `awskit::master_ip`. This configuration is used in two ways:
+  1. The master instance will get configured with that static IP
+  2. The agent instances will connect to this IP as their master.
+- Optionally add static ip addresses to specific instances `data/${FACTER_aws_region}/${FACTER_user}.yaml` as follows:
 
 ```yaml
   awskit::host_config:
-    <master-instance-name>:
+    <instance-name>:
       public_ip: '<static ip>'
 ```
 
