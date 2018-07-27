@@ -22,7 +22,6 @@ class awskit::create_linux_node (
       ami           => $awskit::centos_ami,
       instance_type => $instance_type,
       user_data     => $user_data,
-      require       => Ec2_securitygroup['awskit-agent'],
     }
   }
 }

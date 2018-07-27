@@ -17,7 +17,7 @@ class awskit::create_discovery (
 
   $ami = $awskit::discovery_ami
 
-  ec2_securitygroup { 'awskit-discovery':
+  ec2_securitygroup { $awskit::disco_sc_name:
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -34,8 +34,6 @@ class awskit::create_discovery (
     ami             => $ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => ['awskit-discovery'],
-    require         => Ec2_securitygroup['awskit-discovery'],
+    security_groups => [$awskit::disco_sc_name],
   }
-
 }

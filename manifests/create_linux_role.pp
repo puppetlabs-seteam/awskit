@@ -24,7 +24,6 @@ class awskit::create_linux_role (
       ami           => $awskit::centos_ami,
       instance_type => $instance_type,
       user_data     => $user_data,
-      require       => Ec2_securitygroup['awskit-agent'],
     }
   }
 }

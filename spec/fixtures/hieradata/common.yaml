@@ -22,3 +22,9 @@ awskit::amis:
     discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
     wsus:      ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
+awskit::agent_sc_name: "%{facts.user}-awskit-agent"
+awskit::master_sc_name: "%{facts.user}-awskit-master"
+awskit::disco_sc_name: "%{facts.user}-awskit-disco"
+awskit::windc_sc_name: "%{facts.user}-awskit-windc"
+awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
+awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"

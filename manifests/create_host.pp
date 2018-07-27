@@ -24,13 +24,18 @@ define awskit::create_host (
   $ami,
   $instance_type,
   $user_data,
-  $security_groups = ['awskit-agent'],
+  $security_groups = 'none',
   $run_agent       = true,
   $role            = undef,
   $public_ip       = undef,
 ){
 
   include awskit
+
+  $_security_groups = $security_groups ? {
+    'none'  => $awskit::agent_sc_name,
+    default => $security_groups + $awskit::agent_sc_name,
+  }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
 
@@ -61,7 +66,7 @@ define awskit::create_host (
     tags              => $awskit::tags,
     instance_type     => $_instance_type,
     user_data         => inline_epp($user_data),
-    require           => Ec2_securitygroup['awskit-agent'],
+    require           => Ec2_securitygroup[$_security_groups],
   }
 
   $_public_ip = $public_ip ? {

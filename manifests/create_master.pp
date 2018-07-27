@@ -24,9 +24,8 @@ class awskit::create_master (
     ami             => $pm_ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => ['awskit-master'],
+    security_groups => [$awskit::master_sc_name],
     public_ip       => $public_ip,
-    require         => Ec2_securitygroup['awskit-master'],
   }
 
 }
