@@ -62,7 +62,7 @@ mfa_serial = arn:aws:iam::103716600232:mfa/$your_aws_IAM_user
 After having done this, every time you open a shell to work with awskit, you first need to run this
 
 ```bash
-. scripts/exportcreds.sh
+source scripts/exportcreds.sh
 ```
 
 This script will make sure you are properly logged in (it will ask your MFA token if needed) and it will initialise AWS environment variables with temporary credentials.
