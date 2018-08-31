@@ -26,6 +26,14 @@ awskit::windc_sc_name: "%{facts.user}-awskit-windc"
 awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
 awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"
 
+awskit::create_master::instance_name: "%{facts.user}-awskit-pm"
+awskit::create_linux_node::instance_name: "%{facts.user}-awskit-linux"
+awskit::create_windows_node::instance_name: "%{facts.user}-awskit-windows"
+awskit::create_discovery::instance_name: "%{facts.user}-awskit-disco"
+awskit::create_windc::instance_name: "%{facts.user}-awskit-windc"
+awskit::create_wsus::instance_name: "%{facts.user}-awskit-wsus"
+awskit::create_cd4pe::instance_name: "%{facts.user}-awskit-cd4pe"
+
 awskit::tags:
   description: 'SE Demo Infrastructure'
   department: 'TSE'
