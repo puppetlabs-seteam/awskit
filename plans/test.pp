@@ -19,7 +19,7 @@ plan awskit::test() {
   #   $acc.merge($target.host, $target.facts()['ipaddress']
   # }
 
-  apply('apply_notify', _catch_errors => false, _noop => true ) {
+  apply($targets, _catch_errors => false, _noop => true ) {
     package { 'git': }
   }
   # apply('web_servers') {

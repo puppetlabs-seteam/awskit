@@ -4,7 +4,7 @@ awskit::availability_zone: some_availability_zone_name
 awskit::subnet: some_subnet_name
 awskit::master_ip: '1.2.3.4'
 awskit::host_config:
-  my_host:
+  my-instance-name:
     public_ip: '2.3.4.5'
 awskit::create_linux_role::role: myrole
 awskit::amis:

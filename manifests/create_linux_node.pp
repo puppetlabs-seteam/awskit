@@ -15,7 +15,7 @@ class awskit::create_linux_node (
 
   include awskit
 
-  # create $count CentOS nodes
+  # create $count Linux nodes
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":

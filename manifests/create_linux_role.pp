@@ -16,7 +16,7 @@ class awskit::create_linux_role (
 
   include awskit
 
-  # create $count CentOS nodes
+  # create $count Linux nodes with specified role
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${role}-${i}":

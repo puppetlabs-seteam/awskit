@@ -55,7 +55,7 @@ class awskit(
     $windc_ami       = $amis[$region]['windc']
     $wsus_ami        = $amis[$region]['wsus']
 
-    notify { "tags: ${tags}": }
+    # notify { "tags: ${tags}": }
 
 #TODO: make this more secure
 

@@ -19,6 +19,13 @@ awskit::windows_domain::safemodepw: 'PuppetD3vh0ps!'
 awskit::windows_domain::join_user: 'Administrator'
 awskit::windows_domain::join_password: 'PuppetD3vh0ps!'
 
+awskit::agent_sc_name: "%{facts.user}-awskit-agent"
+awskit::master_sc_name: "%{facts.user}-awskit-master"
+awskit::disco_sc_name: "%{facts.user}-awskit-disco"
+awskit::windc_sc_name: "%{facts.user}-awskit-windc"
+awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
+awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"
+
 awskit::tags:
   description: 'SE Demo Infrastructure'
   department: 'TSE'
