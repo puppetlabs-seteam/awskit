@@ -7,12 +7,12 @@ describe 'awskit::create_windows_node' do
       'count'         => 1,
     }
   end
-    
+
   it { is_expected.to compile }
 
   context 'count => 1' do
-    it { 
-      is_expected.to contain_awskit__create_host("#{params['instance_name']}-1") 
+    it {
+      is_expected.to contain_awskit__create_host("#{params['instance_name']}-1")
     }
   end
 
@@ -20,9 +20,10 @@ describe 'awskit::create_windows_node' do
     let(:params) do
       super().merge('count' => '2')
     end
-    it { 
-      is_expected.to contain_awskit__create_host("#{params['instance_name']}-1") 
-      is_expected.to contain_awskit__create_host("#{params['instance_name']}-2") 
+
+    it {
+      is_expected.to contain_awskit__create_host("#{params['instance_name']}-1")
+      is_expected.to contain_awskit__create_host("#{params['instance_name']}-2")
     }
   end
 end

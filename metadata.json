@@ -1,6 +1,6 @@
 {
   "name": "timidri-awskit",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Dimitri Tischenko",
   "summary": "Toolkit for setting up and managing SE Demo instrastructure in AWS",
   "license": "Apache-2.0",

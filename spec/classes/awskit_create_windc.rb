@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-let(:facts) { RSpec::configuration::default_facts }
+let(:facts) { RSpec.configuration.default_facts }
 
 describe 'awskit::create_windc' do
   it { is_expected.to compile }

@@ -38,14 +38,14 @@ class awskit(
   Hash $tags,
   String $master_ip,
   Hash $amis,
-  String $wsus_ip = '',
-  Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
   String $agent_sc_name,
   String $master_sc_name,
   String $disco_sc_name,
   String $windc_sc_name,
   String $wsus_sc_name,
   String $cd4pe_sc_name,
+  String $wsus_ip = '',
+  Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
   ) {
 
     $pm_ami          = $amis[$region]['pm']

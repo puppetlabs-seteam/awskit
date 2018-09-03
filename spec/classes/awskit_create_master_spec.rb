@@ -11,11 +11,11 @@ describe 'awskit::create_master' do
     }
   end
 
-  let(:facts) { RSpec::configuration::default_facts }
+  let(:facts) { RSpec.configuration.default_facts }
 
   it { is_expected.to compile }
   it { is_expected.to have_awskit__create_host_resource_count(1) }
-  it {  
+  it {
     is_expected.to contain_awskit__create_host(params['instance_name']).with(
       'instance_type' => params['instance_type'],
       'user_data'     => params['user_data'],
@@ -24,7 +24,6 @@ describe 'awskit::create_master' do
   }
 
   it { is_expected.to contain_ec2_elastic_ip('1.2.3.4') } # from hiera awskit::master_ip
-  
-  it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-master") }
 
+  it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-master") }
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'awskit::create_host' do
   let(:title) { 'my-instance-name' }
-  let(:facts) { RSpec::configuration::default_facts }
+  let(:facts) { RSpec.configuration.default_facts }
   let(:params) do
     {
       'ami'           => 'my_ami',
@@ -29,6 +29,7 @@ describe 'awskit::create_host' do
     let(:params) do
       super().merge('public_ip' => '5.6.7.8')
     end
+
     it { is_expected.to contain_ec2_elastic_ip('5.6.7.8') }
   end
 

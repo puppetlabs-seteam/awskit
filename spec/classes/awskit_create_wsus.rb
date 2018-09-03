@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-let(:facts) { RSpec::configuration::default_facts }
+let(:facts) { RSpec.configuration.default_facts }
 
 describe 'awskit::create_wsus' do
   it { is_expected.to compile }

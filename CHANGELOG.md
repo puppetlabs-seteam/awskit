@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.0
+
+**Features**
+
+* added automatic user-specific naming for security groups and instances
+  (configurable in hiera)
+* added unit tests for the above 
+
+## Release 0.2.2
+
+**Features**
+
+* added AMIs and default vpc data for us-east-1
+
 ## Release 0.2.1
 
 **Features**

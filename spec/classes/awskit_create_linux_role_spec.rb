@@ -11,14 +11,14 @@ describe 'awskit::create_linux_role' do
     }
   end
 
-  let (:title) { "#{params['instance_name']}-#{params['role']}" }
+  let(:title) { "#{params['instance_name']}-#{params['role']}" }
 
   it { is_expected.to compile }
 
   context 'count => 1' do
-    it { 
+    it {
       # binding.pry
-      is_expected.to contain_awskit__create_host("#{title}-1") 
+      is_expected.to contain_awskit__create_host("#{title}-1")
     }
   end
 
@@ -26,10 +26,11 @@ describe 'awskit::create_linux_role' do
     let(:params) do
       super().merge('count' => '2')
     end
-    it { 
+
+    it {
       # binding.pry
-      is_expected.to contain_awskit__create_host("#{title}-1") 
-      is_expected.to contain_awskit__create_host("#{title}-2") 
+      is_expected.to contain_awskit__create_host("#{title}-1")
+      is_expected.to contain_awskit__create_host("#{title}-2")
     }
   end
 end
