@@ -1,0 +1,5 @@
+---
+awskit::region: 'us-east-1'
+awskit::availability_zone: 'us-east-1a'
+awskit::vpc: 'tse-us-east-1-vpc'
+awskit::subnet: 'tse-us-east-1-avza'
