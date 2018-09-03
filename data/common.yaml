@@ -167,6 +167,13 @@ awskit::amis:
     discovery: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
     windc:     ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
     wsus:      ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
+  us-east-1: # N. Virginia
+    pm:        ami-059be705180dcab3e # tse-master-vmware-2018.1.4-v0.0.9d.ova
+    centos:    ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows:   ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    discovery: ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    windc:     ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
+    wsus:      ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-2: # London
     pm:        ami-0dfaef6ffe4e87622 # tse-master-vmware-2018.1.0-v0.0.9.ova
 #    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
