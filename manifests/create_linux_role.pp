@@ -16,7 +16,7 @@ class awskit::create_linux_role (
 
   include awskit
 
-  # create $count CentOS nodes
+  # create $count Linux nodes with specified role
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${role}-${i}":
@@ -24,7 +24,6 @@ class awskit::create_linux_role (
       ami           => $awskit::centos_ami,
       instance_type => $instance_type,
       user_data     => $user_data,
-      require       => Ec2_securitygroup['awskit-agent'],
     }
   }
 }

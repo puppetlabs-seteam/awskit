@@ -17,15 +17,15 @@ class awskit::create_windc (
 
   $ami = $awskit::windc_ami
 
-  ec2_securitygroup { 'awskit-windc':
+  ec2_securitygroup { $awskit::windc_sc_name:
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
     description => 'RDP ingress for awskit Windows DC',
     ingress     => [
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',               security_group => 'awskit-agent', },
-      { protocol => 'udp',               security_group => 'awskit-agent', },
+      { protocol => 'tcp',               security_group => $awskit::agent_sc_name, },
+      { protocol => 'udp',               security_group => $awskit::agent_sc_name, },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
@@ -34,8 +34,6 @@ class awskit::create_windc (
     ami             => $ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => ['awskit-windc'],
-    require         => Ec2_securitygroup['awskit-windc'],
+    security_groups => [$awskit::windc_sc_name],
   }
-
 }

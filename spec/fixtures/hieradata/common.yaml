@@ -4,7 +4,7 @@ awskit::availability_zone: some_availability_zone_name
 awskit::subnet: some_subnet_name
 awskit::master_ip: '1.2.3.4'
 awskit::host_config:
-  my_host:
+  my-instance-name:
     public_ip: '2.3.4.5'
 awskit::create_linux_role::role: myrole
 awskit::amis:
@@ -22,3 +22,9 @@ awskit::amis:
     discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
     wsus:      ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
+awskit::agent_sc_name: "%{facts.user}-awskit-agent"
+awskit::master_sc_name: "%{facts.user}-awskit-master"
+awskit::disco_sc_name: "%{facts.user}-awskit-disco"
+awskit::windc_sc_name: "%{facts.user}-awskit-windc"
+awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
+awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"

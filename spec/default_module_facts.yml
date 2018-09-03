@@ -1,0 +1,3 @@
+# Facts specified here will override the values provided by rspec-puppet-facts.
+---
+user: tester

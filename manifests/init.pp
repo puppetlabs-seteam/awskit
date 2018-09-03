@@ -40,21 +40,27 @@ class awskit(
   Hash $amis,
   String $wsus_ip = '',
   Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
+  String $agent_sc_name,
+  String $master_sc_name,
+  String $disco_sc_name,
+  String $windc_sc_name,
+  String $wsus_sc_name,
+  String $cd4pe_sc_name,
   ) {
 
-    $pm_ami         = $amis[$region]['pm']
-    $centos_ami     = $amis[$region]['centos']
-    $windows_ami    = $amis[$region]['windows']
-    $discovery_ami  = $amis[$region]['discovery']
-    $windc_ami      = $amis[$region]['windc']
-    $wsus_ami       = $amis[$region]['wsus']
+    $pm_ami          = $amis[$region]['pm']
+    $centos_ami      = $amis[$region]['centos']
+    $windows_ami     = $amis[$region]['windows']
+    $discovery_ami   = $amis[$region]['discovery']
+    $windc_ami       = $amis[$region]['windc']
+    $wsus_ami        = $amis[$region]['wsus']
 
-    notify { "tags: ${tags}": }
+    # notify { "tags: ${tags}": }
 
 #TODO: make this more secure
 
     $default_ingress = [
-      { protocol => 'tcp',  port => 81,        security_group => 'awskit-agent', }, # PE fileserver
+      { protocol => 'tcp',  port => 81,        security_group => $agent_sc_name, }, # PE fileserver
       { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', }, # PE Console
       { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', }, # Gogs
       { protocol => 'tcp',  port => 4433,      cidr => '0.0.0.0/0', }, # PE Classifier
@@ -73,7 +79,7 @@ class awskit(
 
     $ingress = flatten([$default_ingress, $ssh_ingress])
 
-    ec2_securitygroup { 'awskit-master':
+    ec2_securitygroup { "${facts['user']}-awskit-master":
       ensure      => present,
       region      => $awskit::region,
       vpc         => $awskit::vpc,
@@ -81,7 +87,7 @@ class awskit(
       ingress     => $ingress,
     }
 
-    ec2_securitygroup { 'awskit-agent':
+    ec2_securitygroup { "${facts['user']}-awskit-agent":
       ensure      => 'present',
       region      => $awskit::region,
       vpc         => $awskit::vpc,
@@ -90,12 +96,12 @@ class awskit(
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
-        { protocol => 'tcp', port => 3306, security_group => 'awskit-agent', }, # MySQL
+        { protocol => 'tcp', port => 3306, security_group => $agent_sc_name, }, # MySQL
         { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
         { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
         { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
         { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
-        { protocol => 'tcp', port => 8888, security_group => 'awskit-agent', }, # rgbank webhead
+        { protocol => 'tcp', port => 8888, security_group => $agent_sc_name, }, # rgbank webhead
         { protocol => 'icmp',              cidr => '0.0.0.0/0', },
       ],
     }

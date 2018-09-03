@@ -16,6 +16,7 @@ awskit::create_windows_node::instance_name: dimitri-windows
 awskit::create_discovery::instance_name: dimitri-disco
 awskit::create_windc::instance_name: dimitri-windc
 awskit::create_wsus::instance_name: dimitri-wsus
+awskit::create_cd4pe::instance_name: dimitri-cd4pe
 
 awskit::master_ip: '35.177.92.181'
-awskit::ssh_ingress_cidrs: ['82.217.18.213/32', '0.0.0.0/0']
+awskit::ssh_ingress_cidrs: ['82.217.18.213/32']
