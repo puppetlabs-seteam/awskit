@@ -15,6 +15,19 @@ class awskit::create_discovery_nodes (
 
   include awskit
 
+  ec2_securitygroup { $awskit::disco_sc_name:
+    ensure      => 'present',
+    region      => $awskit::region,
+    vpc         => $awskit::vpc,
+    description => 'ssh and http(s) ingress for awskit discovery',
+    ingress     => [
+      { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 8443, cidr => '0.0.0.0/0', },
+      { protocol => 'icmp',              cidr => '0.0.0.0/0', },
+    ],
+  }
+
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
       ami             => $awskit::centos_ami,
