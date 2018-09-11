@@ -7,6 +7,7 @@ awskit::create_master::instance_type: 't2.large'
 awskit::create_linux_node::instance_type: 't2.micro'
 awskit::create_windows_node::instance_type: 't2.small'
 awskit::create_discovery::instance_type: 't2.small'
+awskit::create_discovery_nodes::instance_type: 't2.micro'
 awskit::create_windc::instance_type: 't2.small'
 awskit::create_wsus::instance_type: 't2.medium'
 awskit::create_cd4pe::instance_type: 't2.xlarge'
@@ -22,6 +23,7 @@ awskit::windows_domain::join_password: 'PuppetD3vh0ps!'
 awskit::agent_sc_name: "%{facts.user}-awskit-agent"
 awskit::master_sc_name: "%{facts.user}-awskit-master"
 awskit::disco_sc_name: "%{facts.user}-awskit-disco"
+awskit::disconodes_sc_name: "%{facts.user}-awskit-disconodes"
 awskit::windc_sc_name: "%{facts.user}-awskit-windc"
 awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
 awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"
@@ -30,6 +32,7 @@ awskit::create_master::instance_name: "%{facts.user}-awskit-pm"
 awskit::create_linux_node::instance_name: "%{facts.user}-awskit-linux"
 awskit::create_windows_node::instance_name: "%{facts.user}-awskit-windows"
 awskit::create_discovery::instance_name: "%{facts.user}-awskit-disco"
+awskit::create_discoverynodes::instance_name: "%{facts.user}-awskit-disconode"
 awskit::create_windc::instance_name: "%{facts.user}-awskit-windc"
 awskit::create_wsus::instance_name: "%{facts.user}-awskit-wsus"
 awskit::create_cd4pe::instance_name: "%{facts.user}-awskit-cd4pe"
@@ -98,6 +101,10 @@ awskit::create_discovery::user_data: |
   curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/production/latest/linux-amd64/puppet-discovery
   chmod a+x ~/puppet-discovery
   ~/puppet-discovery demo
+
+awskit::create_discovery_nodes::user_data: |
+  #! /bin/bash
+  echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
 
 # doesn't work since master doesn't run cloud-init
 # awskit::create_master::user_data: |
@@ -198,7 +205,9 @@ awskit::amis:
     windc:     ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
     wsus:      ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris
-    pm: ami-de73c5a3
+    pm:        ami-de73c5a3
+    centos:    ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    discovery: ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
   eu-central-1: # Frankfurt
     pm: ami-86761be9
   ap-southeast-2: # Sydney
