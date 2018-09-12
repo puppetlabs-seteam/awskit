@@ -57,7 +57,7 @@ define awskit::create_host (
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet            => $awskit::subnet,
     image_id          => $ami,
-    security_groups   => $security_groups,
+    security_groups   => $_security_groups,
     key_name          => $awskit::key_name,
     tags              => $awskit::tags,
     instance_type     => $_instance_type,
