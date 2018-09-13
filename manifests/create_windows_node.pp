@@ -16,6 +16,7 @@ class awskit::create_windows_node (
   include awskit
 
   # create $count Windows nodes
+  # password gets changed to "Devops!" by line 73 of data/common.yaml
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
