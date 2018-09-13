@@ -35,5 +35,23 @@ describe 'awskit::create_host' do
 
   context 'without explicitly specified security groups' do
     it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-agent") }
+    it {
+      is_expected.to contain_ec2_instance(title).with(
+       'security_groups' => "#{facts['user']}-awskit-agent",
+      )
+    }
+  end
+
+  context 'with explicitly specified security groups' do
+    let(:pre_condition) { "ec2_securitygroup { 'my_sg': }" }
+    let(:params) do
+      super().merge('security_groups' => 'my_sg')
+    end
+    it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-agent") }
+    it {
+      is_expected.to contain_ec2_instance(title).with(
+       'security_groups' => 'my_sg',
+      )
+    }
   end
 end

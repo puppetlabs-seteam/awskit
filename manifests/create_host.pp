@@ -34,7 +34,7 @@ define awskit::create_host (
 
   $_security_groups = $security_groups ? {
     'none'  => $awskit::agent_sc_name,
-    default => $security_groups + $awskit::agent_sc_name,
+    default => $security_groups,
   }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
