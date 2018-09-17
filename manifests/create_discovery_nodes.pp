@@ -1,15 +1,15 @@
 # awskit::create_discovery_nodes
 #
-# This class creates 10 instances in AWS for Puppet Discovery to fourage
+# This class creates 9 instances in AWS for Puppet Discovery to fourage
 #
-# @summary Deploys 10 AWS instances for Puppet Discovery to fourage
+# @summary Deploys 9 AWS instances for Puppet Discovery to fourage
 #
 # @example
 #   include awskit::create_discovery_nodes
 class awskit::create_discovery_nodes (
   $instance_type,
   $user_data,
-  $count         = 10,
+  $count         = 9,
   $instance_name = 'awskit-disconode',
 ) {
 
