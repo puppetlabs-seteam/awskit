@@ -1,0 +1,5 @@
+---
+awskit::region: 'eu-west-3'
+awskit::availability_zone: 'eu-west-3a'
+awskit::subnet: 'subnet-default-3a'
+awskit::vpc: 'default'

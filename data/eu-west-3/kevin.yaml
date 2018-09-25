@@ -1,12 +1,8 @@
 ---
-devhops::key_name: 'kevin.reeuwijk.key-eu-west-3'
-devhops::master_ip: '52.47.67.133'
-devhops::wsus_ip: ''
-devhops::elastic_ips:
+awskit::key_name: 'kevin.reeuwijk.key-eu-west-3'
+awskit::master_ip: '52.47.67.133'
+awskit::wsus_ip: ''
+awskit::elastic_ips:
 awskit::host_config:
-  kevin-linhops-1:
-    public_ip: ''
-  kevin-2018.1.0-pm:
+  kevin-awskit-pm:
     public_ip: '52.47.67.133'
-  kevin-wsus:
-    public_ip: ''

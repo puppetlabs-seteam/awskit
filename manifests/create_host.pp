@@ -34,7 +34,7 @@ define awskit::create_host (
 
   $_security_groups = $security_groups ? {
     'none'  => $awskit::agent_sc_name,
-    default => $security_groups + $awskit::agent_sc_name,
+    default => $security_groups,
   }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
@@ -57,7 +57,7 @@ define awskit::create_host (
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet            => $awskit::subnet,
     image_id          => $ami,
-    security_groups   => $security_groups,
+    security_groups   => $_security_groups,
     key_name          => $awskit::key_name,
     tags              => $awskit::tags,
     instance_type     => $_instance_type,
