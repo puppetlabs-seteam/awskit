@@ -62,6 +62,7 @@ if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
 
 # support task noop mode
 if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
+if [ ! -z ${_debug+x} ]; then echo "Debug mode requested"; debug="--debug"; fi
 
 # Validate type
 # Reset count to 1 if more than 1 instance of the type is not supported
@@ -96,4 +97,4 @@ EOM
 echo "applying manifest:"
 echo "$manifest"
 TASKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo "$manifest" | puppet apply --modulepath "${TASKDIR}/../..:$(puppet config print basemodulepath)" $noop
+echo "$manifest" | puppet apply --modulepath "${TASKDIR}/../..:$(puppet config print basemodulepath)" $noop $debug
