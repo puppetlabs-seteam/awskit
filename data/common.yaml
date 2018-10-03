@@ -47,7 +47,7 @@ awskit::vpc: "default"
 
 awskit::create_linux_node::user_data: |
   #! /bin/bash
-  echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
+  echo "<%= $awskit::master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
   install_args=""
   <% unless $run_agent == true { -%>
   $install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
@@ -55,15 +55,18 @@ awskit::create_linux_node::user_data: |
   <% if $role != "" { -%>
   role_args="extension_requests:pp_role=<%= $role %>"
   <% } -%>
-  curl -k https://master.inf.puppet.vm:8140/packages/current/install.bash \
+  <% if $environment != "" { -%>
+  env_args="extension_requests:pp_environment=<%= $environment %>"
+  <% } -%>
+  curl -k https://<%= $awskit::master_name %>:8140/packages/current/install.bash \
   | bash -s agent:certname="<%= $name %>" \
-  $install_args $role_args
+  $install_args $role_args $env_args
 
 # Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
 awskit::create_windows_node::user_data: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts;
+  "<%= $awskit::master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts;
   "<%= $awskit::wsus_ip %> wsus.inf.puppet.vm wsus" | Add-Content -PassThru $hosts;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   net user admin "Devops!" /add ;
@@ -76,7 +79,7 @@ awskit::create_windows_node::user_data: |
   choco install --yes notepadplusplus.install 7zip.install procexp ;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   $webClient = New-Object System.Net.WebClient; 
-  $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
+  $webClient.DownloadFile('https://<%= $awskit::master_name %>:8140/packages/current/install.ps1', 'install.ps1'); 
   <% if $run_agent == true { -%>
   .\install.ps1 main:certname="<%= $name %>"
   <% } else { -%>
@@ -182,6 +185,7 @@ awskit::create_wsus::user_data: |
 awskit::amis:
   us-west-2: # Oregon
     pm: ami-0cc4fd611a2b7b399 # tse-master-vmware-2018.1.0-v0.0.9d.ova
+    # pm: ami-0dfaef6ffe4e87622 # ttse-master-vmware-2018.1.0-v0.0.9.ova
     centos: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
     windows: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
     discovery: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
