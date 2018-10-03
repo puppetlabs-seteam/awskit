@@ -37,7 +37,7 @@ describe 'awskit::create_host' do
     it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-agent") }
     it {
       is_expected.to contain_ec2_instance(title).with(
-       'security_groups' => "#{facts['user']}-awskit-agent",
+        'security_groups' => "#{facts['user']}-awskit-agent",
       )
     }
   end
@@ -47,10 +47,11 @@ describe 'awskit::create_host' do
     let(:params) do
       super().merge('security_groups' => 'my_sg')
     end
+
     it { is_expected.to contain_ec2_securitygroup("#{facts['user']}-awskit-agent") }
     it {
       is_expected.to contain_ec2_instance(title).with(
-       'security_groups' => 'my_sg',
+        'security_groups' => 'my_sg',
       )
     }
   end
