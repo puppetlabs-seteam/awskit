@@ -45,6 +45,7 @@ class awskit(
   String $wsus_sc_name,
   String $cd4pe_sc_name,
   String $wsus_ip = '',
+  String $master_name = 'master.inf.puppet.vm',
   Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
   ) {
 
