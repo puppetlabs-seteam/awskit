@@ -27,6 +27,7 @@ define awskit::create_host (
   $security_groups = 'none',
   $run_agent       = true,
   $role            = undef,
+  $environment     = undef,
   $public_ip       = undef,
 ){
 
