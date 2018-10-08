@@ -43,27 +43,27 @@ if [ -z ${FACTER_user+x} ]; then FACTER_user=$USER; fi
 if [ -z ${FACTER_aws_region+x} ]; then FACTER_aws_region=$AWS_REGION; fi
 
 # check for AWS configuration
-if [ -z "$AWS_ACCESS_KEY_ID" ] && [ ! -d ~/.aws ]; then # try to read them from the instance metadata
-  echo "No AWS credentials found, trying to get EC2 IAM credentials..."
-  declare creds_url="http://169.254.169.254/latest/meta-data/iam/security-credentials/FullAccess"
-  declare ec2_creds
-  if ec2_creds=$(curl "$creds_url"); then
-    echo "EC2 IAM credentials not found, exiting..."
-    exit -4
-  fi
-  declare AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
-  AWS_ACCESS_KEY_ID=$(echo "$ec2_creds" | jq -r .AccessKeyId)
-  AWS_SECRET_ACCESS_KEY=$(echo "$ec2_creds" | jq -r .SecretAccessKey)
-  AWS_SESSION_TOKEN=$(echo "$ec2_creds" | jq -r .Token)
-  export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
-fi
+# if [ -z "$AWS_ACCESS_KEY_ID" ] && [ ! -d ~/.aws ]; then # try to read them from the instance metadata
+#   echo "No AWS credentials found, trying to get EC2 IAM credentials..."
+#   declare creds_url="http://169.254.169.254/latest/meta-data/iam/security-credentials/FullAccess"
+#   declare ec2_creds
+#   if ! ec2_creds=$(curl -s "$creds_url"); then
+#     echo "EC2 IAM credentials not found, exiting..."
+#     exit -4
+#   fi
+#   declare AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+#   AWS_ACCESS_KEY_ID=$(echo "$ec2_creds" | jq -r .AccessKeyId)
+#   AWS_SECRET_ACCESS_KEY=$(echo "$ec2_creds" | jq -r .SecretAccessKey)
+#   AWS_SESSION_TOKEN=$(echo "$ec2_creds" | jq -r .Token)
+#   export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+# fi
 
 # shellcheck disable=SC2154
 if [ ! -z "$PT_region" ]; then
   echo "Region overruled by task parameter: $PT_region"
   export AWS_REGION=$PT_region
   export AWS_DEFAULT_REGION=$PT_region
-  export FACTER_region=$PT_region
+  export FACTER_aws_region=$PT_region
   export FACTER_user='dimitri' # FIXME hack
 else
   echo "found region: $FACTER_aws_region"
