@@ -9,15 +9,15 @@
     },
     "name": {
       "description": "Instance name, auto-assigned if left blank",
-      "type": "String"
+      "type": "Optional[String[6]]"
     },
     "region": {
       "description": "AWS region",
-      "type": "Enum[us-west-2]"
+      "type": "Enum[us-west-2, eu-west-2]"
     },
     "count": {
       "description": "Number of instances to create, defaults to 1",
-      "type": "Integer"
+      "type": "Optional[Integer]"
     }
   }
 }
