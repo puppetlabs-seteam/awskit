@@ -119,6 +119,11 @@ if [ ! -z ${PT_role+x} ]; then
   puppet_params="${puppet_params} role => ${PT_role},"
 fi
 
+# shellcheck disable=SC2154
+if [ ! -z ${PT_name+x} ]; then
+  puppet_params="${puppet_params} instance_name => ${PT_name},"
+fi
+
 read -r -d '' manifest <<EOM
 class { $class:
   ${puppet_params}
