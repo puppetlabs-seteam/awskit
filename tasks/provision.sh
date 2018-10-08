@@ -63,7 +63,8 @@ if [ ! -z "$PT_region" ]; then
   echo "Region overruled by task parameter: $PT_region"
   export AWS_REGION=$PT_region
   export AWS_DEFAULT_REGION=$PT_region
-  export FACTER_REGION=$PT_region
+  export FACTER_region=$PT_region
+  export FACTER_user='dimitri' # FIXME hack
 else
   echo "found region: $FACTER_aws_region"
   echo "found user: $FACTER_user"
