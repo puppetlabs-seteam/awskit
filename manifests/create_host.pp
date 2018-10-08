@@ -47,23 +47,24 @@ define awskit::create_host (
   }
 
   ec2_instance { $name:
-    ensure            => running,
-    region            => $awskit::region,
-    availability_zone => $awskit::availability_zone,
+    ensure                      => running,
+    region                      => $awskit::region,
+    availability_zone           => $awskit::availability_zone,
     # need to specify subnet (although it's documented as optional)
     # if not, errors are generated:
     #  Error: Security groups 'awskit-agent' not found in VPCs 'vpc-fa3ddd93'
     #  Error: /Stage[main]/awskit::Create_agents/Ec2_instance[awskit-1]/ensure: 
     #   change from absent to running failed: Security groups 'awskit-agent' not found in VPCs 'vpc-fa3ddd93'
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
-    subnet            => $awskit::subnet,
-    image_id          => $ami,
-    security_groups   => $_security_groups,
-    key_name          => $awskit::key_name,
-    tags              => $awskit::tags,
-    instance_type     => $_instance_type,
-    user_data         => inline_epp($user_data),
-    require           => Ec2_securitygroup[$_security_groups],
+    subnet                      => $awskit::subnet,
+    image_id                    => $ami,
+    security_groups             => $_security_groups,
+    key_name                    => $awskit::key_name,
+    tags                        => $awskit::tags,
+    instance_type               => $_instance_type,
+    user_data                   => inline_epp($user_data),
+    associate_public_ip_address => true,
+    require                     => Ec2_securitygroup[$_security_groups],
   }
 
   $_public_ip = $public_ip ? {
