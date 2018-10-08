@@ -5,5 +5,5 @@ lookup_options:
 awskit::tags:
   created_by: "dimitri.tischenko@puppetlabs.com"
 
-awskit::create_linux_node::environment: dimitri-production
+awskit::create_linux_node::environment: dimitri_production
 awskit::ssh_ingress_cidrs: ["82.217.18.213/32", "213.86.212.123/32"]
