@@ -64,7 +64,7 @@ if [ ! -z "$PT_region" ]; then
   export AWS_REGION=$PT_region
   export AWS_DEFAULT_REGION=$PT_region
   export FACTER_aws_region=$PT_region
-  export FACTER_user='dimitri' # FIXME hack
+  export FACTER_user='plive2018' # FIXME hack
 else
   echo "found region: $FACTER_aws_region"
   echo "found user: $FACTER_user"

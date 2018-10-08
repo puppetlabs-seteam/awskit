@@ -1,0 +1,13 @@
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: "puppetizelive2018@puppetlabs.com"
+
+awskit::vpc: "puppetdemos-vpc"
+awskit::subnet: "puppetdemos-subnet"
+
+awskit::key_name: puppetize
+awskit::master_ip: "54.203.127.120"
+awskit::master_name: puppet.puppetize2018.puppet.vm

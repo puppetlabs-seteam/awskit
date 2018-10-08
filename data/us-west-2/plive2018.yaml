@@ -1,0 +1,3 @@
+awskit::vpc: "puppetdemos-vpc"
+awskit::subnet: "puppetdemos-subnet"
+awskit::availability_zone: "us-west-2a"
