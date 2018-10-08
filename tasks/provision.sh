@@ -3,7 +3,7 @@
 # Puppet Task Name: provision
 #
 
-usage() {
+function usage() {
 
 cat << EOU
 
@@ -42,8 +42,32 @@ fi
 if [ -z ${FACTER_user+x} ]; then FACTER_user=$USER; fi
 if [ -z ${FACTER_aws_region+x} ]; then FACTER_aws_region=$AWS_REGION; fi
 
-echo "found region: $FACTER_aws_region"
-echo "found user: $FACTER_user"
+# check for AWS configuration
+if [ -z "$AWS_ACCESS_KEY_ID" ] && [ ! -d ~/.aws ]; then # try to read them from the instance metadata
+  echo "No AWS credentials found, trying to get EC2 IAM credentials..."
+  declare creds_url="http://169.254.169.254/latest/meta-data/iam/security-credentials/FullAccess"
+  declare ec2_creds
+  if ec2_creds=$(curl "$creds_url"); then
+    echo "EC2 IAM credentials not found, exiting..."
+    exit -4
+  fi
+  declare AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+  AWS_ACCESS_KEY_ID=$(echo "$ec2_creds" | jq -r .AccessKeyId)
+  AWS_SECRET_ACCESS_KEY=$(echo "$ec2_creds" | jq -r .SecretAccessKey)
+  AWS_SESSION_TOKEN=$(echo "$ec2_creds" | jq -r .Token)
+  export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+fi
+
+# shellcheck disable=SC2154
+if [ ! -z "$PT_region" ]; then
+  echo "Region overruled by task parameter: $PT_region"
+  export AWS_REGION=$PT_region
+  export AWS_DEFAULT_REGION=$PT_region
+  export FACTER_REGION=$PT_region
+else
+  echo "found region: $FACTER_aws_region"
+  echo "found user: $FACTER_user"
+fi
 
 # First argument (or $PT_type) is the type of server to deploy
 if [ ! -z ${1+x} ]; then 
@@ -56,12 +80,17 @@ fi
 
 PT_count=1
 
+# set AWS variables from parameters
+
+
 # Second argument (or $PT_count) is the number of servers to deploy
 if [ ! -z ${2+x} ]; then PT_count=$2; fi
 if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
 
 # support task noop mode
+# shellcheck disable=SC2154
 if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
+# shellcheck disable=SC2154
 if [ ! -z ${_debug+x} ]; then echo "Debug mode requested"; debug="--debug"; fi
 
 # Validate type
@@ -84,6 +113,7 @@ esac
 class="awskit::create_$PT_type"
 
 puppet_params="count => ${PT_count},"
+# shellcheck disable=SC2154
 if [ ! -z ${PT_role+x} ]; then
   puppet_params="${puppet_params} role => ${PT_role},"
 fi
