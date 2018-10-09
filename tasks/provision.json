@@ -13,7 +13,7 @@
     },
     "region": {
       "description": "AWS region",
-      "type": "Enum['us\u002dwest\u002d2', 'eu\u002dwest\u002d2']"
+      "type": "Optional[Enum['us-west-2']]"
     },
     "count": {
       "description": "Number of instances to create, defaults to 1",
