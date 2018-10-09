@@ -5,7 +5,7 @@
   "parameters": {
     "type": {
       "description": "Instance type to create",
-      "type": "Enum[master, linux_node, windows_node, discovery, windc, wsus, cd4pe]"
+      "type": "Enum['master', 'linux_node', 'windows_node', 'discovery', 'windc', 'wsus', 'cd4pe']"
     },
     "name": {
       "description": "Instance name, auto-assigned if left blank",
@@ -13,7 +13,7 @@
     },
     "region": {
       "description": "AWS region",
-      "type": "Enum[us-west-2, eu-west-2]"
+      "type": "Enum['us-west-2', 'eu-west-2']"
     },
     "count": {
       "description": "Number of instances to create, defaults to 1",
