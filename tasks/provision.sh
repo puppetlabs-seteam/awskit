@@ -61,7 +61,7 @@ if [ -z ${FACTER_aws_region+x} ]; then FACTER_aws_region=$AWS_REGION; fi
 # shellcheck disable=SC2154
 if [ ! -z "$PT_region" ]; then
   echo "Region overruled by task parameter: $PT_region"
-  export AWS_REGION=${PT_region/_/-} # hack: can't use hyphens in metadata
+  export AWS_REGION=${PT_region//_/-} # hack: can't use hyphens in metadata
   export AWS_DEFAULT_REGION=$AWS_REGION
   export FACTER_aws_region=$AWS_REGION
   export FACTER_user='plive2018' # FIXME hack
