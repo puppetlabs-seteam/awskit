@@ -4,10 +4,10 @@
 # FIXME: completely untested
 # FIXME: the puppetmaster needs to be excluded from the purge
 
-nodes=$(puppetserver ca list --all|grep ${PT_pattern} | grep -v master |cut -d \" -f 2)
-if [ "$PT_force" == "true" ] ; then
-  puppet node purge $nodes
+nodes=$(puppetserver ca list --all|grep "${PT_pattern}" | grep -v master |cut -d \" -f 2)
+if [ "$PT_force" = "true" ] ; then
+  puppet node purge "$nodes"
 else
   echo "Nodes that would be purged:"
-  echo $nodes
+  echo "$nodes"
 fi
