@@ -79,7 +79,6 @@ else
   fi
 fi
 
-PT_count=1
 
 # set AWS variables from parameters
 
@@ -87,6 +86,8 @@ PT_count=1
 # Second argument (or $PT_count) is the number of servers to deploy
 if [ ! -z ${2+x} ]; then PT_count=$2; fi
 if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
+
+if [ -z "${PT_count}" ]; then PT_count=1; fi
 
 # support task noop mode
 # shellcheck disable=SC2154
