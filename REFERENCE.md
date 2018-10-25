@@ -7,7 +7,7 @@
 
 * [`awskit`](#awskit): Placeholder for hiera parameters
 * [`awskit::create_cd4pe`](#awskitcreate_cd4pe): Installs AWS instance for CD4PE installation. Auto-configures
-the role `cd4pe` which needs to be available in the control repo.
+the role `cd4pe_server` which is available in the control repo.
 * [`awskit::create_discovery`](#awskitcreate_discovery): Installs AWS instance for Puppet Discovery installation
 * [`awskit::create_linux_node`](#awskitcreate_linux_node): Creates $count Linux nodes
 * [`awskit::create_linux_role`](#awskitcreate_linux_role): Creates $count Linux nodes with a role
@@ -129,11 +129,9 @@ Default value: ['0.0.0.0/0']
 
 awskit::create_cd4pe
 
-This class creates an instance in AWS for hosting a cd4pe docker host.
-
-* **Note** At this moment (June 16 2018), you need this control repo:
-https://github.com/puppetlabs/controlrepo-cd4pe-hol
-to use CD4PE in AWS successfully.
+This class creates an instance in AWS for hosting a cd4pe docker host. 
+The cd4pe server created will be automatically classified with the 'cd4pe_server' role 
+and will be bootstrapped accordingly.
 
 #### Examples
 
