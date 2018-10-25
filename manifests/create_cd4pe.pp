@@ -3,13 +3,12 @@
 # This class creates an instance in AWS for hosting a cd4pe docker host.
 #
 # @summary Installs AWS instance for CD4PE installation. Auto-configures
-#   the role `cd4pe` which needs to be available in the control repo.
+#   the role `cd4pe_server` which is available in the control repo.
 #
 # @note
 # 
-#   At this moment (June 16 2018), you need this control repo:
-#   https://github.com/puppetlabs/controlrepo-cd4pe-hol
-#   to use CD4PE in AWS successfully.    
+#  The cd4pe_server role was added in the tse control repo as of 10/2018.
+#  The cd4pe server that is provisioned will automatically be classfied.
 # 
 # @example Using in a manifest
 #   include awskit::create_cd4pe
