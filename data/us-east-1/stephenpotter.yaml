@@ -1,0 +1,19 @@
+---
+awskit::region: 'us-east-1'
+awskit::availability_zone: 'us-east-1d'
+awskit::vpc: 'stephenpotter-east-vpc'
+awskit::subnet: 'stephenpotter-east-subnet'
+awskit::key_name: 'stephen.potter'
+awskit::master_ip: '34.194.244.187'
+#awskit::wsus_ip: '35.178.35.215'
+awskit::host_config:
+  stephenpotter-awskit-cd4pe:
+    public_ip: '35.174.234.209'
+  stephenpotter-awskit-disco:
+    public_ip: '18.235.135.36'
+
+awskit::tags:
+  created_by: 'stephen.potter@puppet.com'
+
+awskit::create_master::gogs_ssh_keys:
+  'stephen.potter@puppet.com': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDG+WuW9n8zOmQcqhl6vBcBc1Su9CjJ2nwVV8l31IeqWCCWk86dWWzHEtauGCAc+HbcnCNF2reAwUi7hFAjQac2vylL8kR/lnPsS2E0PbGqrWWMUFijFMwACP7S7CylAh4MJfpH4PPTRbC/LrtuYgHDrqw0CDBEqZEvKWuLvgWwzPx++wKDTd8ID35NxhzR+puqrsf4IYHkRtxuvW5CtVrSb1Fa6t2flvaX6z8maRA9Jae2OSf7GAODbWC0+Od3ItK/V9oimRw7XZdvNVYN0f9Yb5J2vMbOPynT0dmx8EAvVnwUOUlfGsAKFgIvRakarikTib0I7cJ8DtjDN+H1Eb/FctbpcClWUdbCfZAUrEqNyyUbPsR+ynXz9wcbj0kbF7yYBLsziT3vJWMF1jU3aRDBTjnL+20gFQ7+eVbRbDYezcKpLKXKfXwqNy1tFciZ/Fsl+FPp9iCipGXQrxK+jLR1JIGAiB28C71QgCHKefEj5GgWkJ2Cj6g0OmblDShvwnxO2b47tz91oYuGfflgY+Gzzzg0XVbVlofnuon26PiXtrXn/yp5DTIsY97nWXzMKb9F6uT7jfGLngZ85Le3oOr4s1PkdYIhzgcocmizphYf5pUGQzxjz1o9uBMVY+9k/EYfVS+i8OS0UNfGtfcxSyx9k+WkCxS6moeUOm+s9O8abw==
