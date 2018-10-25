@@ -76,7 +76,7 @@ awskit::create_windows_node::user_data: |
   wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
   Set-ExecutionPolicy Bypass -Scope Process -Force;
   iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
-  choco install --yes notepadplusplus.install 7zip.install procexp ;
+  choco install --yes 7zip.install procexp ;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
   $webClient = New-Object System.Net.WebClient; 
   $webClient.DownloadFile('https://<%= $awskit::master_name %>:8140/packages/current/install.ps1', 'install.ps1'); 
@@ -184,7 +184,8 @@ awskit::create_wsus::user_data: |
 
 awskit::amis:
   us-west-2: # Oregon
-    pm: ami-0cc4fd611a2b7b399 # tse-master-vmware-2018.1.0-v0.0.9d.ova
+    pm: ami-0309a25a7cb549304 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-0cc4fd611a2b7b399 # tse-master-vmware-2018.1.0-v0.0.9d.ova
     # pm: ami-0dfaef6ffe4e87622 # ttse-master-vmware-2018.1.0-v0.0.9.ova
     centos: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
     windows: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
@@ -192,14 +193,16 @@ awskit::amis:
     windc: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
     wsus: ami-ef9a0e97 #  Windows_Server-2016-English-Full-Base-2018.03.06
   us-east-1: # N. Virginia
-    pm: ami-059be705180dcab3e # tse-master-vmware-2018.1.4-v0.0.9d.ova
+    pm: ami-04093f611cb0dd860 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-059be705180dcab3e # tse-master-vmware-2018.1.4-v0.0.9d.ova
     centos: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
     windows: ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
     discovery: ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
     windc: ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
     wsus: ami-cab14db7 #  Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-2: # London
-    pm: ami-07f4b23fb089b0ef6 # tse-master-vmware-2018.1.4-v0.0.9d.ova
+    pm: ami-01c346f78bfcbaf57 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-07f4b23fb089b0ef6 # tse-master-vmware-2018.1.4-v0.0.9d.ova
     #    pm:        ami-9604e0f1 # tse-master-vmware-2017.3.5-v0.0.8.ova
     centos: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
     windows: ami-0fe7fd8b230322c20 # Windows_Server-2016-English-Full-Base-2018.03.06
@@ -207,12 +210,16 @@ awskit::amis:
     windc: ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
     wsus: ami-8bee09ec # Windows_Server-2016-English-Full-Base-2018.03.06
   eu-west-3: # Paris
-    pm: ami-de73c5a3
+    pm: ami-03c5efa0c2682cd6b # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    #pm: ami-de73c5a3
     centos: ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
     discovery: ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
   eu-central-1: # Frankfurt
-    pm: ami-86761be9
+    pm: ami-0aadcb439247edc90 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-86761be9
   ap-southeast-2: # Sydney
-    pm: ami-a6995fc4
+    pm: ami-0b858c6371591713d # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-a6995fc4
   ap-southeast-1: # Singapore
-    pm: ami-3b93db47
+    pm: ami-0f8f21f9b24e2db35 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    # pm: ami-3b93db47
