@@ -45,7 +45,7 @@ class awskit::create_cd4pe (
 
   awskit::create_host { $instance_name:
     ami             => $ami,
-    role            => 'cd4pe',
+    role            => 'cd4pe_server',
     instance_type   => $instance_type,
     user_data       => $user_data,
     security_groups => [$awskit::cd4pe_sc_name],
