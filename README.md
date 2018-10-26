@@ -174,14 +174,14 @@ Note:
 - `public_key_value` should contain your public key string
 
 ```bash
-bolt task run awskit::conf_control_repo --modulepath .. -n $master_ip control_repo="https://github.com/puppetlabs-seteam/control-repo-awskit.git" public_key_name=$FACTER_user public_key_value="$(cat ~/.ssh/id_rsa.pub)" -u root -p #--debug --verbose
+bolt task run awskit::conf_control_repo --modulepath .. -n $master_ip control_repo="${your_control_repo_url}" public_key_name=$FACTER_user public_key_value="$(cat ~/.ssh/id_rsa.pub)" -u root -p #--debug --verbose
 ```
 
-After this, you can add a remote to your local awskit control repo clone:
+After this, you can add a remote to your local control repo clone:
 
 ```bash
-git clone https://github.com/puppetlabs-seteam/control-repo-awskit.git
-cd control-repo-awskit
+git clone ${your_control_repo_url}
+cd ${your_control_repo}
 git remote add awskit git@${master_ip}:puppet/control-repo.git
 ```
 
