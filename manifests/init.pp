@@ -27,7 +27,14 @@
 #   instance restarts, you would need an Elastic IP address for this. See README for the AWS cli command to create one.
 # @param amis The central hash of AMIs, which lives on `common.yaml`. Rather than providing AMIs per region,
 #   they are all in the same hash for easier maintenance. This class creates variables with the correct AMIs based on the region.
+# @param agent_sc_name The name of the AWS security group for the agents
+# @param master_sc_name The name of the AWS security group for the master
+# @param disco_sc_name The name of the AWS security group for the Puppet Discovery instances
+# @param windc_sc_name The name of the AWS security group for the Windows Domain Controller
+# @param wsus_sc_name The name of the AWS security group for the WSUS machine
+# @param cd4pe_sc_name The name of the AWS security group for the CD4PE instances
 # @param wsus_ip The IP address for the WSUS server, if you use it in your environment. Also needs an EIP (see `master_ip`).
+# @param master_name The name of the puppetmaster.
 # @param ssh_ingress_cidrs The ingress CIDR for ssh access of the master.
 class awskit(
   String $key_name,

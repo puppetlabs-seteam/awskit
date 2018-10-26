@@ -1,25 +1,21 @@
 # awskit::create_host
-
+#
 # Create a host in AWS
 #
 # @summary This define creates a host with given parameters
 #
 # @example
-#
-# $_user_data = @("USERDATA"/L)
-#   #! /bin/bash
-#   echo "${master_ip} master.inf.puppet.vm master" >> /etc/hosts
-#   curl -k ${master_url} | bash -s agent:certname=${instance_name} extension_requests:pp_role=${role}
-#   | USERDATA
-#
-#   aws::create_host { 'centos-demo-host':
-#     $ami           = 'ami-ee6a718a',
-#     $instance_type = 't2.small',
-#     $instance_type = 't2.small',
-#     $user_data     = $_user_data,
-#     $security_groups = ['awskit-agent'],
-#   }
-
+#   $user_data = @("USERDATA"/L)
+#     #! /bin/bash
+#     echo "${master_ip} master.inf.puppet.vm master" >> /etc/hosts
+#     curl -k ${master_url} | bash -s agent:certname=${instance_name} extension_requests:pp_role=${role}
+#     | USERDATA
+#     aws::create_host { 'centos-demo-host':
+#       $ami           = 'ami-ee6a718a',
+#       $instance_type = 't2.small',
+#       $user_data     = $user_data,
+#       $security_groups = ['awskit-agent'],
+#     }
 define awskit::create_host (
   $ami,
   $instance_type,

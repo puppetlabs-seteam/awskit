@@ -1,8 +1,8 @@
 # awskit::create_discovery_nodes
 #
-# This class creates 9 instances in AWS for Puppet Discovery to fourage
+# This class creates 9 instances in AWS for Puppet Discovery to forage
 #
-# @summary Deploys 9 AWS instances for Puppet Discovery to fourage
+# @summary Deploys 9 AWS instances for Puppet Discovery to forage
 #
 # @example
 #   include awskit::create_discovery_nodes

@@ -7,8 +7,9 @@
 
 * [`awskit`](#awskit): Placeholder for hiera parameters
 * [`awskit::create_cd4pe`](#awskitcreate_cd4pe): Installs AWS instance for CD4PE installation. Auto-configures
-the role `cd4pe` which needs to be available in the control repo.
+the role `cd4pe_server` which is available in the control repo.
 * [`awskit::create_discovery`](#awskitcreate_discovery): Installs AWS instance for Puppet Discovery installation
+* [`awskit::create_discovery_nodes`](#awskitcreate_discovery_nodes): Deploys 9 AWS instances for Puppet Discovery to forage
 * [`awskit::create_linux_node`](#awskitcreate_linux_node): Creates $count Linux nodes
 * [`awskit::create_linux_role`](#awskitcreate_linux_role): Creates $count Linux nodes with a role
 * [`awskit::create_master`](#awskitcreate_master): Provision a Puppetmaster in AWS
@@ -20,7 +21,7 @@ the role `cd4pe` which needs to be available in the control repo.
 
 **Defined types**
 
-* [`awskit::create_host`](#awskitcreate_host): 
+* [`awskit::create_host`](#awskitcreate_host): This define creates a host with given parameters
 
 **Tasks**
 
@@ -109,6 +110,42 @@ Data type: `Hash`
 The central hash of AMIs, which lives on `common.yaml`. Rather than providing AMIs per region,
 they are all in the same hash for easier maintenance. This class creates variables with the correct AMIs based on the region.
 
+##### `agent_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the agents
+
+##### `master_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the master
+
+##### `disco_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the Puppet Discovery instances
+
+##### `windc_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the Windows Domain Controller
+
+##### `wsus_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the WSUS machine
+
+##### `cd4pe_sc_name`
+
+Data type: `String`
+
+The name of the AWS security group for the CD4PE instances
+
 ##### `wsus_ip`
 
 Data type: `String`
@@ -116,6 +153,14 @@ Data type: `String`
 The IP address for the WSUS server, if you use it in your environment. Also needs an EIP (see `master_ip`).
 
 Default value: ''
+
+##### `master_name`
+
+Data type: `String`
+
+The name of the puppetmaster.
+
+Default value: 'master.inf.puppet.vm'
 
 ##### `ssh_ingress_cidrs`
 
@@ -131,9 +176,8 @@ awskit::create_cd4pe
 
 This class creates an instance in AWS for hosting a cd4pe docker host.
 
-* **Note** At this moment (June 16 2018), you need this control repo:
-https://github.com/puppetlabs/controlrepo-cd4pe-hol
-to use CD4PE in AWS successfully.
+* **Note** The cd4pe_server role was added in the tse control repo as of 10/2018.
+The cd4pe server that is provisioned will automatically be classfied.
 
 #### Examples
 
@@ -229,6 +273,52 @@ Data type: `Any`
 
 Default value: 'awskit-disco'
 
+### awskit::create_discovery_nodes
+
+awskit::create_discovery_nodes
+
+This class creates 9 instances in AWS for Puppet Discovery to forage
+
+#### Examples
+
+##### 
+
+```puppet
+include awskit::create_discovery_nodes
+```
+
+#### Parameters
+
+The following parameters are available in the `awskit::create_discovery_nodes` class.
+
+##### `instance_type`
+
+Data type: `Any`
+
+
+
+##### `user_data`
+
+Data type: `Any`
+
+
+
+##### `count`
+
+Data type: `Any`
+
+
+
+Default value: 9
+
+##### `instance_name`
+
+Data type: `Any`
+
+
+
+Default value: 'awskit-disconode'
+
 ### awskit::create_linux_node
 
 awskit::create_linux_node
@@ -258,6 +348,22 @@ Data type: `Any`
 Data type: `Any`
 
 
+
+##### `role`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `environment`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
 
 ##### `instance_name`
 
@@ -568,7 +674,27 @@ Data type: `Any`
 
 ### awskit::create_host
 
-The awskit::create_host class.
+awskit::create_host
+
+Create a host in AWS
+
+#### Examples
+
+##### 
+
+```puppet
+$user_data = @("USERDATA"/L)
+  #! /bin/bash
+  echo "${master_ip} master.inf.puppet.vm master" >> /etc/hosts
+  curl -k ${master_url} | bash -s agent:certname=${instance_name} extension_requests:pp_role=${role}
+  | USERDATA
+  aws::create_host { 'centos-demo-host':
+    $ami           = 'ami-ee6a718a',
+    $instance_type = 't2.small',
+    $user_data     = $user_data,
+    $security_groups = ['awskit-agent'],
+  }
+```
 
 #### Parameters
 
@@ -598,7 +724,7 @@ Data type: `Any`
 
 
 
-Default value: ['awskit-agent']
+Default value: 'none'
 
 ##### `run_agent`
 
@@ -609,6 +735,14 @@ Data type: `Any`
 Default value: `true`
 
 ##### `role`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### `environment`
 
 Data type: `Any`
 
