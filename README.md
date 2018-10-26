@@ -153,25 +153,24 @@ awskit::host_config:
 
 ### Configure the control repo
 
-Out of the box, the Puppetmasters come with a running Gogs git server with a demo control repo configured: https://github.com/puppetlabs-seteam/control-repo. You can clone this control repo to your local machine, customize it and push to Gogs. Alternatively, you can push a totally different control repo to Gogs.
+Out of the box, the Puppetmasters come with a running Gitea git server with a demo control repo configured: https://github.com/puppetlabs-seteam/control-repo. You can clone this control repo to your local machine, customize it and push to Gitea. Alternatively, you can push a totally different control repo to Gitea.
 
-For doing this, you will need to add your public key to Gogs to be able to push changes easily.
+For doing this, you will need to add your public key to Gitea to be able to push changes easily.
 
-#### Add your public key to Gogs through the GUI
+#### Add your public key to Gitea through the GUI
 
-# Navigate to http://$master_ip:3000
-
-# Click <somewhere> #TODO
+- Navigate to http://$master_ip:3000
+- Click <somewhere> #TODO
 
 #### Use bolt and a task to add your public key and push
 
 First, make sure to install bolt.
 
-Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local GOGS server (which is hosted at http://$master_ip:3000). Optionally, you can add your own public key to GOGS so you can start pushing your changes to the PM directly.
+Next run the following task on the local machine. This will push the contents of the control repo you specify to Puppetmaster's local Gitea server (which is hosted at http://$master_ip:3000). Optionally, you can add your own public key to Gitea so you can start pushing your changes to the PM directly.
 
 Note:
 
-- `public_key_name` can be any string - gogs will register this public key under this name.
+- `public_key_name` can be any string - Gitea will register this public key under this name.
 - `public_key_value` should contain your public key string
 
 ```bash
@@ -186,7 +185,7 @@ cd control-repo-awskit
 git remote add awskit git@${master_ip}:puppet/control-repo.git
 ```
 
-Now, you can push your changes directly to the master's gogs server:
+Now, you can push your changes directly to the master's Gitea server:
 
 ```bash
 git commit -m "some commit"
