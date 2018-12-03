@@ -33,6 +33,7 @@
 # @param windc_sc_name The name of the AWS security group for the Windows Domain Controller
 # @param wsus_sc_name The name of the AWS security group for the WSUS machine
 # @param cd4pe_sc_name The name of the AWS security group for the CD4PE instances
+# @param artifactory_sc_name The name of the AWS security group for the Artifactory instances (not part of CD4PE)
 # @param wsus_ip The IP address for the WSUS server, if you use it in your environment. Also needs an EIP (see `master_ip`).
 # @param master_name The name of the puppetmaster.
 # @param ssh_ingress_cidrs The ingress CIDR for ssh access of the master.
@@ -51,6 +52,7 @@ class awskit(
   String $windc_sc_name,
   String $wsus_sc_name,
   String $cd4pe_sc_name,
+  String $artifactory_sc_name,
   String $wsus_ip = '',
   String $master_name = 'master.inf.puppet.vm',
   Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
