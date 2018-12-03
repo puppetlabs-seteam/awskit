@@ -117,7 +117,11 @@ awskit::create_artifactory::user_data: |
   yum install -y docker-ce
   systemctl enable docker
   systemctl start docker
-  
+  docker run --detach --name artifactory \
+   --publish 8081:8081 \
+   --env EXTRA_JAVA_OPTIONS="-Xms384m -Xmx768m" \
+   --volume artifactory:/var/opt/jfrog/artifactory \
+ docker.bintray.io/jfrog/artifactory-oss
 
 # doesn't work since master doesn't run cloud-init
 # awskit::create_master::user_data: |
