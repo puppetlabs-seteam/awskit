@@ -10,6 +10,7 @@ awskit::create_discovery_nodes::instance_type: "t2.micro"
 awskit::create_windc::instance_type: "t2.small"
 awskit::create_wsus::instance_type: "t2.medium"
 awskit::create_cd4pe::instance_type: "t2.xlarge"
+awskit::create_artifactory::instance_type: "t2.small"
 awskit::windows_domain::dn: "DC=awskit,DC=local"
 awskit::windows_domain::localadminpw: "PuppetD3vh0ps!"
 awskit::windows_domain::domainname: "awskit.local"
@@ -25,6 +26,7 @@ awskit::disco_sc_name: "%{facts.user}-awskit-disco"
 awskit::windc_sc_name: "%{facts.user}-awskit-windc"
 awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
 awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"
+awskit::artifactory_sc_name: "%{facts.user}-awskit-artifactory"
 
 awskit::create_master::instance_name: "%{facts.user}-awskit-pm"
 awskit::create_linux_node::instance_name: "%{facts.user}-awskit-linux"
@@ -34,6 +36,7 @@ awskit::create_discoverynodes::instance_name: "%{facts.user}-awskit-disconode"
 awskit::create_windc::instance_name: "%{facts.user}-awskit-windc"
 awskit::create_wsus::instance_name: "%{facts.user}-awskit-wsus"
 awskit::create_cd4pe::instance_name: "%{facts.user}-awskit-cd4pe"
+awskit::create_artifactory::instance_name: "%{facts.user}-awskit-artifactory"
 
 awskit::tags:
   description: "SE Demo Infrastructure"
@@ -106,6 +109,15 @@ awskit::create_discovery::user_data: |
 awskit::create_discovery_nodes::user_data: |
   #! /bin/bash
   echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
+
+awskit::create_artifactory::user_data: |
+  #! /bin/bash
+  yum install -y yum-utils device-mapper-persistent-data lvm2
+  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  yum install -y docker-ce
+  systemctl enable docker
+  systemctl start docker
+  
 
 # doesn't work since master doesn't run cloud-init
 # awskit::create_master::user_data: |
