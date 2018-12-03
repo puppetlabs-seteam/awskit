@@ -34,7 +34,6 @@ class awskit::create_artifactory (
 
   awskit::create_host { $instance_name:
     ami             => $ami,
-    role            => 'artifactory_server',
     instance_type   => $instance_type,
     user_data       => $user_data,
     security_groups => [$awskit::artifactory_sc_name],
