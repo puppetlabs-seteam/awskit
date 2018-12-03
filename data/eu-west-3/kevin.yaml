@@ -7,4 +7,4 @@ awskit::host_config:
   kevin-awskit-pm:
     public_ip: '52.47.67.133'
   kevin-awskit-artifactory:
-    public_ip: '18.130.105.158'
+    public_ip: '52.47.96.40'
