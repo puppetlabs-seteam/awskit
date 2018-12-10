@@ -11,6 +11,9 @@ awskit::create_windc::instance_type: "t2.small"
 awskit::create_wsus::instance_type: "t2.medium"
 awskit::create_cd4pe::instance_type: "t2.xlarge"
 awskit::create_artifactory::instance_type: "t2.small"
+awskit::create_bolt_workshop_targets::instance_type_linux: "t2.micro"
+awskit::create_bolt_workshop_targets::instance_type_windows: "t2.small"
+
 awskit::windows_domain::dn: "DC=awskit,DC=local"
 awskit::windows_domain::localadminpw: "PuppetD3vh0ps!"
 awskit::windows_domain::domainname: "awskit.local"
@@ -27,6 +30,7 @@ awskit::windc_sc_name: "%{facts.user}-awskit-windc"
 awskit::wsus_sc_name: "%{facts.user}-awskit-wsus"
 awskit::cd4pe_sc_name: "%{facts.user}-awskit-cd4pe"
 awskit::artifactory_sc_name: "%{facts.user}-awskit-artifactory"
+awskit::boltws_sc_name: "%{facts.user}-awskit-boltws"
 
 awskit::create_master::instance_name: "%{facts.user}-awskit-pm"
 awskit::create_linux_node::instance_name: "%{facts.user}-awskit-linux"
@@ -37,6 +41,7 @@ awskit::create_windc::instance_name: "%{facts.user}-awskit-windc"
 awskit::create_wsus::instance_name: "%{facts.user}-awskit-wsus"
 awskit::create_cd4pe::instance_name: "%{facts.user}-awskit-cd4pe"
 awskit::create_artifactory::instance_name: "%{facts.user}-awskit-artifactory"
+awskit::create_bolt_workshop_targets::instance_name: "%{facts.user}-awskit-boltws-node"
 
 awskit::tags:
   description: "SE Demo Infrastructure"
@@ -198,6 +203,22 @@ awskit::create_wsus::user_data: |
   winrm quickconfig -force
   </powershell>
 
+awskit::create_bolt_workshop_targets::user_data_linux: |
+  #! /bin/bash
+  echo "<%= $awskit::boltws_master_ip %> <%= $awskit::boltws_master_name %> master" >> /etc/hosts
+
+awskit::create_bolt_workshop_targets::user_data_windows: |
+  <powershell>
+  $hosts = "$env:windir\System32\drivers\etc\hosts"
+  "<%= $awskit::boltws_master_ip %> <%= $awskit::boltws_master_name %> master" | Add-Content -PassThru $hosts;
+  net user Administrator "BoltR0cks!" ;
+  wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+  Set-ExecutionPolicy Bypass -Scope Process -Force;
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+  winrm quickconfig -force
+  </powershell>
+
 awskit::amis:
   us-west-2: # Oregon
     pm: ami-0309a25a7cb549304       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
@@ -224,6 +245,7 @@ awskit::amis:
     pm: ami-03c5efa0c2682cd6b       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
     centos: ami-0c60d771            # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
     discovery: ami-0c60d771         # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows: ami-041c2ed9f395ea43f  # Windows_Server-2016-English-Full-Base-2018.11.28
   eu-central-1: # Frankfurt
     pm: ami-0aadcb439247edc90       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
   ap-southeast-2: # Sydney
