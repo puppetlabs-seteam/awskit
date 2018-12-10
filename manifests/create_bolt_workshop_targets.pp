@@ -12,7 +12,7 @@ class awskit::create_bolt_workshop_targets (
   $user_data_linux,
   $user_data_windows,
   $count         = 15,
-  $instance_name = 'awskit-boltws-node',
+  $instance_name = 'awskit-boltws',
 ) {
 
   include awskit
