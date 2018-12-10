@@ -41,7 +41,7 @@ awskit::create_windc::instance_name: "%{facts.user}-awskit-windc"
 awskit::create_wsus::instance_name: "%{facts.user}-awskit-wsus"
 awskit::create_cd4pe::instance_name: "%{facts.user}-awskit-cd4pe"
 awskit::create_artifactory::instance_name: "%{facts.user}-awskit-artifactory"
-awskit::create_bolt_workshop_targets::instance_name: "%{facts.user}-awskit-boltws-node"
+awskit::create_bolt_workshop_targets::instance_name: "%{facts.user}-awskit-boltws"
 
 awskit::tags:
   description: "SE Demo Infrastructure"
