@@ -206,17 +206,23 @@ awskit::create_wsus::user_data: |
 awskit::create_bolt_workshop_targets::user_data_linux: |
   #! /bin/bash
   echo "<%= $awskit::boltws_master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
+  hostnamectl set-hostname <%= $name %>
+  shutdown -r +1
 
 awskit::create_bolt_workshop_targets::user_data_windows: |
   <powershell>
-  $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::boltws_master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts;
+  $hosts = "$env:windir\System32\drivers\etc\hosts" ;
+  "<%= $awskit::boltws_master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts ;
   net user Administrator "BoltR0cks!" ;
   wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  Set-ExecutionPolicy Bypass -Scope Process -Force;
-  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
-  winrm quickconfig -force
+  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ; 
+  Set-ExecutionPolicy Bypass -Scope Process -Force ;
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ;
+  winrm quickconfig -force ;
+  Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
+  get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
+  Rename-Computer -NewName <%= $name %> -Force ;
+  shutdown /r /t 60 ;
   </powershell>
 
 awskit::amis:
