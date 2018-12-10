@@ -1,6 +1,6 @@
 ---
 awskit::key_name: 'kevin.reeuwijk.key-eu-west-3'
-awskit::boltws_key_name: 'kevin.reeuwijk.key-eu-west-3'
+awskit::boltws_key_name: 'kevin-boltws.key-eu-west-3'
 awskit::master_ip: '52.47.67.133'
 awskit::boltws_master_ip: '52.47.67.133'
 awskit::wsus_ip: ''
