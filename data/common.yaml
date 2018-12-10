@@ -205,12 +205,12 @@ awskit::create_wsus::user_data: |
 
 awskit::create_bolt_workshop_targets::user_data_linux: |
   #! /bin/bash
-  echo "<%= $awskit::boltws_master_ip %> <%= $awskit::boltws_master_name %> master" >> /etc/hosts
+  echo "<%= $awskit::boltws_master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
 
 awskit::create_bolt_workshop_targets::user_data_windows: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::boltws_master_ip %> <%= $awskit::boltws_master_name %> master" | Add-Content -PassThru $hosts;
+  "<%= $awskit::boltws_master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts;
   net user Administrator "BoltR0cks!" ;
   wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
