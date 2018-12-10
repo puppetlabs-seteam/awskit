@@ -21,6 +21,7 @@ define awskit::create_host (
   $instance_type,
   $user_data,
   $security_groups = 'none',
+  $key_name        = 'none',
   $run_agent       = true,
   $role            = undef,
   $environment     = undef,
@@ -32,6 +33,11 @@ define awskit::create_host (
   $_security_groups = $security_groups ? {
     'none'  => $awskit::agent_sc_name,
     default => $security_groups,
+  }
+
+  $_key_name = $key_name ? {
+    'none'  => $awskit::key_name,
+    default => $key_name,
   }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
@@ -55,7 +61,7 @@ define awskit::create_host (
     subnet            => $awskit::subnet,
     image_id          => $ami,
     security_groups   => $_security_groups,
-    key_name          => $awskit::key_name,
+    key_name          => $_key_name,
     tags              => $awskit::tags,
     instance_type     => $_instance_type,
     user_data         => inline_epp($user_data),
