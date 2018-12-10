@@ -38,6 +38,8 @@ class awskit::create_bolt_workshop_targets (
       instance_type   => $instance_type_linux,
       user_data       => $user_data_linux,
       security_groups => [$awskit::boltws_sc_name],
+      key_name        => lookup('awskit::boltws_key_name'),
+
     }
 
     #Create the Windows target
@@ -46,6 +48,7 @@ class awskit::create_bolt_workshop_targets (
       instance_type   => $instance_type_windows,
       user_data       => $user_data_windows,
       security_groups => [$awskit::boltws_sc_name],
+      key_name        => lookup('awskit::boltws_key_name'),
     }
   }
 }
