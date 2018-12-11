@@ -1,0 +1,20 @@
+---
+awskit::region: 'us-east-1'
+awskit::availability_zone: 'us-east-1c'
+awskit::vpc: 'vpc-abir'
+awskit::subnet: 'vpc-abir-subnet'
+awskit::key_name: 'abir_awskit'
+awskit::master_ip: '35.175.94.167'
+#awskit::wsus_ip: '35.178.35.215'
+awskit::host_config:
+  abir-awskit-cd4pe:
+    public_ip: '100.25.59.79'
+  abir-awskit-disco:
+    public_ip: '18.214.202.199'
+
+awskit::tags:
+  created_by: 'abir@puppet.com'
+
+awskit::create_master::gogs_ssh_keys:
+  'abir@puppet.com': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3+2BMwC9ECePKBHd/VspLIyBOl3kKn3nrjivr68yvE9Y7/K1m+5fO6/ea1Ez4JQ+I8unBfF/UiHIme2n26Qt68GbGdPDlWLrXG+qUED/i2l+aDIrjBF6HAtzr1TKoF3J8AVwin72i6ykQis1c5OCnyOfMTta5scl5ofZtGWyj+atL4bqT0ATMQ6o2OspWr4m/FF8gM9XBhhINFCOmxGZHpEhXOsCEScYGaJykfyoh/io934FrglTkwZw8Gpat5PMXW+FLBBkpWXQLMmPD76mWVvHWS1xMNoZuQrhPYgVpMKZYt4dt6Qmr2zJrbNHIWIvqGWsxa4KPzPcZC0DA2AAJC42buxduTDGTUkfqOMXMcmMuRDqANRXc+gFF3L6Fmsssx5LJER/2/w/tH2Kaj0bms3/uF4+Qe3QwwnAJ0b0bNvZ2+eMhnrVKcwDIK3UahPLLE44kvIW9VxsjauTOqJS66rrSDB62fQMZ1xI96WLXWLG0xgiQZnqbwjsqHk92l5dChxqdQRP2PUXCsfkp+NNrYALPxNIFBQQnMMY4i0UXbW5+mnlAWYIq3CNCsWbjcb3bwRwQShYrah8DoSPoXsVXaQIpfYmhUq8vVt6CtT4ClvP8m+9n3zLqlNmrVYXoVNUu5zEXMjlgDxHLN8k0Bn/w7/Y2vlB9rM/aCBFQ6qaMiw== beersy@gmail.com
+
