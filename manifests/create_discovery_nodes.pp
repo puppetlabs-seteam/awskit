@@ -15,7 +15,7 @@ class awskit::create_discovery_nodes (
 
   include awskit
 
-  ec2_securitygroup { "${facts['user']}-awskit-discovery":
+  ec2_securitygroup { "${facts['user']}-awskit-disco":
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -33,7 +33,7 @@ class awskit::create_discovery_nodes (
       ami             => $awskit::centos_ami,
       instance_type   => $instance_type,
       user_data       => $user_data,
-      security_groups => ["${facts['user']}-awskit-discovery"],
+      security_groups => ["${facts['user']}-awskit-disco"],
     }
   }
 }
