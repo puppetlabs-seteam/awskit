@@ -22,13 +22,16 @@ class awskit::create_bolt_workshop_targets (
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
-    description => 'SSH and WinRM ingress for Puppet Bolt Workshop',
+    description => 'Ingress rules for Puppet Bolt Workshop',
     ingress     => [
-      { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
-      { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', },
-      { protocol => 'icmp',              cidr => '0.0.0.0/0', },
+      { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', }, # SSH
+      { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', }, # PE Console HTTPS
+      { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
+      { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
+      { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
+      { protocol => 'tcp', port => 8143, cidr => '0.0.0.0/0', }, # PE Orchestrator
+      { protocol => 'tcp', port => 8170, cidr => '0.0.0.0/0', }, # PE Code Manager
+      { protocol => 'icmp',              cidr => '0.0.0.0/0', }, # Ping
     ],
   }
 
