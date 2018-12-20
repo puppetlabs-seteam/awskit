@@ -11,13 +11,14 @@ class awskit::create_bolt_workshop_targets (
   $instance_type_windows,
   $user_data_linux,
   $user_data_windows,
+  $master_ip,
   $count         = 15,
   $instance_name = 'awskit-boltws',
 ) {
 
   include awskit
 
-  ec2_securitygroup { $awskit::boltws_sc_name:
+  ec2_securitygroup { "${facts['user']}-awskit-boltws":
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -37,7 +38,7 @@ class awskit::create_bolt_workshop_targets (
       ami             => $awskit::centos_ami,
       instance_type   => $instance_type_linux,
       user_data       => $user_data_linux,
-      security_groups => [$awskit::boltws_sc_name],
+      security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
 
     }
@@ -47,7 +48,7 @@ class awskit::create_bolt_workshop_targets (
       ami             => $awskit::windows_ami,
       instance_type   => $instance_type_windows,
       user_data       => $user_data_windows,
-      security_groups => [$awskit::boltws_sc_name],
+      security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
     }
   }

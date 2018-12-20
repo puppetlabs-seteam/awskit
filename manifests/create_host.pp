@@ -31,7 +31,7 @@ define awskit::create_host (
   include awskit
 
   $_security_groups = $security_groups ? {
-    'none'  => $awskit::agent_sc_name,
+    'none'  => "${facts['user']}-awskit-agent",
     default => $security_groups,
   }
 
