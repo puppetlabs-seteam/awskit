@@ -8,7 +8,6 @@
 #   include awskit::create_bolt_workshop_master
 class awskit::create_bolt_workshop_master (
   $instance_type,
-  $user_data,
   $instance_name = 'awskit-boltws-master',
 ) {
 
@@ -35,7 +34,7 @@ class awskit::create_bolt_workshop_master (
   awskit::create_host { $instance_name:
     ami             => $awskit::centos_ami,
     instance_type   => $instance_type,
-    user_data       => $user_data,
+    user_data       => '',
     security_groups => ["${facts['user']}-awskit-boltws"]
   }
 
