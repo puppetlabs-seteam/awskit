@@ -1,7 +1,7 @@
 ---
 awskit::key_name: 'kevin.reeuwijk.key-eu-west-3'
 awskit::boltws_key_name: 'kevin-boltws.key-eu-west-3'
-awskit::create_bolt_workshop_targets::master_ip: '52.47.67.133'
+awskit::create_bolt_workshop_targets::master_ip: '35.180.221.85'
 awskit::master_ip: '52.47.67.133'
 awskit::wsus_ip: ''
 awskit::elastic_ips:
@@ -10,5 +10,5 @@ awskit::host_config:
     public_ip: '52.47.67.133'
   kevin-awskit-artifactory:
     public_ip: '52.47.96.40'
-  kevin-awskit-boltws-pm:
-    public_ip: '52.47.67.133'
+  kevin-awskit-boltws-master:
+    public_ip: '35.180.221.85'
