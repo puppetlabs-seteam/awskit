@@ -26,7 +26,7 @@ class awskit::create_cd4pe (
 
   $ami = $awskit::centos_ami
 
-  ec2_securitygroup { $awskit::cd4pe_sc_name:
+  ec2_securitygroup { "${facts['user']}-awskit-cd4pe":
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -48,7 +48,7 @@ class awskit::create_cd4pe (
     role            => 'cd4pe_server',
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => [$awskit::cd4pe_sc_name],
+    security_groups => ["${facts['user']}-awskit-cd4pe"],
   }
 
 }
