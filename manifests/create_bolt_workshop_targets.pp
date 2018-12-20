@@ -11,6 +11,7 @@ class awskit::create_bolt_workshop_targets (
   $instance_type_windows,
   $user_data_linux,
   $user_data_windows,
+  $master_ip,
   $count         = 15,
   $instance_name = 'awskit-boltws',
 ) {
