@@ -27,14 +27,6 @@
 #   instance restarts, you would need an Elastic IP address for this. See README for the AWS cli command to create one.
 # @param amis The central hash of AMIs, which lives on `common.yaml`. Rather than providing AMIs per region,
 #   they are all in the same hash for easier maintenance. This class creates variables with the correct AMIs based on the region.
-# @param agent_sc_name The name of the AWS security group for the agents
-# @param master_sc_name The name of the AWS security group for the master
-# @param disco_sc_name The name of the AWS security group for the Puppet Discovery instances
-# @param windc_sc_name The name of the AWS security group for the Windows Domain Controller
-# @param wsus_sc_name The name of the AWS security group for the WSUS machine
-# @param cd4pe_sc_name The name of the AWS security group for the CD4PE instances
-# @param artifactory_sc_name The name of the AWS security group for the Artifactory instances (not part of CD4PE)
-# @param wsus_ip The IP address for the WSUS server, if you use it in your environment. Also needs an EIP (see `master_ip`).
 # @param master_name The name of the puppetmaster.
 # @param ssh_ingress_cidrs The ingress CIDR for ssh access of the master.
 class awskit(
@@ -46,16 +38,6 @@ class awskit(
   Hash $tags,
   String $master_ip,
   Hash $amis,
-  String $agent_sc_name,
-  String $master_sc_name,
-  String $disco_sc_name,
-  String $windc_sc_name,
-  String $wsus_sc_name,
-  String $cd4pe_sc_name,
-  String $artifactory_sc_name,
-  String $boltws_sc_name,
-  String $boltws_master_ip,
-  String $wsus_ip = '',
   String $master_name = 'master.inf.puppet.vm',
   Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
   ) {
@@ -72,7 +54,7 @@ class awskit(
 #TODO: make this more secure
 
     $default_ingress = [
-      { protocol => 'tcp',  port => 81,        security_group => $agent_sc_name, }, # PE fileserver
+      { protocol => 'tcp',  port => 81,        security_group => "${facts['user']}-awskit-agent", }, # PE fileserver
       { protocol => 'tcp',  port => 443,       cidr => '0.0.0.0/0', }, # PE Console
       { protocol => 'tcp',  port => 3000,      cidr => '0.0.0.0/0', }, # Gogs
       { protocol => 'tcp',  port => 4433,      cidr => '0.0.0.0/0', }, # PE Classifier
@@ -108,12 +90,12 @@ class awskit(
         { protocol => 'tcp', port => 22,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 80,   cidr => '0.0.0.0/0', },
         { protocol => 'tcp', port => 443,  cidr => '0.0.0.0/0', },
-        { protocol => 'tcp', port => 3306, security_group => $agent_sc_name, }, # MySQL
+        { protocol => 'tcp', port => 3306, security_group => "${facts['user']}-awskit-agent", }, # MySQL
         { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
         { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
         { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
         { protocol => 'tcp', port => 8080, cidr => '0.0.0.0/0', },
-        { protocol => 'tcp', port => 8888, security_group => $agent_sc_name, }, # rgbank webhead
+        { protocol => 'tcp', port => 8888, security_group => "${facts['user']}-awskit-agent", }, # rgbank webhead
         { protocol => 'icmp',              cidr => '0.0.0.0/0', },
       ],
     }
