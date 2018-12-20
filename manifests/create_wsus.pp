@@ -22,10 +22,10 @@ class awskit::create_wsus (
     ami             => $wsus_ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => [$awskit::wsus_sc_name],
+    security_groups => ["${facts['user']}-awskit-wsus"],
   }
 
-  ec2_securitygroup { $awskit::wsus_sc_name:
+  ec2_securitygroup { "${facts['user']}-awskit-wsus":
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -34,8 +34,8 @@ class awskit::create_wsus (
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 8530, cidr => '0.0.0.0/0', },
       { protocol => 'tcp', port => 8531, cidr => '0.0.0.0/0', },
-      { protocol => 'tcp',               security_group => $awskit::agent_sc_name, },
-      { protocol => 'udp',               security_group => $awskit::agent_sc_name, },
+      { protocol => 'tcp',               security_group => "${facts['user']}-awskit-agent", },
+      { protocol => 'udp',               security_group => "${facts['user']}-awskit-agent", },
       { protocol => 'icmp',              cidr => '0.0.0.0/0', },
     ],
   }
