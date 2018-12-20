@@ -20,7 +20,7 @@ class awskit::create_artifactory (
 
   $ami = $awskit::centos_ami
 
-  ec2_securitygroup { $awskit::artifactory_sc_name:
+  ec2_securitygroup { "${facts['user']}-awskit-artifactory":
     ensure      => 'present',
     region      => $awskit::region,
     vpc         => $awskit::vpc,
@@ -36,7 +36,7 @@ class awskit::create_artifactory (
     ami             => $ami,
     instance_type   => $instance_type,
     user_data       => $user_data,
-    security_groups => [$awskit::artifactory_sc_name],
+    security_groups => ["${facts['user']}-awskit-artifactory"],
   }
 
 }
