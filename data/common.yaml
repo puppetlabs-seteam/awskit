@@ -196,14 +196,14 @@ awskit::create_wsus::user_data: |
 
 awskit::create_bolt_workshop_targets::user_data_linux: |
   #! /bin/bash
-  echo "<%= $master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
+  echo "<%= $awskit::create_bolt_workshop_targets::master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
   hostnamectl set-hostname <%= $name %>
   shutdown -r +1
 
 awskit::create_bolt_workshop_targets::user_data_windows: |
   <powershell>
   $hosts = "$env:windir\System32\drivers\etc\hosts" ;
-  "<%= $master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts ;
+  "<%= $awskit::create_bolt_workshop_targets::master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts ;
   net user Administrator "BoltR0cks!" ;
   wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
   [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ; 
