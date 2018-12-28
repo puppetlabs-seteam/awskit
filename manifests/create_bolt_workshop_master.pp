@@ -34,7 +34,6 @@ class awskit::create_bolt_workshop_master (
   awskit::create_host { $instance_name:
     ami             => $awskit::centos_ami,
     instance_type   => $instance_type,
-    user_data       => '',
     security_groups => ["${facts['user']}-awskit-boltws"]
   }
 

@@ -1,0 +1,24 @@
+<%- | $certname, $master_name, $master_ip, $environment, $role, $run_agent | -%>
+<powershell>
+$hosts = "$env:windir\System32\drivers\etc\hosts"
+"<%= $master_ip %> <%= $master_name %> master" | Add-Content -PassThru $hosts;
+<%# "<%= $wsus_ip %> wsus.inf.puppet.vm wsus" | Add-Content -PassThru $hosts; %>
+[Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+net user admin "Devops!" /add ;
+net localgroup Administrators admin /add ;
+wmic USERACCOUNT WHERE "Name='admin'" set PasswordExpires=FALSE ;
+net user Administrator "Devops!" ;
+wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+choco install --yes 7zip.install procexp ;
+[Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+$webClient = New-Object System.Net.WebClient; 
+$webClient.DownloadFile('https://<%= $master_name %>:8140/packages/current/install.ps1', 'install.ps1'); 
+<% if $run_agent == true { -%>
+.\install.ps1 main:certname="<%= $certname %>"
+<% } else { -%>
+.\install.ps1 main:certname="<%= $certname %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
+<% } -%>
+winrm quickconfig -force
+</powershell>

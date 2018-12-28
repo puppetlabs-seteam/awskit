@@ -1,0 +1,12 @@
+#! /bin/bash
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce
+systemctl enable docker
+systemctl start docker
+docker run --detach --name artifactory \
+  --publish 8081:8081 \
+  --env EXTRA_JAVA_OPTIONS="-Xms384m -Xmx768m" \
+  --volume artifactory:/var/opt/jfrog/artifactory \
+docker.bintray.io/jfrog/artifactory-oss
+

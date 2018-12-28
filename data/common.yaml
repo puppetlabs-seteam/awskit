@@ -46,80 +46,8 @@ awskit::tags:
 
 awskit::vpc: "default"
 
-awskit::create_linux_node::user_data: |
-  #! /bin/bash
-  echo "<%= $awskit::master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
-  install_args=""
-  <% unless $run_agent == true { -%>
-  $install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
-  <% } -%>
-  <% if $role != "" { -%>
-  role_args="extension_requests:pp_role=<%= $role %>"
-  <% } -%>
-  <% if $environment != "" { -%>
-  env_args="extension_requests:pp_environment=<%= $environment %>"
-  <% } -%>
-  curl -k https://<%= $awskit::master_name %>:8140/packages/current/install.bash \
-  | bash -s agent:certname="<%= $name %>" \
-  $install_args $role_args $env_args
-
-# Adding Useful install packages here such as chocolately, npp++, 7zip and procexp tools for installation.
-awskit::create_windows_node::user_data: |
-  <powershell>
-  $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts;
-  "<%= $awskit::wsus_ip %> wsus.inf.puppet.vm wsus" | Add-Content -PassThru $hosts;
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  net user admin "Devops!" /add ;
-  net localgroup Administrators admin /add ;
-  wmic USERACCOUNT WHERE "Name='admin'" set PasswordExpires=FALSE ;
-  net user Administrator "Devops!" ;
-  wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
-  Set-ExecutionPolicy Bypass -Scope Process -Force;
-  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
-  choco install --yes 7zip.install procexp ;
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  $webClient = New-Object System.Net.WebClient; 
-  $webClient.DownloadFile('https://<%= $awskit::master_name %>:8140/packages/current/install.ps1', 'install.ps1'); 
-  <% if $run_agent == true { -%>
-  .\install.ps1 main:certname="<%= $name %>"
-  <% } else { -%>
-  .\install.ps1 main:certname="<%= $name %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
-  <% } -%>
-  winrm quickconfig -force
-  </powershell>
-
 awskit::create_linux_node::count: 2
 awskit::create_windows_node::count: 2
-
-awskit::create_discovery::user_data: |
-  #! /bin/bash
-  #hostname=$(curl http://169.254.169.254/latest/meta-data/public-hostname)
-  yum install -y yum-utils device-mapper-persistent-data lvm2
-  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  yum install -y docker-ce
-  systemctl enable docker
-  systemctl start docker
-  curl -o ~/puppet-discovery https://storage.googleapis.com/chvwcgv0lwrpc2nvdmvyes1jbgkk/production/latest/linux-amd64/puppet-discovery
-  chmod a+x ~/puppet-discovery
-  ~/puppet-discovery demo
-
-awskit::create_discovery_nodes::user_data: |
-  #! /bin/bash
-  echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts
-
-awskit::create_artifactory::user_data: |
-  #! /bin/bash
-  yum install -y yum-utils device-mapper-persistent-data lvm2
-  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-  yum install -y docker-ce
-  systemctl enable docker
-  systemctl start docker
-  docker run --detach --name artifactory \
-   --publish 8081:8081 \
-   --env EXTRA_JAVA_OPTIONS="-Xms384m -Xmx768m" \
-   --volume artifactory:/var/opt/jfrog/artifactory \
-  docker.bintray.io/jfrog/artifactory-oss
 
 # doesn't work since master doesn't run cloud-init
 # awskit::create_master::user_data: |
@@ -140,114 +68,36 @@ awskit::create_artifactory::user_data: |
 
 awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-awskit
 
-awskit::create_windc::user_data: |
-  <powershell>
-  $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  $webClient = New-Object System.Net.WebClient; 
-  $webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
-  .\install.ps1 main:certname="windchops-1.inf.puppet.vm"
-  winrm quickconfig -force
-  </powershell>
-
-awskit::create_wsus::user_data: |
-  <powershell>
-  $hosts = "$env:windir\System32\drivers\etc\hosts"
-  "<%= $awskit::master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
-  net user admin "Devops!" /add ;
-  net localgroup Administrators admin /add ;
-  wmic USERACCOUNT WHERE "Name='admin'" set PasswordExpires=FALSE ;
-  net user Administrator "Devops!" ;
-  wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
-  Set-ExecutionPolicy Bypass -Scope Process -Force;
-  Install-WindowsFeature -Name UpdateServices -IncludeManagementTools;
-  New-Item -Path C: -Name WSUS -ItemType Directory;
-  & "C:\Program Files\Update Services\Tools\wsusutil.exe" postinstall CONTENT_DIR=C:\WSUS
-  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-  choco install --yes notepadplusplus.install 7zip.install procexp
-  # Further WSUS Configuration
-  $wsus = Get-WSUSServer;
-  $wsusConfig = $wsus.GetConfiguration();
-  # Set to download updates from Microsoft Updates
-  Set-WsusServerSynchronization –SyncFromMU;
-  # Set Update Languages to English and save configuration settings
-  $wsusConfig.AllUpdateLanguagesEnabled = $false;
-  $wsusConfig.SetEnabledUpdateLanguages("en");
-  $wsusConfig.Save();
-  # Get WSUS Subscription and perform initial synchronization to get latest categories
-  $subscription = $wsus.GetSubscription();
-  $subscription.StartSynchronizationForCategoryOnly();
-  While ($subscription.GetSynchronizationStatus() -ne 'NotProcessing') { Write-Host "." -NoNewline; Start-Sleep -Seconds 5 ;};
-  Write-Host "Sync is done.";
-  # Configure the Platforms that we want WSUS to receive updates
-  Get-WsusProduct | where-Object { $_.Product.Title -in ('Windows 10', 'Windows Server 2016','Windows Server 2012 R2') } | Set-WsusProduct;
-  # Configure the Classifications
-  Get-WsusClassification | Where-Object { $_.Classification.Title -in ('Update Rollups', 'Security Updates', 'Critical Updates', 'Service Packs', 'Updates') } | Set-WsusClassification;
-  # Configure Synchronizations
-  $subscription.SynchronizeAutomatically=$true;
-  # Set synchronization scheduled for midnight each night
-  $subscription.SynchronizeAutomaticallyTimeOfDay= (New-TimeSpan -Hours 0);
-  $subscription.NumberOfSynchronizationsPerDay=1;
-  $subscription.Save();
-  # Kick off a synchronization
-  $subscription.StartSynchronization();
-  winrm quickconfig -force
-  </powershell>
-
-awskit::create_bolt_workshop_targets::user_data_linux: |
-  #! /bin/bash
-  echo "<%= $awskit::create_bolt_workshop_targets::master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
-  hostnamectl set-hostname <%= $name %>
-  shutdown -r +1
-
-awskit::create_bolt_workshop_targets::user_data_windows: |
-  <powershell>
-  $hosts = "$env:windir\System32\drivers\etc\hosts" ;
-  "<%= $awskit::create_bolt_workshop_targets::master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts ;
-  net user Administrator "BoltR0cks!" ;
-  wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
-  [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ; 
-  Set-ExecutionPolicy Bypass -Scope Process -Force ;
-  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ;
-  winrm quickconfig -force ;
-  Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
-  get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
-  Rename-Computer -NewName <%= $name %> -Force ;
-  shutdown /r /t 60 ;
-  </powershell>
-
 awskit::amis:
   us-west-2: # Oregon
-    pm: ami-0309a25a7cb549304       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-b63ae0ce            # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-017bf00eb0d4c7182  # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-b63ae0ce         # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windc: ami-017bf00eb0d4c7182    # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-017bf00eb0d4c7182     # Windows_Server-2016-English-Full-Base-2018.10.14
+    pm: ami-0309a25a7cb549304 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    centos: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
+    discovery: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windc: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
+    wsus: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
   us-east-1: # N. Virginia
-    pm: ami-04093f611cb0dd860       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-02e98f78            # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-050202fb72f001b47  # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-02e98f78         # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windc: ami-050202fb72f001b47    # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-050202fb72f001b47     # Windows_Server-2016-English-Full-Base-2018.10.14
+    pm: ami-04093f611cb0dd860 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    centos: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
+    discovery: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windc: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
+    wsus: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
   eu-west-2: # London
-    pm: ami-01c346f78bfcbaf57       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-ee6a718a            # CentOS Linux 7 x86_64 HVM EBS
-    windows: ami-0f5f78829606035fc  # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-ee6a718a         # CentOS Linux 7 x86_64 HVM EBS
-    windc: ami-0f5f78829606035fc    # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-0f5f78829606035fc     # Windows_Server-2016-English-Full-Base-2018.10.14
+    pm: ami-01c346f78bfcbaf57 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    centos: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windows: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
+    discovery: ami-ee6a718a # CentOS Linux 7 x86_64 HVM EBS
+    windc: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
+    wsus: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
   eu-west-3: # Paris
-    pm: ami-03c5efa0c2682cd6b       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-0c60d771            # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    discovery: ami-0c60d771         # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-041c2ed9f395ea43f  # Windows_Server-2016-English-Full-Base-2018.11.28
+    pm: ami-03c5efa0c2682cd6b # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    centos: ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    discovery: ami-0c60d771 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    windows: ami-041c2ed9f395ea43f # Windows_Server-2016-English-Full-Base-2018.11.28
   eu-central-1: # Frankfurt
-    pm: ami-0aadcb439247edc90       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    pm: ami-0aadcb439247edc90 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
   ap-southeast-2: # Sydney
-    pm: ami-0b858c6371591713d       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    pm: ami-0b858c6371591713d # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
   ap-southeast-1: # Singapore
-    pm: ami-0f8f21f9b24e2db35       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    pm: ami-0f8f21f9b24e2db35 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
