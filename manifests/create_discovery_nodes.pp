@@ -8,7 +8,6 @@
 #   include awskit::create_discovery_nodes
 class awskit::create_discovery_nodes (
   $instance_type,
-  $user_data,
   $count         = 9,
   $instance_name = 'awskit-disconode',
 ) {
@@ -30,10 +29,10 @@ class awskit::create_discovery_nodes (
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
-      ami             => $awskit::centos_ami,
-      instance_type   => $instance_type,
-      user_data       => $user_data,
-      security_groups => ["${facts['user']}-awskit-disco"],
+      ami                => $awskit::centos_ami,
+      instance_type      => $instance_type,
+      user_data_template => 'awskit/discovery_node_userdata.epp',
+      security_groups    => ["${facts['user']}-awskit-disco"],
     }
   }
 }

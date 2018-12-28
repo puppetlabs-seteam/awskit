@@ -8,7 +8,6 @@
 #   include awskit::create_windows_node
 class awskit::create_windows_node (
   $instance_type,
-  $user_data,
   $count         = 1,
   $instance_name = 'awskit-windows',
 ){
@@ -20,9 +19,9 @@ class awskit::create_windows_node (
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
-      ami           => $awskit::windows_ami,
-      instance_type => $instance_type,
-      user_data     => $user_data,
+      ami                => $awskit::windows_ami,
+      instance_type      => $instance_type,
+      user_data_template => 'awskit/windows_userdata.epp',
     }
   }
 }

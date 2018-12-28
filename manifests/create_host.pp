@@ -19,16 +19,29 @@
 define awskit::create_host (
   $ami,
   $instance_type,
-  $user_data,
-  $security_groups = 'none',
-  $key_name        = 'none',
-  $run_agent       = true,
-  $role            = undef,
-  $environment     = undef,
-  $public_ip       = undef,
+  $user_data          = undef,
+  $user_data_template = undef,
+  $master_ip          = undef,
+  $master_name        = undef,
+  $run_agent          = true,
+  $security_groups    = 'none',
+  $key_name           = 'none',
+  $role               = undef,
+  $environment        = undef,
+  $public_ip          = undef,
 ){
 
   include awskit
+
+  $_master_ip = $master_ip ? {
+    undef   => $awskit::master_ip,
+    default => $master_ip,
+  }
+
+  $_master_name = $master_name ? {
+    undef   => $awskit::master_name,
+    default => $master_name,
+  }
 
   $_security_groups = $security_groups ? {
     'none'  => "${facts['user']}-awskit-agent",
@@ -48,6 +61,29 @@ define awskit::create_host (
     $_instance_type = $instance_type
   }
 
+  if $user_data and $user_data_template {
+    fail('Only one of $user_data and $user_data_template should be specified')
+  }
+
+  if $user_data_template {
+
+    $template_params = {
+      certname    => $name,
+      master_ip   => $_master_ip,
+      master_name => $_master_name,
+      environment => $environment,
+      role        => $role,
+      run_agent   => $run_agent,
+    }
+
+    $_user_data = epp($user_data_template, $template_params)
+
+  } elsif $user_data {
+    $_user_data = $user_data
+  } else {
+    $_user_data = undef
+  }
+
   ec2_instance { $name:
     ensure            => running,
     region            => $awskit::region,
@@ -64,7 +100,7 @@ define awskit::create_host (
     key_name          => $_key_name,
     tags              => $awskit::tags,
     instance_type     => $_instance_type,
-    user_data         => inline_epp($user_data),
+    user_data         => $_user_data,
     require           => Ec2_securitygroup[$_security_groups],
   }
 

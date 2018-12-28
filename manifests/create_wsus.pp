@@ -8,7 +8,6 @@
 #   include awskit::create_agents
 class awskit::create_wsus (
   $instance_type,
-  $user_data,
   $count         = 1,
   $instance_name = 'awskit-wsus',
 ){
@@ -19,10 +18,10 @@ class awskit::create_wsus (
 
   # create puppetmaster instance
   awskit::create_host { $instance_name:
-    ami             => $wsus_ami,
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-wsus"],
+    ami                => $wsus_ami,
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/wsus_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-wsus"],
   }
 
   ec2_securitygroup { "${facts['user']}-awskit-wsus":
