@@ -6,6 +6,7 @@
 **Classes**
 
 * [`awskit`](#awskit): Placeholder for hiera parameters
+* [`awskit::create_gitlab`](#create_gitlab): Installs AWS instance for Gitlab installation. Auto-configures
 * [`awskit::create_cd4pe`](#awskitcreate_cd4pe): Installs AWS instance for CD4PE installation. Auto-configures
 the role `cd4pe_server` which is available in the control repo.
 * [`awskit::create_discovery`](#awskitcreate_discovery): Installs AWS instance for Puppet Discovery installation

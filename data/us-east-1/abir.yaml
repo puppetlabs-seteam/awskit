@@ -11,6 +11,8 @@ awskit::host_config:
     public_ip: '100.25.59.79'
   abir-awskit-disco:
     public_ip: '18.214.202.199'
+  abir-awskit-gitlab:
+    public_ip: '3.85.180.73'
 
 awskit::tags:
   created_by: 'abir@puppet.com'
