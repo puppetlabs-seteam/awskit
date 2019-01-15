@@ -238,15 +238,15 @@ awskit::amis:
     wsus: ami-050202fb72f001b47     # Windows_Server-2016-English-Full-Base-2018.10.14
   eu-west-2: # London
     pm: ami-01c346f78bfcbaf57       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-ee6a718a            # CentOS Linux 7 x86_64 HVM EBS
+    centos: ami-00846a67            # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     windows: ami-0f5f78829606035fc  # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-ee6a718a         # CentOS Linux 7 x86_64 HVM EBS
+    discovery: ami-00846a67         # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     windc: ami-0f5f78829606035fc    # Windows_Server-2016-English-Full-Base-2018.10.14
     wsus: ami-0f5f78829606035fc     # Windows_Server-2016-English-Full-Base-2018.10.14
   eu-west-3: # Paris
     pm: ami-03c5efa0c2682cd6b       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
-    centos: ami-0c60d771            # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    discovery: ami-0c60d771         # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
+    centos: ami-262e9f5b            # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    discovery: ami-262e9f5b         # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     windows: ami-041c2ed9f395ea43f  # Windows_Server-2016-English-Full-Base-2018.11.28
   eu-central-1: # Frankfurt
     pm: ami-0aadcb439247edc90       # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
