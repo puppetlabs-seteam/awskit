@@ -21,4 +21,5 @@ $webClient.DownloadFile('https://<%= $master_name %>:8140/packages/current/insta
 .\install.ps1 main:certname="<%= $certname %>" -PuppetServiceEnsure stopped -PuppetServiceEnable false
 <% } -%>
 winrm quickconfig -force
+get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any
 </powershell>
