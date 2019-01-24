@@ -15,4 +15,4 @@ awskit::create_discovery::instance_name: marc-disco
 awskit::create_windc::instance_name: marc-windc
 awskit::create_wsus::instance_name: marc-wsus
 
-awskit::master_ip: '35.177.8.159'
+awskit::master_ip: '35.178.137.102'
