@@ -24,6 +24,8 @@ class awskit::create_bolt_workshop_master (
       { protocol => 'tcp', port => 3389, cidr => '0.0.0.0/0', }, # RDP
       { protocol => 'tcp', port => 5985, cidr => '0.0.0.0/0', }, # WinRM HTTP
       { protocol => 'tcp', port => 5986, cidr => '0.0.0.0/0', }, # WinRM HTTPS
+      { protocol => 'tcp', port => 8140, cidr => '0.0.0.0/0', }, # Puppet Server
+      { protocol => 'tcp', port => 8142, cidr => '0.0.0.0/0', }, # PE Orchestrator
       { protocol => 'tcp', port => 8143, cidr => '0.0.0.0/0', }, # PE Orchestrator
       { protocol => 'tcp', port => 8170, cidr => '0.0.0.0/0', }, # PE Code Manager
       { protocol => 'icmp',              cidr => '0.0.0.0/0', }, # Ping

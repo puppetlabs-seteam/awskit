@@ -1,0 +1,12 @@
+---
+awskit::key_name: 'marc.mckinley.key-eu-west-3'
+awskit::boltws_key_name: 'marc-boltws.key-eu-west-3'
+awskit::create_bolt_workshop_targets::master_ip: '35.181.18.74'
+awskit::master_ip: ''
+awskit::wsus_ip: ''
+awskit::elastic_ips:
+awskit::host_config:
+  marc-awskit-pm:
+    public_ip: ''
+  marc-awskit-boltws-master:
+    public_ip: '35.181.18.74'
