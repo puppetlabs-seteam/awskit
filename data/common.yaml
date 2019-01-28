@@ -15,6 +15,7 @@ awskit::create_artifactory::instance_type: "t2.small"
 awskit::create_bolt_workshop_master::instance_type: "t3.large"
 awskit::create_bolt_workshop_targets::instance_type_linux: "t3.micro"
 awskit::create_bolt_workshop_targets::instance_type_windows: "t3.small"
+awskit::create_dockerhost::instance_type: "t2.large"
 
 awskit::windows_domain::dn: "DC=awskit,DC=local"
 awskit::windows_domain::localadminpw: "PuppetD3vh0ps!"
@@ -37,6 +38,7 @@ awskit::create_gitlab::instance_name: "%{facts.user}-awskit-gitlab"
 awskit::create_artifactory::instance_name: "%{facts.user}-awskit-artifactory"
 awskit::create_bolt_workshop_master::instance_name: "%{facts.user}-awskit-boltws-master"
 awskit::create_bolt_workshop_targets::instance_name: "%{facts.user}-awskit-boltws"
+awskit::create_dockerhost::instance_name: "%{facts.user}-awskit-dockerhost"
 
 awskit::tags:
   description: "SE Demo Infrastructure"
@@ -93,6 +95,15 @@ awskit::create_windows_node::user_data: |
 
 awskit::create_linux_node::count: 2
 awskit::create_windows_node::count: 2
+
+awskit::create_dockerhost::user_data: |
+  #! /bin/bash
+  yum install -y yum-utils device-mapper-persistent-data lvm2 git
+  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  yum install -y docker-ce
+  systemctl enable docker
+  systemctl start docker
+  curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /bin/docker-compose && chmod +x /bin/docker-compose
 
 awskit::create_discovery::user_data: |
   #! /bin/bash
