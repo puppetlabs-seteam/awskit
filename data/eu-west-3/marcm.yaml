@@ -6,7 +6,7 @@ awskit::master_ip: ''
 awskit::wsus_ip: ''
 awskit::elastic_ips:
 awskit::host_config:
-  marc-awskit-pm:
+  marcm-awskit-pm:
     public_ip: ''
-  marc-awskit-boltws-master:
+  marcm-awskit-boltws-master:
     public_ip: '35.181.18.74'
