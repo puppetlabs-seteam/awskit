@@ -1,0 +1,19 @@
+---
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: 'keith.apps@puppet.com'
+
+awskit::create_master::gogs_ssh_keys:
+  'keith.apps@puppetmac': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDqy4F8MkJS2ywBpZscWzXrEITODKJgBcorSxh6+pBl6eaAesVZs0UPEiLQXX1K5f0qE44B/SY1GBWWziokv/Qnp2xsKwsUvSlvcoU9AIE1x76DjlZW67twWwteMp11hd722ajI5iwN4AWcDtkAsECCWPr/VA3KTvwweFFT0WVghCQgSaEjJ+Pm4MqtBZ9VtHSwbjm3l3f76yW8cfcvI8GM+SE/RI5p1BsMzMTEwgEZzlt3feaCkhH1lJzwMQMUY0kCFkblNWSo3wzgkpIcHDR2ig9ft9SDrd2gMDoaJ4D9Q85wrkv/c7UqBYgWLuo8jWMcTbvS9IvE1AiabgQ/b3ivLX4rc/yYLUvwbM+Rvo4Cec8E+dwmdmTvZQbXBtFl9UdM5eRKC4QzxGIiORn82LLXne7bSeK82bszam8vgASqeXu7spuXqTzxXzhOXig+wZDPTYHSTdOlwq5hky7IyuEdfleAh63fv6bmc51y4wkxiPJlW/pILrd7A9FJRZOqwIwKQmY8mbMzp3bMaRus1+q9YkqL5OnC27oN8it6fYJSKiIO3T/srAjpHiKgZ+HX/UFticqNaGgveP2t3Vgqr+eUJiCSi/g+EkTkznMD058/hLgWo1iI+i7Ej19oP3l9gLV/Uas0Wt0oOtNW5XnHz1tGS9vMxnCqgfQ9bf1dAJ5GlQ==
+
+awskit::create_master::instance_name: keith-pe-master
+awskit::create_agents::instance_name_lin: keith-linux
+awskit::create_agents::instance_name_win: keith-windows
+awskit::create_cd4pe::instance_name: keith-cd4pe
+awskit::create_discovery::instance_name: keith-disco
+awskit::create_windc::instance_name: keith-windc
+awskit::create_wsus::instance_name: keith-wsus
+awskit::master_ip: '18.130.104.250'
