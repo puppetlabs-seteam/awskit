@@ -5,6 +5,14 @@ defaults:
   data_hash: yaml_data
 
 hierarchy:
+  - name: "Private AWS region-level user-level data"
+    datadir: "/%{::awskit_confdir}"
+    path: "common.yaml"
+
+  - name: "Private User-level data"
+    datadir: "/%{::awskit_confdir}"
+    path: "%{::aws_region}.yaml"
+
   - name: "AWS region-level user-level data"
     path: "%{::aws_region}/%{::user}.yaml"
 
