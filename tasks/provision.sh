@@ -15,7 +15,7 @@ Usage in task mode:
 
 [_noop="yes"] [PT_count=<count>] PT_type=<type> $0
 
-- type should be one of: ['master', 'linux_node', 'windows_node', 'discovery', 'windc', 'wsus', 'cd4pe','gitlab']
+- type should be one of: ['master', 'linux_node', 'windows_node', 'discovery', 'windc', 'wsus', 'cd4pe','gitlab', 'dockerhost']
 - count should be an integer, default: value configured in hiera
 
 Examples:
@@ -76,6 +76,7 @@ case $PT_type in
   wsus) PT_count=1 ;;
   cd4pe) PT_count=1 ;;
   gitlab) PT_count=1 ;;  
+  dockerhost) PT_count=1 ;;  
   *) 
     echo "unknown type $PT_type specified."
     usage 

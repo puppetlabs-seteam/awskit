@@ -155,6 +155,10 @@ awskit::host_config:
 
 - run `tasks/provision.sh gitlab`
 
+### Provision the Docker host
+
+- run `tasks/provision.sh dockerhost`
+
 ### Configure the control repo
 
 Out of the box, the Puppetmasters come with a running Gitea git server with a demo control repo configured: https://github.com/puppetlabs-seteam/control-repo. You can clone this control repo to your local machine, customize it and push to Gitea. Alternatively, you can push a totally different control repo to Gitea.
