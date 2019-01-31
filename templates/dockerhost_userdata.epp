@@ -1,0 +1,7 @@
+#! /bin/bash
+yum install -y yum-utils device-mapper-persistent-data lvm2 git
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce
+systemctl enable docker
+systemctl start docker
+curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /bin/docker-compose && chmod +x /bin/docker-compose

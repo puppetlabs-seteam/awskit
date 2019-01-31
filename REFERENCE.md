@@ -14,6 +14,7 @@ the role `cd4pe_server` which is available in the control repo.
 * [`awskit::create_linux_node`](#awskitcreate_linux_node): Creates $count Linux nodes
 * [`awskit::create_linux_role`](#awskitcreate_linux_role): Creates $count Linux nodes with a role
 * [`awskit::create_master`](#awskitcreate_master): Provision a Puppetmaster in AWS
+* [`awskit::create_dockerhost`](#awskitcreate_dockerhost): Provision a base demo docker host on which containerized stacks can be auto-configured via custom user_data. Includes docker-compose
 * [`awskit::create_windc`](#awskitcreate_windc): Installs AWS instance for Windows Domain Controller installation
 * [`awskit::create_windows_node`](#awskitcreate_windows_node): Creates a number of Windows nodes
 * [`awskit::create_wsus`](#awskitcreate_wsus): A short summary of the purpose of this class

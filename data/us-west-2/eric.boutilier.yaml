@@ -1,0 +1,6 @@
+---
+awskit::key_name: 'ericb-west'
+awskit::vpc: 'default-vpc'
+awskit::subnet: 'default'
+awskit::availability_zone: 'us-west-2a'
+awskit::master_ip: '54.244.17.142'

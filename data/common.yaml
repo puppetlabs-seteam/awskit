@@ -15,6 +15,7 @@ awskit::create_artifactory::instance_type: "t2.small"
 awskit::create_bolt_workshop_master::instance_type: "t3.large"
 awskit::create_bolt_workshop_targets::instance_type_linux: "t3.micro"
 awskit::create_bolt_workshop_targets::instance_type_windows: "t3.small"
+awskit::create_dockerhost::instance_type: "t2.large"
 
 awskit::windows_domain::dn: "DC=awskit,DC=local"
 awskit::windows_domain::localadminpw: "PuppetD3vh0ps!"
@@ -37,6 +38,7 @@ awskit::create_gitlab::instance_name: "%{facts.user}-awskit-gitlab"
 awskit::create_artifactory::instance_name: "%{facts.user}-awskit-artifactory"
 awskit::create_bolt_workshop_master::instance_name: "%{facts.user}-awskit-boltws-master"
 awskit::create_bolt_workshop_targets::instance_name: "%{facts.user}-awskit-boltws"
+awskit::create_dockerhost::instance_name: "%{facts.user}-awskit-dockerhost"
 
 awskit::tags:
   description: "SE Demo Infrastructure"
@@ -50,23 +52,6 @@ awskit::vpc: "default"
 
 awskit::create_linux_node::count: 2
 awskit::create_windows_node::count: 2
-
-# doesn't work since master doesn't run cloud-init
-# awskit::create_master::user_data: |
-#   #! /bin/bash
-#   sleep 120 # give time for startup
-#   cd /tmp
-#   git clone <%= $control_repo %> control-repo
-#   cd control-repo
-#   git remote add gogs git@localhost:puppet/control-repo.git
-#   git push gogs production
-#   <% $gogs_ssh_keys.each |$title| { -%>
-#   curl -u puppet:puppetlabs -X POST -H "Content-Type: application/json" -d \
-#   '{"title": "<%= $title %>", "key": "<%= $gogs_ssh_keys[$title] %>"}'
-#   <% } -%>
-#   <% unless $ssh_key =~ Undef { -%>
-#   echo "<%= $ssh_key %>" >> /root/.ssh/authorized_keys
-#   <% } -%>
 
 awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/control-repo-awskit
 

@@ -1,0 +1,6 @@
+---
+awskit::key_name: 'keith.apps'
+awskit::master_ip: '18.130.104.250'
+awskit::host_config:
+  keith-pe-master:
+    public_ip: '18.130.104.250'

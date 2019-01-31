@@ -3,9 +3,9 @@ awskit::key_name: "marc.mckinley-eu-west-2"
 awskit::master_ip: "35.178.137.102"
 awskit::wsus_ip: '35.178.35.215'
 awskit::host_config:
-  marc-wsus:
+  marcm-wsus:
     public_ip: '35.178.35.215'
-  marc-demo-pm: 
+  marcm-demo-pm: 
     public_ip: '35.178.137.102'
-  marc-awskit-artifactory:
+  marcm-awskit-artifactory:
     public_ip: '18.130.103.142'
