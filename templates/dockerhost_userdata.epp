@@ -5,3 +5,23 @@ yum install -y docker-ce
 systemctl enable docker
 systemctl start docker
 curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /bin/docker-compose && chmod +x /bin/docker-compose
+
+# Provision splunk with 2 apps
+cat > /root/Dockerfile << "EOF"
+FROM splunk/splunk:latest
+RUN sudo apt-get update && sudo apt-get install -y git
+ENV SPLUNK_START_ARGS --accept-license
+ENV SPLUNK_PASSWORD tindoor8383
+ENV GITHUB_URL https://github.com/puppetlabs
+ENV APP1 SplunkTAforPuppetEnterprise
+ENV APP2 SplunkAppforPuppetEnterprise
+EOF
+cat > /root/startup.sh << "EOF"
+docker build -t splunkdemo_i .
+docker run --name splunkdemo_c -d -p 8000:8000 splunkdemo_i
+docker exec splunkdemo_c bash -c 'sudo git clone "${GITHUB_URL}/${APP1}.git" "/opt/splunk/etc/apps/${APP1}"'
+docker exec splunkdemo_c bash -c 'sudo git clone "${GITHUB_URL}/${APP2}.git" "/opt/splunk/etc/apps/${APP2}"'
+EOF
+cd /root
+chmod 700 startup.sh
+./startup.sh
