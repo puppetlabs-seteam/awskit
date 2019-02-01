@@ -1,5 +1,5 @@
 #!/bin/bash
-profile=tse
+profile=${AWS_PROFILE:-"tse"}
 
 # make sure we have a temporary token
 # This will also request your MFA token if needed
