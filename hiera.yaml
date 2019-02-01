@@ -13,10 +13,10 @@ hierarchy:
     datadir: "/%{::awskit_confdir}"
     path: "%{::aws_region}.yaml"
 
-  - name: "AWS region-level user-level data"
+  - name: "DEPRECATED - DO NOT USE - AWS region-level user-level data"
     path: "%{::aws_region}/%{::user}.yaml"
 
-  - name: "User-level data"
+  - name: "DEPRECATED - DO NOT USE - User-level data"
     path: "%{::user}.yaml"
 
   - name: "AWS region-level data"
