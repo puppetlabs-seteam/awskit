@@ -14,7 +14,7 @@ class awskit::create_dockerhost (
 
   include awskit
 
-  $ami = $awskit::centos_ami
+  $ami = $awskit::docker_ami
 
   ec2_securitygroup { "${facts['user']}-awskit-dockerhost":
     ensure      => 'present',
