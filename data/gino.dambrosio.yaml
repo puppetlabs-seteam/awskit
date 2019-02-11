@@ -1,0 +1,18 @@
+---
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: "gino.dambrosio@puppet.com"
+
+awskit::create_master::gogs_ssh_keys:
+  'gino.dambrosio@puppet.com': ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDF/brSoTuKoTrTtef6ZWbaR94zaKKoE3VQjf/nto2slc8ytsjfd/VbyEVOxaoT56EAAVz8dI28T2gN11J9lhyGczOxUStO+TdUsFRCRVsQpWH/lFFsFVNvknZ3sbAUD+YxeQxlPxPvVnXe6nUnU7le/3EW4Ha5qJgjhsnG8YpX8QQr8A7PoJtncGFzNZfhOGRyDmaRuZ4aMNjMSttFoLJUCeGcf0bfWc9+nLAOgQ5xwkj49hXi/oeswtb9rb2bsZs1Yw0ENyrGDhVn6W49pJkUOo1HHGMOgH0u/mE8kFKXvaCQkwR6E7M2vBVhb9c562PtVsQk49V3yw8Y0n2K1ejZWWqI01/vHRpoorG9RhDQW7Whz7dML+8GVWdXWwYVJkS0EXXGQ+9LgDYQHfj0UIhKTA22dVccEUTDG3QfHE0UDLc0HyCLiJI5k3KmXd1t8igKV49PrkQXMCjo/hwOwLVQBrry+h5uXv/6nLWLAnJv+My0wqPirBXLFb1j/clOMW2asj0217QUXTqOKt2eoFg+IBUnT+R7tUfLp9ZC44X7ZP4XWXhq+y6sLxhiTuacRlhsu4fzWyfomj+feZrfGjqQhIhb1v1ipwZcvVL4uabkVrD8pLlHweT0SAOr/8H/9zz7bVbSHJ5LfypGUu9Upzob9nSVm0s+1VokCVpn0qdWKQ==
+
+awskit::create_master::instance_name: gino-pe-master
+awskit::create_agents::instance_name_lin: gino-linux
+awskit::create_agents::instance_name_win: gino-windows
+awskit::create_cd4pe::instance_name: gino-cd4pe
+awskit::create_discovery::instance_name: gino-disco
+awskit::create_windc::instance_name: gino-windc
+awskit::create_wsus::instance_name: gino-wsus

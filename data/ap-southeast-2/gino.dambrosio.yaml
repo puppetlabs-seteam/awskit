@@ -1,0 +1,4 @@
+---
+awskit::key_name: 'gino.dambrosio'
+awskit::master_ip: '52.65.184.185'
+#awskit::wsus_ip: ''
