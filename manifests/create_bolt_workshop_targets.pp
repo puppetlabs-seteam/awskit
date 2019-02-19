@@ -59,6 +59,24 @@ class awskit::create_bolt_workshop_targets (
     </powershell>
     | EOW
 
+  #Create the Linux target for teacher
+  awskit::create_host { "${instance_name}-linux-teacher":
+    ami             => $awskit::centos_ami,
+    instance_type   => $instance_type_linux,
+    user_data       => inline_epp($user_data_linux),
+    security_groups => ["${facts['user']}-awskit-boltws"],
+    key_name        => lookup('awskit::boltws_key_name'),
+  }
+
+  #Create the Windows target for teacher
+  awskit::create_host { "${instance_name}-windows-teacher":
+    ami             => $awskit::windows_ami,
+    instance_type   => $instance_type_windows,
+    user_data       => inline_epp($user_data_windows),
+    security_groups => ["${facts['user']}-awskit-boltws"],
+    key_name        => lookup('awskit::boltws_key_name'),
+  }
+
   range(1,$count).each | $i | {
     #Create the Linux target
     $certname_linux = "${instance_name}-linux-student${i}"
