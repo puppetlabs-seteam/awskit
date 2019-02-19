@@ -7,6 +7,8 @@ awskit::tags:
 
 # awskit::create_dockerhost::instance_type: "t2.xlarge"
 
+# FIXME since userdata have been moved to templates, this overriding in hiera won't work anymore.
+
 awskit::create_dockerhost::user_data: |
   #! /bin/bash
   # This block is just a copy of the user_data in common.yaml. It sets up a base dockerhost

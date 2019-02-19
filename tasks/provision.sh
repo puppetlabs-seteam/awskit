@@ -38,7 +38,7 @@ if [ "$(whoami)" == "root" ]; then
    exit -3
 fi
 
-# set default values of FACTER_USER and FACTER_aws_region
+# set default values of user and FACTER_aws_region
 if [ -z ${FACTER_user+x} ]; then FACTER_user=$USER; fi
 if [ -z ${FACTER_aws_region+x} ]; then FACTER_aws_region=$AWS_REGION; fi
 
@@ -54,11 +54,13 @@ else
   fi
 fi
 
-PT_count=1
+# PT_count=0
 
 # Second argument (or $PT_count) is the number of servers to deploy
 if [ ! -z ${2+x} ]; then PT_count=$2; fi
-if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
+if [ ! -z ${PT_count+x} ]; then
+  if ! [[ "$PT_count" =~ ^[0-9]+$ ]] ; then usage; fi
+fi
 
 # support task noop mode
 if [ ! -z ${_noop+x} ]; then echo "Noop mode requested"; noop="--noop"; fi
@@ -71,10 +73,14 @@ case $PT_type in
   linux_node) ;;
   linux_role) ;;
   windows_node) ;;
+  artifactory) ;;
   discovery) PT_count=1 ;;
+  discovery_nodes) ;;
   windc) PT_count=1 ;;
   wsus) PT_count=1 ;;
   cd4pe) PT_count=1 ;;
+  bolt_workshop_master) ;;
+  bolt_workshop_targets) ;;
   gitlab) PT_count=1 ;;  
   dockerhost) PT_count=1 ;;  
   *) 
@@ -85,7 +91,9 @@ esac
 
 class="awskit::create_$PT_type"
 
-puppet_params="count => ${PT_count},"
+if [ ! -z ${PT_count+x} ]; then
+  puppet_params="count => ${PT_count},"
+fi
 if [ ! -z ${PT_role+x} ]; then
   puppet_params="${puppet_params} role => ${PT_role},"
 fi

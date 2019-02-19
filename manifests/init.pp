@@ -45,6 +45,7 @@ class awskit(
   ) {
 
     $pm_ami          = $amis[$region]['pm']
+    $docker_ami      = $amis[$region]['docker']
     $centos_ami      = $amis[$region]['centos']
     $windows_ami     = $amis[$region]['windows']
     $discovery_ami   = $amis[$region]['discovery']

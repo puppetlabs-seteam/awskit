@@ -1,0 +1,3 @@
+<%- | $certname, $master_name, $master_ip, $environment, $role, $run_agent | -%>
+#! /bin/bash
+echo "<%= $awskit::master_ip %> master.inf.puppet.vm master" >> /etc/hosts

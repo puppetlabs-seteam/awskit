@@ -1,0 +1,16 @@
+<%- | $certname, $master_name, $master_ip, $environment, $role, $run_agent | -%>
+#! /bin/bash
+echo "<%= $master_ip %> <%= $master_name %> master" >> /etc/hosts
+install_args=""
+<% unless $run_agent == true { -%>
+$install_args=" --puppet-service-ensure stopped --puppet-service-enable false"
+<% } -%>
+<% if $role != "" { -%>
+role_args="extension_requests:pp_role=<%= $role %>"
+<% } -%>
+<% if $environment != "" { -%>
+env_args="extension_requests:pp_environment=<%= $environment %>"
+<% } -%>
+curl -k https://<%= $awskit::master_name %>:8140/packages/current/install.bash \
+| bash -s agent:certname="<%= $certname %>" \
+$install_args $role_args $env_args

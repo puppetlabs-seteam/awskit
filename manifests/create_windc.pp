@@ -8,7 +8,6 @@
 #   include awskit::create_windc
 class awskit::create_windc (
   $instance_type,
-  $user_data,
   $instance_name = 'awskit-windc',
   $count = 1,
 ) {
@@ -31,9 +30,9 @@ class awskit::create_windc (
   }
 
   awskit::create_host { $instance_name:
-    ami             => $ami,
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-windc"],
+    ami                => $ami,
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/windc_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-windc"],
   }
 }

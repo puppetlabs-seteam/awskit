@@ -8,7 +8,6 @@
 #   include awskit::create_linux_node
 class awskit::create_linux_node (
   $instance_type,
-  $user_data,
   $role           = undef,
   $environment    = undef,
   $instance_name  = 'awskit-linux',
@@ -21,11 +20,11 @@ class awskit::create_linux_node (
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
-      ami           => $awskit::centos_ami,
-      instance_type => $instance_type,
-      user_data     => $user_data,
-      role          => $role,
-      environment   => $environment,
+      ami                => $awskit::centos_ami,
+      instance_type      => $instance_type,
+      user_data_template => 'awskit/linux_userdata.epp',
+      role               => $role,
+      environment        => $environment,
     }
   }
 }
