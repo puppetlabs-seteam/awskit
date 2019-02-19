@@ -2,6 +2,8 @@ lookup_options:
   awskit::tags:
     merge: deep
 
+awskit::boltws_key_name: "bolt_ws_key"
+
 awskit::create_master::instance_type: "t2.large"
 awskit::create_linux_node::instance_type: "t2.micro"
 awskit::create_windows_node::instance_type: "t2.small"
@@ -73,18 +75,23 @@ awskit::amis:
   eu-west-2: # London
     pm: ami-01c346f78bfcbaf57 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
     centos: ami-00846a67 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windows: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
+    windows: ami-077b73dd304d0fd05 # Windows_Server-2016-English-Full-Base-2018.11.28
     discovery: ami-00846a67 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windc: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-0f5f78829606035fc # Windows_Server-2016-English-Full-Base-2018.10.14
+    windc: ami-077b73dd304d0fd05 # Windows_Server-2016-English-Full-Base-2018.11.28
+    wsus: ami-077b73dd304d0fd05 # Windows_Server-2016-English-Full-Base-2018.11.28
   eu-west-3: # Paris
     pm: ami-03c5efa0c2682cd6b # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
     centos: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     discovery: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windows: ami-041c2ed9f395ea43f # Windows_Server-2016-English-Full-Base-2018.11.28
+    windows: ami-09a75829fc2accef7 # Windows_Server-2016-English-Full-Base-2019.02.09
   eu-central-1: # Frankfurt
     pm: ami-0aadcb439247edc90 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
   ap-southeast-2: # Sydney
     pm: ami-0b858c6371591713d # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
+    centos: ami-e9c7208b # CentOS Linux 7 x86_64 HVM EBS 1708_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-0d8f9576.4
+    windows: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
+    discovery: ami-e9c7208b # CentOS Linux 7 x86_64 HVM EBS 1708_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-0d8f9576.4
+    windc: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
+    wsus: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
   ap-southeast-1: # Singapore
     pm: ami-0f8f21f9b24e2db35 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk

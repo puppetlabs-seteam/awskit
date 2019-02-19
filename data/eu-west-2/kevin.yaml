@@ -1,6 +1,5 @@
 ---
 awskit::key_name: 'kevin.reeuwijk.key-eu-west-2'
-awskit::boltws_key_name: 'kevin-boltws.key-eu-west-2'
 awskit::create_bolt_workshop_targets::master_ip: '35.178.79.49'
 awskit::master_ip: ''
 awskit::wsus_ip: ''
