@@ -8,7 +8,6 @@
 #   include awskit::create_master
 class awskit::create_master (
   $instance_type,
-  $user_data     = '',
   $count         = 1,
   $instance_name = 'awskit-pm',
 ) {
@@ -23,7 +22,7 @@ class awskit::create_master (
   awskit::create_host { $instance_name:
     ami             => $pm_ami,
     instance_type   => $instance_type,
-    user_data       => $user_data,
+    user_data       => undef,
     security_groups => ["${facts['user']}-awskit-master"],
     public_ip       => $public_ip,
   }

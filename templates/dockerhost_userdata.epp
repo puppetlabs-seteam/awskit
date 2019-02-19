@@ -1,0 +1,43 @@
+#! /bin/bash
+#
+# Docker app examples. Uncomment or add as needed.
+#
+## Optionally uncomment the following line to add git, e.g. pupperware depends on it
+# yum install -y git
+
+## Optionally uncomment the following 4 lines to add docker-compose, e.g. pupperware depends on it
+# compose_version=1.23.2
+# curl -L https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-`uname -s`-`uname -m` \
+#   -o /bin/docker-compose && \
+#   chmod +x /bin/docker-compose
+
+### Sample apps...
+
+## Uncomment to install pupperware
+# cd /root
+# git clone https://github.com/puppetlabs/pupperware.git && \
+# cd pupperware && \
+# docker-compose up -d
+
+
+# Uncomment to install Splunk Enterprise
+#
+## Notes: The below Dockerfile pulls the base splunk image from dockerhub and configures 
+## it to accept the license and to set a password on startup. It also preps it w/ env 
+## vars for customizing, e.g. for puppet/splunk integration demo
+#
+# cd /root
+# cat > ./Dockerfile << "EOF"
+# FROM splunk/splunk:latest
+# RUN sudo apt-get update && sudo apt-get install -y git
+# ENV SPLUNK_START_ARGS --accept-license
+# ENV SPLUNK_PASSWORD puppetlabs
+# ENV GITHUB_URL https://github.com/puppetlabs
+# ENV APP1 SplunkTAforPuppetEnterprise
+# ENV APP2 SplunkAppforPuppetEnterprise
+# EOF
+
+# docker build -t splunkdemo_i .
+# docker run --name splunkdemo_c -d -p 8000:8000 splunkdemo_i
+# docker exec splunkdemo_c bash -c 'sudo git clone "${GITHUB_URL}/${APP1}.git" "/opt/splunk/etc/apps/${APP1}"'
+# docker exec splunkdemo_c bash -c 'sudo git clone "${GITHUB_URL}/${APP2}.git" "/opt/splunk/etc/apps/${APP2}"'

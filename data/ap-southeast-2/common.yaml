@@ -1,0 +1,5 @@
+---
+awskit::region: 'ap-southeast-2'
+awskit::availability_zone: 'ap-southeast-2b'
+awskit::vpc: 'gino-vpc-01'
+awskit::subnet: 'gino-vpc-01-training'

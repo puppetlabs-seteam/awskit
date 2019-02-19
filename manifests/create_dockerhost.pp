@@ -8,14 +8,13 @@
 #   include awskit::create_dockerhost
 class awskit::create_dockerhost (
   $instance_type,
-  $user_data,
   $count         = 1,
   $instance_name = 'awskit-dockerhost',
 ) {
 
   include awskit
 
-  $ami = $awskit::centos_ami
+  $ami = $awskit::docker_ami
 
   ec2_securitygroup { "${facts['user']}-awskit-dockerhost":
     ensure      => 'present',
@@ -34,9 +33,9 @@ class awskit::create_dockerhost (
   }
 
   awskit::create_host { $instance_name:
-    ami             => $ami,
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-dockerhost"],
+    ami                => $ami,
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/dockerhost_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-dockerhost"],
   }
 }

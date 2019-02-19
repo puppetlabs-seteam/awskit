@@ -9,8 +9,6 @@
 class awskit::create_bolt_workshop_targets (
   $instance_type_linux,
   $instance_type_windows,
-  $user_data_linux,
-  $user_data_windows,
   $master_ip,
   $count         = 15,
   $instance_name = 'awskit-boltws',
@@ -37,40 +35,66 @@ class awskit::create_bolt_workshop_targets (
     ],
   }
 
+  $user_data_linux = @(EOL)
+    #! /bin/bash
+    echo "<%= $master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
+    hostnamectl set-hostname <%= $certname_linux %>
+    shutdown -r +1
+    | EOL
+
+  $user_data_windows = @(EOW)
+    <powershell>
+    $hosts = "$env:windir\System32\drivers\etc\hosts" ;
+    "<%= $master_ip %> <%= $awskit::master_name %> master" | Add-Content -PassThru $hosts ;
+    net user Administrator "BoltR0cks!" ;
+    wmic USERACCOUNT WHERE "Name='Administrator'" set PasswordExpires=FALSE ;
+    [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ; 
+    Set-ExecutionPolicy Bypass -Scope Process -Force ;
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ;
+    winrm quickconfig -force ;
+    Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
+    get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
+    Rename-Computer -NewName <%= $certname_windows %> -Force ;
+    shutdown /r /t 60 ;
+    </powershell>
+    | EOW
+
   #Create the Linux target for teacher
   awskit::create_host { "${instance_name}-linux-teacher":
     ami             => $awskit::centos_ami,
     instance_type   => $instance_type_linux,
-    user_data       => $user_data_linux,
+    user_data       => inline_epp($user_data_linux),
     security_groups => ["${facts['user']}-awskit-boltws"],
     key_name        => lookup('awskit::boltws_key_name'),
-
   }
 
   #Create the Windows target for teacher
   awskit::create_host { "${instance_name}-windows-teacher":
     ami             => $awskit::windows_ami,
     instance_type   => $instance_type_windows,
-    user_data       => $user_data_windows,
+    user_data       => inline_epp($user_data_windows),
     security_groups => ["${facts['user']}-awskit-boltws"],
     key_name        => lookup('awskit::boltws_key_name'),
   }
 
   range(1,$count).each | $i | {
-    #Create the Linux targets for students
-    awskit::create_host { "${instance_name}-linux-student${i}":
+    #Create the Linux target
+    $certname_linux = "${instance_name}-linux-student${i}"
+    # notice(inline_epp($user_data_linux))
+    awskit::create_host { $certname_linux:
       ami             => $awskit::centos_ami,
       instance_type   => $instance_type_linux,
-      user_data       => $user_data_linux,
+      user_data       => inline_epp($user_data_linux),
       security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
     }
 
-    #Create the Windows targets for students
-    awskit::create_host { "${instance_name}-windows-student${i}":
+    #Create the Windows target
+    $certname_windows = "${instance_name}-windows-student${i}"
+    awskit::create_host { $certname_windows:
       ami             => $awskit::windows_ami,
       instance_type   => $instance_type_windows,
-      user_data       => $user_data_windows,
+      user_data       => inline_epp($user_data_windows),
       security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
     }

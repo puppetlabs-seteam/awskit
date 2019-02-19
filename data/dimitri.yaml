@@ -7,3 +7,5 @@ awskit::tags:
 
 awskit::create_linux_node::environment: dimitri_production
 awskit::ssh_ingress_cidrs: ["82.217.18.213/32", "213.86.212.123/32"]
+awskit::boltws_key_name: "foo"
+awskit::create_bolt_workshop_targets::master_ip: "bar"

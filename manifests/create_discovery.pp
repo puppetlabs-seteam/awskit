@@ -8,7 +8,6 @@
 #   include awskit::create_discovery
 class awskit::create_discovery (
   $instance_type,
-  $user_data,
   $count         = 1,
   $instance_name = 'awskit-disco',
 ) {
@@ -31,9 +30,9 @@ class awskit::create_discovery (
   }
 
   awskit::create_host { $instance_name:
-    ami             => $ami,
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-disco"],
+    ami                => $ami,
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/discovery_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-disco"],
   }
 }

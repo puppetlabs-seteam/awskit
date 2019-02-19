@@ -41,10 +41,11 @@ class awskit(
   Hash $amis,
   String $wsus_ip = '',
   String $master_name = 'master.inf.puppet.vm',
-  Array[String] $ssh_ingress_cidrs = ['0.0.0.0/0'],
+  Array[String] $ssh_ingress_cidrs = [],
   ) {
 
     $pm_ami          = $amis[$region]['pm']
+    $docker_ami      = $amis[$region]['docker']
     $centos_ami      = $amis[$region]['centos']
     $windows_ami     = $amis[$region]['windows']
     $discovery_ami   = $amis[$region]['discovery']

@@ -11,7 +11,6 @@
 #  
 class awskit::create_artifactory (
   $instance_type,
-  $user_data = lookup('awskit::create_linux_node::user_data'),
   $instance_name = 'awskit-artifactory',
   $count = 1,
 ) {
@@ -33,10 +32,10 @@ class awskit::create_artifactory (
   }
 
   awskit::create_host { $instance_name:
-    ami             => $ami,
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-artifactory"],
+    ami                => $ami,
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/artifactory_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-artifactory"],
   }
 
 }

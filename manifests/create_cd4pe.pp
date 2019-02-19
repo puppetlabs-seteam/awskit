@@ -17,7 +17,6 @@
 #  
 class awskit::create_cd4pe (
   $instance_type,
-  $user_data = lookup('awskit::create_linux_node::user_data'),
   $instance_name = 'awskit-cd4pe',
   $count = 1,
 ) {
@@ -44,11 +43,11 @@ class awskit::create_cd4pe (
   }
 
   awskit::create_host { $instance_name:
-    ami             => $ami,
-    role            => 'cd4pe_server',
-    instance_type   => $instance_type,
-    user_data       => $user_data,
-    security_groups => ["${facts['user']}-awskit-cd4pe"],
+    ami                => $ami,
+    role               => 'cd4pe_server',
+    instance_type      => $instance_type,
+    user_data_template => 'awskit/linux_userdata.epp',
+    security_groups    => ["${facts['user']}-awskit-cd4pe"],
   }
 
 }

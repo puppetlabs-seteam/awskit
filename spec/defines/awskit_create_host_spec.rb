@@ -7,7 +7,6 @@ describe 'awskit::create_host' do
     {
       'ami'           => 'my_ami',
       'instance_type' => 'my_instance_type',
-      'user_data'     => 'my_user_data',
     }
   end
 
@@ -17,7 +16,6 @@ describe 'awskit::create_host' do
     is_expected.to contain_ec2_instance(title).with(
       'image_id'      => params['ami'],
       'instance_type' => params['instance_type'],
-      'user_data'     => params['user_data'],
     )
   }
 

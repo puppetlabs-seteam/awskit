@@ -1,0 +1,10 @@
+<%- | $certname, $master_name, $master_ip, $environment, $role, $run_agent | -%>
+<powershell>
+$hosts = "$env:windir\System32\drivers\etc\hosts"
+"<%= $master_ip %> master.inf.puppet.vm master" | Add-Content -PassThru $hosts
+[Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
+$webClient = New-Object System.Net.WebClient; 
+$webClient.DownloadFile('https://master:8140/packages/current/install.ps1', 'install.ps1'); 
+.\install.ps1 main:certname="<%= $certname %>"
+winrm quickconfig -force
+</powershell>
