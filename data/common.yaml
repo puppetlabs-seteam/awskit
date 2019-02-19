@@ -2,6 +2,8 @@ lookup_options:
   awskit::tags:
     merge: deep
 
+awskit::boltws_key_name: 'bolt_ws_key'
+
 awskit::create_master::instance_type: "t2.large"
 awskit::create_linux_node::instance_type: "t2.micro"
 awskit::create_windows_node::instance_type: "t2.small"
