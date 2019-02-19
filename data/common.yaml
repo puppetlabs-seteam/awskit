@@ -69,10 +69,10 @@ awskit::amis:
   us-east-1: # N. Virginia
     pm: ami-04093f611cb0dd860 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
     centos: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
+    windows: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
     discovery: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windc: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-050202fb72f001b47 # Windows_Server-2016-English-Full-Base-2018.10.14
+    windc: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
+    wsus: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
     docker: ami-014810e050a2986e9 # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   eu-west-2: # London
     pm: ami-01c346f78bfcbaf57 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk
