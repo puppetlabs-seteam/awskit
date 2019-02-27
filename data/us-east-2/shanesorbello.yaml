@@ -1,0 +1,17 @@
+---
+awskit::region: 'us-east-2'
+awskit::availability_zone: 'us-east-2a'
+awskit::vpc: 'shanesorbello-east-vpc'
+awskit::subnet: 'shanesorbello-east-subnet'
+awskit::key_name: 'shane.sorbello'
+awskit::master_ip: '3.17.33.77'
+#awskit::boltws_master_ip: '18.215.48.198'
+#awskit::boltws_key_name: 'spotter-boltws.us-east'
+#awskit::create_bolt_workshop_targets::master_ip: '18.215.48.198'
+#awskit::wsus_ip: '35.178.35.215'
+awskit::host_config:
+  shanesorbello-awskit-cd4pe:
+    public_ip: '18.221.120.56'
+
+awskit::tags:
+  created_by: 'shane.sorbello@puppet.com'
