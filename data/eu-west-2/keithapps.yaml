@@ -1,0 +1,13 @@
+---
+awskit::key_name: 'keith.apps'
+awskit::master_ip: '18.130.104.250'
+awskit::host_config:
+  keith-pe-master:
+    public_ip: '18.130.104.250'
+
+awskit::ssh_ingress_cidrs: ["165.120.99.140/32", "81.144.255.193/32"]
+
+awskit::create_bolt_workshop_targets::master_ip: '35.178.209.163'
+awskit::host_config:
+  keithapps-awskit-boltws-master:
+    public_ip: '35.178.209.163'
