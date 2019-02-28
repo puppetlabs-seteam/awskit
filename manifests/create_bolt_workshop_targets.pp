@@ -58,7 +58,7 @@ class awskit::create_bolt_workshop_targets (
     Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
     get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
     Rename-Computer -NewName <%= $auto_name %> -Force ;
-    iwr -Uri "http://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
+    iwr -Uri "http://downloads.puppet.com/windows/puppet/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
     cd ~ ;
     $MSIArguments = @(
         "/i"
