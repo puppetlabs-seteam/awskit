@@ -60,7 +60,14 @@ class awskit::create_bolt_workshop_targets (
     Rename-Computer -NewName <%= $auto_name %> -Force ;
     iwr -Uri "http://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
     cd ~ ;
-    msiexec /qb /norestart /i "$((Get-Location).Path)\puppet-agent-x64-latest.msi" PUPPET_AGENT_STARTUP_MODE=Disabled ;
+    $MSIArguments = @(
+        "/i"
+        "$((Get-Location).Path)\puppet-agent-x64-latest.msi"
+        "/qn"
+        "/norestart"
+        "PUPPET_AGENT_STARTUP_MODE=Disabled"
+    )
+    Start-Process "msiexec.exe" -Wait -ArgumentList $MSIArguments ;
     shutdown /r /t 60 ;
     </powershell>
     | EOW
