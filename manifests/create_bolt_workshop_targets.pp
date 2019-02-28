@@ -40,6 +40,8 @@ class awskit::create_bolt_workshop_targets (
     echo "<%= $master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
     sed -i -r -e '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/opt/puppetlabs/bin[' /etc/sudoers
     hostnamectl set-hostname <%= $auto_name %>
+    rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
+    yum install -y puppet-agent
     shutdown -r +1
     | EOL
 
@@ -56,6 +58,9 @@ class awskit::create_bolt_workshop_targets (
     Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
     get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
     Rename-Computer -NewName <%= $auto_name %> -Force ;
+    iwr -Uri "http://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
+    cd ~ ;
+    msiexec /qb /norestart /i "$((Get-Location).Path)\puppet-agent-x64-latest.msi" PUPPET_AGENT_STARTUP_MODE=Disabled ;
     shutdown /r /t 60 ;
     </powershell>
     | EOW
