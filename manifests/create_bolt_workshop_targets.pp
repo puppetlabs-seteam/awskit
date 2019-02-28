@@ -80,8 +80,7 @@ class awskit::create_bolt_workshop_targets (
 
   range(1,$count).each | $i | {
     #Create the Linux target
-    # notice(inline_epp($user_data_linux))
-    awskit::create_host { $certname_linux:
+    awskit::create_host { "${instance_name}-linux-student${i}":
       ami             => $awskit::centos_ami,
       instance_type   => $instance_type_linux,
       user_data       => inline_epp($user_data_linux),
@@ -90,7 +89,7 @@ class awskit::create_bolt_workshop_targets (
     }
 
     #Create the Windows target
-    awskit::create_host { $certname_windows:
+    awskit::create_host { "${instance_name}-windows-student${i}":
       ami             => $awskit::windows_ami,
       instance_type   => $instance_type_windows,
       user_data       => inline_epp($user_data_windows),
