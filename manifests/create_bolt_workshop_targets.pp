@@ -39,7 +39,7 @@ class awskit::create_bolt_workshop_targets (
     #! /bin/bash
     echo "<%= $master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
     sed -i -r -e '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/opt/puppetlabs/bin[' /etc/sudoers
-    hostnamectl set-hostname <%= $certname_linux %>
+    hostnamectl set-hostname <%= $name %>
     shutdown -r +1
     | EOL
 
@@ -55,7 +55,7 @@ class awskit::create_bolt_workshop_targets (
     winrm quickconfig -force ;
     Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
     get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
-    Rename-Computer -NewName <%= $certname_windows %> -Force ;
+    Rename-Computer -NewName <%= $name %> -Force ;
     shutdown /r /t 60 ;
     </powershell>
     | EOW
@@ -80,9 +80,7 @@ class awskit::create_bolt_workshop_targets (
 
   range(1,$count).each | $i | {
     #Create the Linux target
-    $certname_linux = "${instance_name}-linux-student${i}"
-    # notice(inline_epp($user_data_linux))
-    awskit::create_host { $certname_linux:
+    awskit::create_host { "${instance_name}-linux-student${i}":
       ami             => $awskit::centos_ami,
       instance_type   => $instance_type_linux,
       user_data       => inline_epp($user_data_linux),
@@ -91,8 +89,7 @@ class awskit::create_bolt_workshop_targets (
     }
 
     #Create the Windows target
-    $certname_windows = "${instance_name}-windows-student${i}"
-    awskit::create_host { $certname_windows:
+    awskit::create_host { "${instance_name}-windows-student${i}":
       ami             => $awskit::windows_ami,
       instance_type   => $instance_type_windows,
       user_data       => inline_epp($user_data_windows),
