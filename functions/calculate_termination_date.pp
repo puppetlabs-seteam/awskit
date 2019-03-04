@@ -12,10 +12,11 @@ function awskit::calculate_termination_date(
     $length = Integer($1)
     $unit = $2
     case $unit {
-      'w': { $duration = Timespan.new(days => 7*$length) }
+      'w': { $duration = Timespan.new(days => 7 * $length) }
       'd': { $duration = Timespan.new(days => $length) }
       'h': { $duration = Timespan.new(hours => $length) }
       'm': { $duration = Timespan.new(minutes => $length) }
+      default: { fail("Invalid lifetime: ${lifetime}") }
     }
     $termination_date = $start + $duration
     notice("Start timestamp: ${start}")
