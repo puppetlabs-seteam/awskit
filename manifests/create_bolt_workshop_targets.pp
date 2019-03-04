@@ -58,6 +58,13 @@ class awskit::create_bolt_workshop_targets (
     Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
     get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
     Rename-Computer -NewName <%= $auto_name %> -Force ;
+    $RegPath = "HKLM:SOFTWARE\Policies\Microsoft\Windows Defender"
+    If (!(Test-Path $RegPath)) {
+      New-Item -Path $RegPath
+    }
+    If (!((Get-ItemProperty -Path $RegPath -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue).DisableAntiSpyware -eq 1)) {
+      New-ItemProperty -Path $RegPath -Name "DisableAntiSpyware" -PropertyType DWORD -Value 1 -Force
+    }
     iwr -Uri "http://downloads.puppet.com/windows/puppet/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
     cd ~ ;
     $MSIArguments = @(
