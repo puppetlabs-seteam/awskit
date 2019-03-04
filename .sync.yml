@@ -9,7 +9,5 @@ remove_includes:
 includes:
   - env: CHECK="syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop"
   - env: CHECK=parallel_spec
-  - env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
-    rvm: 2.3.3
   - env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
     rvm: 2.4.4
