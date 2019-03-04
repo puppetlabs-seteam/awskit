@@ -1,0 +1,11 @@
+---
+awskit::key_name: 'pierre-demo-aws'
+awskit::master_ip: '35.176.177.25'
+awskit::host_config:
+  pierre-pe-master:
+    public_ip: '35.176.177.25'
+
+awskit::create_bolt_workshop_targets::master_ip: '18.130.7.99'
+awskit::host_config:
+  pierre-awskit-boltws-master:
+    public_ip: '18.130.7.99'
