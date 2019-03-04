@@ -84,6 +84,11 @@ define awskit::create_host (
     $_user_data = undef
   }
 
+  $lifetime = $awskit::tags['lifetime']
+  $termination_date = awskit::calculate_termination_date($lifetime)
+  $_tags = { 'termination_date' => $termination_date} + $awskit::tags
+  notice("_tags: ${_tags}")
+
   ec2_instance { $name:
     ensure            => running,
     region            => $awskit::region,
@@ -98,7 +103,7 @@ define awskit::create_host (
     image_id          => $ami,
     security_groups   => $_security_groups,
     key_name          => $_key_name,
-    tags              => $awskit::tags,
+    tags              => $_tags,
     instance_type     => $_instance_type,
     user_data         => $_user_data,
     require           => Ec2_securitygroup[$_security_groups],
