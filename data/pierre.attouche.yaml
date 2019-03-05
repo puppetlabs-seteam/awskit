@@ -1,0 +1,16 @@
+---
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: ‘pierre@puppet.com'
+
+awskit::create_master::instance_name: pierre-pe-master
+awskit::create_agents::instance_name_lin: pierre-linux
+awskit::create_agents::instance_name_win: pierre-windows
+awskit::create_cd4pe::instance_name: pierre-cd4pe
+awskit::create_discovery::instance_name: pierre-disco
+awskit::create_windc::instance_name: pierre-windc
+awskit::create_wsus::instance_name: pierre-wsus
+awskit::master_ip: '35.176.177.25'
