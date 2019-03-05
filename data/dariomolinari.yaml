@@ -1,0 +1,17 @@
+---
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: 'dario@puppet.com'
+
+awskit::create_master::gogs_ssh_keys:
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC4AQFq61ZiNZu3FpeHu643CgR6eO/V4AFKpOYVmEijtzEk9UTqx/pLhdgUKG0Cat11WJ1geY7VNFc8WE6ouU8Y0Pw6iWXWNsaQT5HQPeDUoRmzRWY42MBg+34p75XKZzq4wc+ClYmEjte4hCoUY6gIjaH23DzMkuG88vxhSLOGVsRJErxlIM5JzRyjXlwAmzRJqmlAGTdZMYVot5qnPZI9WyzISrKtr47uCFcgTh65P/MHXzKSDMv4yAlk+52qFUm9QzfVfhM1/0Y6x/Z6HrZ8PK3If68WF/8LklREvRZEznBUWpKDTM1yFfXONneAPNK9EwTGVm2vcz+ZVmxtFBFaI+RwSNCGw4dHbBpe/X1+HBppEvbH/sxE2xf8PQgu4xi0AciMtqW9lZU3OSNLUPqfntt3YZWVI8cUzhKA4ITiPqbHEFnXiuiGzW6fjl71zoXp3xbWlFXwCw9BsCkTzyARULrw1mkSyossQTRyRNUlDMdXC81woXBYJ7ef35e3ZtPJr8OzQy2biWkCeewmzw+QU17X6YvqNlptAtkxjO1U0srlnnndaZFX+C3dCkDFup0s8bT/NqYSvQjUVbyIPe68cCUuofuUGak95/Zdw31gaA9VMkyvmjo8M/nOe/dk9PTc8xoXcqEtkjM/dffEMl/XGPOkPbQCP0lDTkgzI4jg4Q== dario@Darios-MBP.corp.puppetlabs.net
+
+awskit::create_master::instance_name: dario-demo-pm
+awskit::create_agents::instance_name_lin: dario-linux
+awskit::create_agents::instance_name_win: dario-windows
+awskit::create_discovery::instance_name: dario-disco
+awskit::create_windc::instance_name: dario-windc
+awskit::create_wsus::instance_name: dario-wsus
