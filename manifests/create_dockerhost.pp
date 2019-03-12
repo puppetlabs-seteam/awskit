@@ -37,5 +37,11 @@ class awskit::create_dockerhost (
     instance_type      => $instance_type,
     user_data_template => 'awskit/dockerhost_userdata.epp',
     security_groups    => ["${facts['user']}-awskit-dockerhost"],
+    block_devices      => [
+    {
+      'device_name'           => '/dev/sda1',
+      'volume_size'           => 8,
+      'delete_on_termination' => true
+    }],
   }
 }

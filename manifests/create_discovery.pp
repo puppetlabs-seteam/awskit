@@ -34,5 +34,11 @@ class awskit::create_discovery (
     instance_type      => $instance_type,
     user_data_template => 'awskit/discovery_userdata.epp',
     security_groups    => ["${facts['user']}-awskit-disco"],
+    block_devices      => [
+    {
+      'device_name'           => '/dev/sda1',
+      'volume_size'           => 8,
+      'delete_on_termination' => true
+    }],
   }
 }

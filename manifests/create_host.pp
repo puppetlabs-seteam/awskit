@@ -26,6 +26,7 @@ define awskit::create_host (
   $run_agent          = true,
   $security_groups    = 'none',
   $key_name           = 'none',
+  $block_devices      = 'none',
   $role               = undef,
   $environment        = undef,
   $public_ip          = undef,
@@ -51,6 +52,11 @@ define awskit::create_host (
   $_key_name = $key_name ? {
     'none'  => $awskit::key_name,
     default => $key_name,
+  }
+
+  $_block_devices = $block_devices ? {
+    'none'  => undef,
+    default => $block_devices,
   }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
@@ -101,6 +107,7 @@ define awskit::create_host (
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet            => $awskit::subnet,
     image_id          => $ami,
+    block_devices     => $_block_devices,
     security_groups   => $_security_groups,
     key_name          => $_key_name,
     tags              => $_tags,

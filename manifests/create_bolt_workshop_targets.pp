@@ -86,6 +86,12 @@ class awskit::create_bolt_workshop_targets (
     user_data       => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-teacher" }),
     security_groups => ["${facts['user']}-awskit-boltws"],
     key_name        => lookup('awskit::boltws_key_name'),
+    block_devices   => [
+    {
+      'device_name'           => '/dev/sda1',
+      'volume_size'           => 8,
+      'delete_on_termination' => true
+    }],
   }
 
   #Create the Windows target for teacher
@@ -105,6 +111,12 @@ class awskit::create_bolt_workshop_targets (
       user_data       => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-student${i}" }),
       security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
+      block_devices   => [
+      {
+        'device_name'           => '/dev/sda1',
+        'volume_size'           => 8,
+        'delete_on_termination' => true
+      }],
     }
 
     #Create the Windows target

@@ -25,6 +25,12 @@ class awskit::create_linux_node (
       user_data_template => 'awskit/linux_userdata.epp',
       role               => $role,
       environment        => $environment,
+      block_devices      => [
+      {
+        'device_name'           => '/dev/sda1',
+        'volume_size'           => 8,
+        'delete_on_termination' => true
+      }],
     }
   }
 }
