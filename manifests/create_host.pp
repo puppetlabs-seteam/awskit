@@ -60,7 +60,7 @@ define awskit::create_host (
       'device_name'           => '/dev/sda1',
       'volume_size'           => 8,
       'delete_on_termination' => true
-    }],
+    }]
   } else {
     $block_devices = undef
   }
