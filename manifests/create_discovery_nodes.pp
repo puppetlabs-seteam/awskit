@@ -29,10 +29,11 @@ class awskit::create_discovery_nodes (
 
   range(1,$count).each | $i | {
     awskit::create_host { "${instance_name}-${i}":
-      ami                => $awskit::centos_ami,
-      instance_type      => $instance_type,
-      user_data_template => 'awskit/discovery_node_userdata.epp',
-      security_groups    => ["${facts['user']}-awskit-disco"],
+      ami                   => $awskit::centos_ami,
+      instance_type         => $instance_type,
+      user_data_template    => 'awskit/discovery_node_userdata.epp',
+      security_groups       => ["${facts['user']}-awskit-disco"],
+      delete_on_termination => true
     }
   }
 }
