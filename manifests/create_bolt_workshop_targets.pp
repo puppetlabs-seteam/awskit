@@ -81,17 +81,12 @@ class awskit::create_bolt_workshop_targets (
 
   #Create the Linux target for teacher
   awskit::create_host { "${instance_name}-linux-teacher":
-    ami             => $awskit::centos_ami,
-    instance_type   => $instance_type_linux,
-    user_data       => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-teacher" }),
-    security_groups => ["${facts['user']}-awskit-boltws"],
-    key_name        => lookup('awskit::boltws_key_name'),
-    block_devices   => [
-    {
-      'device_name'           => '/dev/sda1',
-      'volume_size'           => 8,
-      'delete_on_termination' => true
-    }],
+    ami                   => $awskit::centos_ami,
+    instance_type         => $instance_type_linux,
+    user_data             => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-teacher" }),
+    security_groups       => ["${facts['user']}-awskit-boltws"],
+    key_name              => lookup('awskit::boltws_key_name'),
+    delete_on_termination => true
   }
 
   #Create the Windows target for teacher
@@ -106,17 +101,12 @@ class awskit::create_bolt_workshop_targets (
   range(1,$count).each | $i | {
     #Create the Linux target
     awskit::create_host { "${instance_name}-linux-student${i}":
-      ami             => $awskit::centos_ami,
-      instance_type   => $instance_type_linux,
-      user_data       => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-student${i}" }),
-      security_groups => ["${facts['user']}-awskit-boltws"],
-      key_name        => lookup('awskit::boltws_key_name'),
-      block_devices   => [
-      {
-        'device_name'           => '/dev/sda1',
-        'volume_size'           => 8,
-        'delete_on_termination' => true
-      }],
+      ami                   => $awskit::centos_ami,
+      instance_type         => $instance_type_linux,
+      user_data             => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-student${i}" }),
+      security_groups       => ["${facts['user']}-awskit-boltws"],
+      key_name              => lookup('awskit::boltws_key_name'),
+      delete_on_termination => true
     }
 
     #Create the Windows target

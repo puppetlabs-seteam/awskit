@@ -43,17 +43,12 @@ class awskit::create_gitlab (
   }
 
   awskit::create_host { $instance_name:
-    ami                => $ami,
-    role               => 'git_server',
-    instance_type      => $instance_type,
-    user_data_template => 'awskit/linux_userdata.epp',
-    security_groups    => ["${facts['user']}-awskit-gitlab"],
-    block_devices      => [
-    {
-      'device_name'           => '/dev/sda1',
-      'volume_size'           => 8,
-      'delete_on_termination' => true
-    }],
+    ami                   => $ami,
+    role                  => 'git_server',
+    instance_type         => $instance_type,
+    user_data_template    => 'awskit/linux_userdata.epp',
+    security_groups       => ["${facts['user']}-awskit-gitlab"],
+    delete_on_termination => true
   }
 
 }

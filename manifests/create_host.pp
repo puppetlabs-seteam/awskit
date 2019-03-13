@@ -19,17 +19,17 @@
 define awskit::create_host (
   $ami,
   $instance_type,
-  $user_data          = undef,
-  $user_data_template = undef,
-  $master_ip          = undef,
-  $master_name        = undef,
-  $run_agent          = true,
-  $security_groups    = 'none',
-  $key_name           = 'none',
-  $block_devices      = 'none',
-  $role               = undef,
-  $environment        = undef,
-  $public_ip          = undef,
+  $user_data             = undef,
+  $user_data_template    = undef,
+  $master_ip             = undef,
+  $master_name           = undef,
+  $run_agent             = true,
+  $security_groups       = 'none',
+  $key_name              = 'none',
+  $delete_on_termination = false,
+  $role                  = undef,
+  $environment           = undef,
+  $public_ip             = undef,
 ){
 
   include awskit
@@ -54,9 +54,15 @@ define awskit::create_host (
     default => $key_name,
   }
 
-  $_block_devices = $block_devices ? {
-    'none'  => undef,
-    default => $block_devices,
+  if $delete_on_termination {
+    $block_devices = [
+    {
+      'device_name'           => '/dev/sda1',
+      'volume_size'           => 8,
+      'delete_on_termination' => true
+    }],
+  } else {
+    $block_devices = undef
   }
 
   $host_config = lookup("awskit::host_config.${name}", Hash, 'first', {})
@@ -107,7 +113,7 @@ define awskit::create_host (
     #  see also https://github.com/puppetlabs/puppetlabs-aws/issues/191
     subnet            => $awskit::subnet,
     image_id          => $ami,
-    block_devices     => $_block_devices,
+    block_devices     => $block_devices,
     security_groups   => $_security_groups,
     key_name          => $_key_name,
     tags              => $_tags,

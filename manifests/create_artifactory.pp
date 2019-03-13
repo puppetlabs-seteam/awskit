@@ -32,16 +32,11 @@ class awskit::create_artifactory (
   }
 
   awskit::create_host { $instance_name:
-    ami                => $ami,
-    instance_type      => $instance_type,
-    user_data_template => 'awskit/artifactory_userdata.epp',
-    security_groups    => ["${facts['user']}-awskit-artifactory"],
-    block_devices      => [
-    {
-      'device_name'           => '/dev/sda1',
-      'volume_size'           => 8,
-      'delete_on_termination' => true
-    }],
+    ami                   => $ami,
+    instance_type         => $instance_type,
+    user_data_template    => 'awskit/artifactory_userdata.epp',
+    security_groups       => ["${facts['user']}-awskit-artifactory"],
+    delete_on_termination => true
   }
 
 }

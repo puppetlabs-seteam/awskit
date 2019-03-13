@@ -34,15 +34,10 @@ class awskit::create_bolt_workshop_master (
 
   #Create the PE Master
   awskit::create_host { $instance_name:
-    ami             => $awskit::centos_ami,
-    instance_type   => $instance_type,
-    security_groups => ["${facts['user']}-awskit-boltws"],
-    block_devices   => [
-    {
-      'device_name'           => '/dev/sda1',
-      'volume_size'           => 8,
-      'delete_on_termination' => true
-    }],
+    ami                   => $awskit::centos_ami,
+    instance_type         => $instance_type,
+    security_groups       => ["${facts['user']}-awskit-boltws"],
+    delete_on_termination => true
   }
 
 }
