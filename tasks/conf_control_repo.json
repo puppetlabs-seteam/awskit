@@ -9,11 +9,11 @@
     },
     "public_key_name": {
       "description": "Name of the public key to configure for GOGS",
-      "type": "String"
+      "type": "Optional[String[1]]"
     },
     "public_key_value": {
       "description": "Name of the public key to configure for GOGS",
-      "type": "String"
+      "type": "Optional[String[1]]"
     }
   }
 }
