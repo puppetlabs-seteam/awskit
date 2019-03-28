@@ -1,0 +1,6 @@
+lookup_options:
+  awskit::tags:
+    merge: deep
+
+awskit::tags:
+  created_by: "eric.boutilier@puppet.com"
