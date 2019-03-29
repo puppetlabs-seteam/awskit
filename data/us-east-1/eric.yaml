@@ -1,0 +1,10 @@
+---
+awskit::key_name: 'ericb-east'
+awskit::vpc: 'default-vpc'
+awskit::subnet: 'subnet-east1b'
+awskit::availability_zone: 'us-east-1b'
+awskit::create_bolt_workshop_targets::master_ip: '34.230.94.250'
+awskit::master_ip: ''
+awskit::host_config:
+  eric-awskit-boltws-master:
+    public_ip: '34.230.94.250'
