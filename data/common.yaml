@@ -48,7 +48,7 @@ awskit::tags:
   project: "SE Demos"
   lifetime: 10w
   #termination_date: '2018-07-19T11:03:05.626507+00:00'
-  Schedule: "-21:00"
+  # Schedule: "-21:00"
 
 awskit::vpc: "default"
 
