@@ -30,11 +30,12 @@ First, make sure you don't have rvm (Ruby Version Manager) enabled (see https://
 ```bash
 xcode-select --install # install XCode build tools
 brew install awscli
+brew install jq
 aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
 export FACTER_user=$your_user_name # needed for hiera
-sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc
+sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk-core retries --no-ri --no-rdoc
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
