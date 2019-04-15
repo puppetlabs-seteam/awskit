@@ -81,9 +81,10 @@ Both commands 1 and 2 should display the list of s3 buckets in your TSE account.
 
 ## Usage
 
-### Clone the awskit repo
+### Clone the awskit repo (to your base module path)
 
 ```bash
+cd $(puppet config print basemodulepath | cut -f 1 -d ":")
 git clone https://github.com/puppetlabs-seteam/awskit.git
 ```
 
