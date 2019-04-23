@@ -6,6 +6,7 @@ awskit::subnet: 'vpc-abir-subnet'
 awskit::key_name: 'abir_awskit'
 awskit::master_ip: '35.175.94.167'
 #awskit::wsus_ip: '35.178.35.215'
+awskit::create_bolt_workshop_targets::master_ip: '35.169.129.252'
 awskit::host_config:
   abir-awskit-cd4pe:
     public_ip: '100.25.59.79'
@@ -13,7 +14,8 @@ awskit::host_config:
     public_ip: '18.214.202.199'
   abir-awskit-gitlab:
     public_ip: '3.85.180.73'
-
+  abir-awskit-boltws-master:
+    public_ip: '35.169.129.252'
 awskit::tags:
   created_by: 'abir@puppet.com'
 
