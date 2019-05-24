@@ -79,6 +79,37 @@ You can test whether the script actually provided correct credentials by doing:
 
 Both commands 1 and 2 should display the list of s3 buckets in your TSE account.
 
+### Docker setup
+If you don't want install awskit on your local machine, you can spin up awskit in a Docker container.  The only machine pre-req is credentials and config need to exist on your Docker host.
+```docker
+docker run -it -d --name awskiter \
+-e AWS_REGION=us-east-1 \
+-e FACTER_aws_region=us-east-1 \
+-e FACTER_user=abir \
+-v ~/.aws/credentials:/root/.aws/credentials \
+-v ~/.aws/config:/root/.aws/config \
+maju6406/puppet-aws-kit
+```
+Once the container is running, attach yourself to it.
+```bash
+docker exec -it awskiter bash
+```
+Once attached, you will need to run the exportcreds.sh script and paste in your MFA token.
+```bash
+[root@4ccfe43b55eb awskit]# source scripts/exportcreds.sh
+Requesting identity with profile tse
+Enter MFA code for arn:aws:iam::103716600232:mfa/abir:
+{
+    "Account": "221643373539",
+    "UserId": "AROAJ3YUWJIC4P4HVYJO4:botocore-session-1558713181",
+    "Arn": "arn:aws:sts::221644363539:assumed-role/Engineer/botocore-session-1558113181"
+}
+exporting AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
+Current token expires at: 2019-05-24T16:53:19Z
+```
+Now you're ready to use awskit!
+
+
 ## Usage
 
 ### Clone the awskit repo
