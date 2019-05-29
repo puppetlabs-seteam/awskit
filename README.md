@@ -25,7 +25,7 @@ It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
 
 ### Setup on your Mac
 
-Your Puppet agent needs to be version 5 or better
+Your Puppet agent needs to be version 6 or better
 
 First, make sure you don't have rvm (Ruby Version Manager) enabled (see https://stackoverflow.com/questions/5660605/disable-rvm-or-use-ruby-which-was-installed-without-rvm).
 
@@ -36,7 +36,7 @@ aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
 export FACTER_user=$your_user_name # needed for hiera
-sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc
+sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc --verbose
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
@@ -232,6 +232,13 @@ Now, you can push your changes directly to the master's Gitea server:
 git commit -m "some commit"
 git push awskit production
 ```
+
+## Troubleshooting Tips
+1. If you see a "Syntax error" at calculate_termination_date.pp it means you're running Puppet 5. You need Puppet 6. On your mac, run `brew cask install puppet-agent-6`
+2. If 
+3. Make sure to create the [elastic ip](https://github.com/puppetlabs-seteam/awskit/tree/docker#configure-hiera) and VPC in AWS for the master and other requisite service before starting.
+3. Make sure 
+5. When in doubt run the provision task in debug mode. Read the [provision.sh](https://github.com/puppetlabs-seteam/awskit/blob/docker/tasks/provision.sh) for more details on how to turn that on.
 
 ## References
 
