@@ -235,10 +235,8 @@ git push awskit production
 
 ## Troubleshooting Tips
 1. If you see a "Syntax error" at calculate_termination_date.pp it means you're running Puppet 5. You need Puppet 6. On your mac, run `brew cask install puppet-agent-6`
-2. If 
-3. Make sure to create the [elastic ip](https://github.com/puppetlabs-seteam/awskit/tree/docker#configure-hiera) and VPC in AWS for the master and other requisite service before starting.
-3. Make sure 
-5. When in doubt run the provision task in debug mode. Read the [provision.sh](https://github.com/puppetlabs-seteam/awskit/blob/docker/tasks/provision.sh) for more details on how to turn that on.
+2. Make sure to create the [elastic ip](https://github.com/puppetlabs-seteam/awskit/tree/docker#configure-hiera) and VPC in AWS for the master and other requisite service before starting.
+3. When in doubt run the provision task in debug mode. Read the [provision.sh](https://github.com/puppetlabs-seteam/awskit/blob/docker/tasks/provision.sh) for more details on how to turn that on.
 
 ## References
 
