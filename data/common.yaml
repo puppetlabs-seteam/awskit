@@ -88,7 +88,7 @@ awskit::amis:
     pm: ami-04888616e3de30118 # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
     centos: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     discovery: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windows: ami-04f6c3a108e0d348b # Windows_Server-2016-English-Full-Base-2019.02.13
+    windows: ami-0b0cc8d2d8f136b0e # Windows_Server-2016-English-Full-Base-2019.05.15
     docker: ami-0d86fa8483cfc9a34 # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   eu-central-1: # Frankfurt
     pm: ami-04e50a29a7e21ce6a # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
