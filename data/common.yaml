@@ -60,44 +60,44 @@ awskit::create_master::control_repo: https://github.com/puppetlabs-seteam/contro
 awskit::amis:
   us-west-2: # Oregon
     pm: ami-0a27e5d7e13f8e8cb # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
-    centos: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-b63ae0ce # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windc: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-017bf00eb0d4c7182 # Windows_Server-2016-English-Full-Base-2018.10.14
+    centos: ami-3ecc8f46 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windows: ami-07f35a597a32e470d # Windows_Server-2016-English-Full-Base-2019.05.15
+    discovery: ami-3ecc8f46 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windc: ami-07f35a597a32e470d # Windows_Server-2016-English-Full-Base-2019.05.15
+    wsus: ami-07f35a597a32e470d # Windows_Server-2016-English-Full-Base-2019.05.15
     docker: ami-08a73ef2db6c656e5 # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   us-east-1: # N. Virginia
     pm: ami-0d9f00c3381ab8cc7 # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
-    centos: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windows: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
-    discovery: ami-02e98f78 # CentOS Linux 7 x86_64 HVM EBS 1708_11.01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-95096eef.4
-    windc: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
-    wsus: ami-0bf148826ef491d16 # Windows_Server-2016-English-Full-Base-2019.02.13
+    centos: ami-9887c6e7 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windows: ami-06bee8e1000e44ca4 # Windows_Server-2016-English-Full-Base-2019.05.15
+    discovery: ami-9887c6e7 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windc: ami-06bee8e1000e44ca4 # Windows_Server-2016-English-Full-Base-2019.05.15
+    wsus: ami-06bee8e1000e44ca4 # Windows_Server-2016-English-Full-Base-2019.05.15
     docker: ami-014810e050a2986e9 # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   us-east-2: # Ohio
     pm: ami-006002b6be9ca888c # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
   eu-west-2: # London
     pm: ami-006aeaac27a401a24 # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
     centos: ami-00846a67 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windows: ami-0186531b707ced2ef # Windows_Server-2016-English-Full-Base-2019.02.13
+    windows: ami-0f8e3bd4713dc814e # Windows_Server-2016-English-Full-Base-2019.05.15
     discovery: ami-00846a67 # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windc: ami-0186531b707ced2ef # Windows_Server-2016-English-Full-Base-2019.02.13
-    wsus: ami-0186531b707ced2ef # Windows_Server-2016-English-Full-Base-2019.02.13
+    windc: ami-0f8e3bd4713dc814e # Windows_Server-2016-English-Full-Base-2019.05.15
+    wsus: ami-0f8e3bd4713dc814e # Windows_Server-2016-English-Full-Base-2019.05.15
     docker: ami-0b48a90115318e01c # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   eu-west-3: # Paris
     pm: ami-04888616e3de30118 # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
     centos: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
     discovery: ami-262e9f5b # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
-    windows: ami-04f6c3a108e0d348b # Windows_Server-2016-English-Full-Base-2019.02.13
+    windows: ami-0b0cc8d2d8f136b0e # Windows_Server-2016-English-Full-Base-2019.05.15
     docker: ami-0d86fa8483cfc9a34 # Docker optimized Amazon Linux AMI 2.0.20190127 x86_64 ECS HVM GP2 - https://tinyurl.com/y9f6ao4t
   eu-central-1: # Frankfurt
     pm: ami-04e50a29a7e21ce6a # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
   ap-southeast-2: # Sydney
     pm: ami-0ee432a0cb963266c # tse-master-virtualbox-2019.0.2-v0.1.2.vmdk
-    centos: ami-e9c7208b # CentOS Linux 7 x86_64 HVM EBS 1708_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-0d8f9576.4
-    windows: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
-    discovery: ami-e9c7208b # CentOS Linux 7 x86_64 HVM EBS 1708_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-0d8f9576.4
-    windc: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
-    wsus: ami-0096a7a7add65af89 # Windows_Server-2016-English-Full-Base-2018.10.14
+    centos: ami-d8c21dba # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windows: ami-01a5f3665934df1ca # Windows_Server-2016-English-Full-Base-2019.05.15
+    discovery: ami-d8c21dba # CentOS Linux 7 x86_64 HVM EBS ENA 1805_01-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-77ec9308.4
+    windc: ami-01a5f3665934df1ca # Windows_Server-2016-English-Full-Base-2019.05.15
+    wsus: ami-01a5f3665934df1ca # Windows_Server-2016-English-Full-Base-2019.05.15
 # ap-southeast-1: # Singapore
 #   pm: ami-0f8f21f9b24e2db35 # tse-master-virtualbox-2019.0.0-v0.1.1.vmdk (old AMI)
