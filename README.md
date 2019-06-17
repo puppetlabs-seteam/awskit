@@ -25,6 +25,8 @@ It assumes a "Demo Reboot" Puppetmaster AMI is available in your region.
 
 ### Setup on your Mac
 
+Your Puppet agent needs to be version 6 or better
+
 First, make sure you don't have rvm (Ruby Version Manager) enabled (see https://stackoverflow.com/questions/5660605/disable-rvm-or-use-ruby-which-was-installed-without-rvm).
 
 ```bash

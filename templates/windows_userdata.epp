@@ -2,7 +2,6 @@
 <powershell>
 $hosts = "$env:windir\System32\drivers\etc\hosts"
 "<%= $master_ip %> <%= $master_name %> master" | Add-Content -PassThru $hosts;
-<%# "<%= $wsus_ip %> wsus.inf.puppet.vm wsus" | Add-Content -PassThru $hosts; %>
 [Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; 
 net user admin "Devops!" /add ;
 net localgroup Administrators admin /add ;

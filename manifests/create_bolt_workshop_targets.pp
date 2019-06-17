@@ -38,7 +38,10 @@ class awskit::create_bolt_workshop_targets (
   $user_data_linux = @(EOL)
     #! /bin/bash
     echo "<%= $master_ip %> <%= $awskit::master_name %> master" >> /etc/hosts
-    hostnamectl set-hostname <%= $certname_linux %>
+    sed -i -r -e '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/opt/puppetlabs/bin[' /etc/sudoers
+    hostnamectl set-hostname <%= $auto_name %>
+    rpm -Uvh https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
+    yum install -y puppet-agent
     shutdown -r +1
     | EOL
 
@@ -54,47 +57,63 @@ class awskit::create_bolt_workshop_targets (
     winrm quickconfig -force ;
     Enable-NetFirewallRule -Name FPS-ICMP4-ERQ-In ;
     get-netfirewallrule -Name WINRM-HTTP-In-TCP-PUBLIC | Set-NetFirewallRule -RemoteAddress Any ;
-    Rename-Computer -NewName <%= $certname_windows %> -Force ;
+    Rename-Computer -NewName <%= $auto_name %> -Force ;
+    $RegPath = "HKLM:SOFTWARE\Policies\Microsoft\Windows Defender"
+    If (!(Test-Path $RegPath)) {
+      New-Item -Path $RegPath
+    }
+    If (!((Get-ItemProperty -Path $RegPath -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue).DisableAntiSpyware -eq 1)) {
+      New-ItemProperty -Path $RegPath -Name "DisableAntiSpyware" -PropertyType DWORD -Value 1 -Force
+    }
+    iwr -Uri "http://downloads.puppet.com/windows/puppet/puppet-agent-x64-latest.msi" -OutFile ~/puppet-agent-x64-latest.msi ;
+    cd ~ ;
+    $MSIArguments = @(
+        "/i"
+        "$((Get-Location).Path)\puppet-agent-x64-latest.msi"
+        "/qn"
+        "/norestart"
+        "PUPPET_AGENT_STARTUP_MODE=Disabled"
+    )
+    Start-Process "msiexec.exe" -Wait -ArgumentList $MSIArguments ;
     shutdown /r /t 60 ;
     </powershell>
     | EOW
 
   #Create the Linux target for teacher
   awskit::create_host { "${instance_name}-linux-teacher":
-    ami             => $awskit::centos_ami,
-    instance_type   => $instance_type_linux,
-    user_data       => inline_epp($user_data_linux),
-    security_groups => ["${facts['user']}-awskit-boltws"],
-    key_name        => lookup('awskit::boltws_key_name'),
+    ami                   => $awskit::centos_ami,
+    instance_type         => $instance_type_linux,
+    user_data             => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-teacher" }),
+    security_groups       => ["${facts['user']}-awskit-boltws"],
+    key_name              => lookup('awskit::boltws_key_name'),
+    delete_on_termination => true
   }
 
   #Create the Windows target for teacher
   awskit::create_host { "${instance_name}-windows-teacher":
     ami             => $awskit::windows_ami,
     instance_type   => $instance_type_windows,
-    user_data       => inline_epp($user_data_windows),
+    user_data       => inline_epp($user_data_windows, { 'auto_name' => "${instance_name}-windows-teacher" }),
     security_groups => ["${facts['user']}-awskit-boltws"],
     key_name        => lookup('awskit::boltws_key_name'),
   }
 
   range(1,$count).each | $i | {
     #Create the Linux target
-    $certname_linux = "${instance_name}-linux-student${i}"
-    # notice(inline_epp($user_data_linux))
-    awskit::create_host { $certname_linux:
-      ami             => $awskit::centos_ami,
-      instance_type   => $instance_type_linux,
-      user_data       => inline_epp($user_data_linux),
-      security_groups => ["${facts['user']}-awskit-boltws"],
-      key_name        => lookup('awskit::boltws_key_name'),
+    awskit::create_host { "${instance_name}-linux-student${i}":
+      ami                   => $awskit::centos_ami,
+      instance_type         => $instance_type_linux,
+      user_data             => inline_epp($user_data_linux, { 'auto_name' => "${instance_name}-linux-student${i}" }),
+      security_groups       => ["${facts['user']}-awskit-boltws"],
+      key_name              => lookup('awskit::boltws_key_name'),
+      delete_on_termination => true
     }
 
     #Create the Windows target
-    $certname_windows = "${instance_name}-windows-student${i}"
-    awskit::create_host { $certname_windows:
+    awskit::create_host { "${instance_name}-windows-student${i}":
       ami             => $awskit::windows_ami,
       instance_type   => $instance_type_windows,
-      user_data       => inline_epp($user_data_windows),
+      user_data       => inline_epp($user_data_windows, { 'auto_name' => "${instance_name}-windows-student${i}" }),
       security_groups => ["${facts['user']}-awskit-boltws"],
       key_name        => lookup('awskit::boltws_key_name'),
     }

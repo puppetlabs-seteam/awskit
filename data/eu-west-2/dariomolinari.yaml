@@ -1,0 +1,14 @@
+---
+awskit::key_name: 'DarioTestv1'
+awskit::master_ip: '52.56.35.21'
+
+awskit::host_config:
+  dario-pe-master:
+    public_ip: '52.56.35.21'
+
+awskit::ssh_ingress_cidrs: ["82.34.146.158/32", "81.144.255.193/32", "92.39.186.148/32"]
+
+awskit::create_bolt_workshop_targets::master_ip: '35.176.126.188'
+awskit::host_config:
+  dariomolinari-awskit-boltws-master:
+    public_ip: '35.176.126.188'

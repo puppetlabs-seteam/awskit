@@ -33,9 +33,10 @@ class awskit::create_dockerhost (
   }
 
   awskit::create_host { $instance_name:
-    ami                => $ami,
-    instance_type      => $instance_type,
-    user_data_template => 'awskit/dockerhost_userdata.epp',
-    security_groups    => ["${facts['user']}-awskit-dockerhost"],
+    ami                   => $ami,
+    instance_type         => $instance_type,
+    user_data_template    => 'awskit/dockerhost_userdata.epp',
+    security_groups       => ["${facts['user']}-awskit-dockerhost"],
+    delete_on_termination => true
   }
 }

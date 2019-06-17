@@ -44,6 +44,11 @@ class awskit(
   Array[String] $ssh_ingress_cidrs = [],
   ) {
 
+    $version_required = '5.0.0'
+    if versioncmp($::puppetversion, $version_required) < 0 { # agent version < $version_required
+      fail("awskit requires agent version >= ${version_required}, found: ${::puppetversion}")
+    }
+
     $pm_ami          = $amis[$region]['pm']
     $docker_ami      = $amis[$region]['docker']
     $centos_ami      = $amis[$region]['centos']
