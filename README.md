@@ -87,7 +87,7 @@ docker run -it -d --name awskiter \
 -e AWS_REGION=us-east-1 \
 -e FACTER_aws_region=us-east-1 \
 -e FACTER_user=abir \
--e FACTER_awskit_confdir=${HOME}/.awskit # to store your private hiera configuration
+-e FACTER_awskit_confdir=${HOME}/.awskit \
 -v ~/.aws/credentials:/root/.aws/credentials \
 -v ~/.aws/config:/root/.aws/config \
 -v ~/.awskit:/root/.awskit \
