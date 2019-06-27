@@ -36,6 +36,7 @@ aws configure # needed for your AWS access
 export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
 export FACTER_user=$your_user_name # needed for hiera
+export FACTER_awskit_confdir=${HOME}/.awskit # to store your private hiera configuration
 sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc --verbose
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
@@ -86,9 +87,11 @@ docker run -it -d --name awskiter \
 -e AWS_REGION=us-east-1 \
 -e FACTER_aws_region=us-east-1 \
 -e FACTER_user=abir \
+-e FACTER_awskit_confdir=${HOME}/.awskit # to store your private hiera configuration
 -v ~/.aws/credentials:/root/.aws/credentials \
 -v ~/.aws/config:/root/.aws/config \
-maju6406/puppet-aws-kit
+-v ~/.awskit:/root/.awskit \
+puppetseteam/puppet-aws-kit
 ```
 Once the container is running, attach yourself to it.
 ```bash
@@ -123,11 +126,13 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
 
 ```yaml
-- name: "AWS region-level user-level data"
-  path: "%{::aws_region}/%{::user}.yaml"
+- name: "Private AWS region-level user-level data"
+  datadir: "/%{::awskit_confdir}"
+  path: "common.yaml"
 
-- name: "User-level data"
-  path: "%{::user}.yaml"
+- name: "Private User-level data"
+  datadir: "/%{::awskit_confdir}"
+  path: "%{::aws_region}.yaml"
 
 - name: "AWS region-level data"
   path: "%{::aws_region}/common.yaml"
@@ -142,11 +147,11 @@ The module uses module-level hiera to store all configuration. The hierarchy is 
   region-specific AWS variables
 - If not done yet, reserve a static IP for your master by doing:
   `aws ec2 allocate-address --region ${FACTER_aws_region} --domain vpc`
-- Create the file `data/${FACTER_aws_region}/${FACTER_user}.yaml` and add
+- Create the file `${FACTER_awskit_confdir}/${FACTER_aws_region}.yaml` and add
   your `awskit::key_name` and `awskit::master_ip`. This configuration is used in two ways:
   1. The master instance will get configured with that static IP
   2. The agent instances will connect to this IP as their master.
-- Optionally add static ip addresses to specific instances `data/${FACTER_aws_region}/${FACTER_user}.yaml` as follows:
+- Optionally add other static ip addresses to specific instances `${FACTER_awskit_confdir}/${FACTER_aws_region}.yaml` as follows:
 
 ```yaml
 awskit::host_config:
@@ -154,7 +159,7 @@ awskit::host_config:
     public_ip: "<static ip>"
 ```
 
-- Create the file `data/${FACTER_user}.yaml` and configure user-specific variabls (such as tags)
+- Create the file `${FACTER_awskit_confdir}/common.yaml` and configure user-specific variabls (such as tags) which are valid across regions.
 
 ### Provision the master
 
