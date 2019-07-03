@@ -126,13 +126,13 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
 
 ```yaml
-- name: "Private AWS region-level user-level data"
-  datadir: "/%{::awskit_confdir}"
-  path: "common.yaml"
-
-- name: "Private User-level data"
+- name: "Private AWS region-level user data"
   datadir: "/%{::awskit_confdir}"
   path: "%{::aws_region}.yaml"
+
+- name: "Private AWS common data"
+  datadir: "/%{::awskit_confdir}"
+  path: "common.yaml"
 
 - name: "AWS region-level data"
   path: "%{::aws_region}/common.yaml"
