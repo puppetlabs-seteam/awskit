@@ -1,9 +1,0 @@
----
-awskit::key_name: 'kevin.reeuwijk.key-eu-west-2'
-awskit::create_bolt_workshop_targets::master_ip: '35.178.79.49'
-awskit::master_ip: ''
-awskit::wsus_ip: ''
-awskit::elastic_ips:
-awskit::host_config:
-  kevin-awskit-boltws-master:
-    public_ip: '35.178.79.49'

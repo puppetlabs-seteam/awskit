@@ -37,7 +37,7 @@ export AWS_REGION=$your_region # speeds up puppet aws module tremendously
 export FACTER_aws_region=$your_region # needed for hiera
 export FACTER_user=$your_user_name # needed for hiera
 export FACTER_awskit_confdir=${HOME}/.awskit # to store your private hiera configuration
-sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc
+sudo /opt/puppetlabs/puppet/bin/gem install aws-sdk retries --no-ri --no-rdoc --verbose
 puppet module install puppetlabs/aws
 puppet module install puppetlabs/stdlib
 ```
@@ -80,6 +80,39 @@ You can test whether the script actually provided correct credentials by doing:
 
 Both commands 1 and 2 should display the list of s3 buckets in your TSE account.
 
+### Docker setup
+If you don't want install awskit on your local machine, you can spin up awskit in a Docker container.  The only machine pre-req is credentials and config need to exist on your Docker host.
+```docker
+docker run -it -d --name awskiter \
+-e AWS_REGION=us-east-1 \
+-e FACTER_aws_region=us-east-1 \
+-e FACTER_user=abir \
+-e FACTER_awskit_confdir=/root/.awskit \
+-v ~/.aws/credentials:/root/.aws/credentials \
+-v ~/.aws/config:/root/.aws/config \
+-v ~/.awskit:/root/.awskit \
+puppetseteam/puppet-aws-kit
+```
+Once the container is running, attach yourself to it.
+```bash
+docker exec -it awskiter bash
+```
+Once attached, you will need to run the exportcreds.sh script and paste in your MFA token.
+```bash
+[root@4ccfe43b55eb awskit]# source scripts/exportcreds.sh
+Requesting identity with profile tse
+Enter MFA code for arn:aws:iam::103716600232:mfa/abir:
+{
+    "Account": "221643373539",
+    "UserId": "AROAJ3YUWJIC4P4HVYJO4:botocore-session-1558713181",
+    "Arn": "arn:aws:sts::221644363539:assumed-role/Engineer/botocore-session-1558113181"
+}
+exporting AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
+Current token expires at: 2019-05-24T16:53:19Z
+```
+Now you're ready to use awskit!
+
+
 ## Usage
 
 ### Clone the awskit repo
@@ -93,13 +126,13 @@ git clone https://github.com/puppetlabs-seteam/awskit.git
 The module uses module-level hiera to store all configuration. The hierarchy is expressed as follows in hiera.yaml:
 
 ```yaml
-- name: "Private AWS region-level user-level data"
-  datadir: "/%{::awskit_confdir}"
-  path: "common.yaml"
-
-- name: "Private User-level data"
+- name: "Private AWS region-level user data"
   datadir: "/%{::awskit_confdir}"
   path: "%{::aws_region}.yaml"
+
+- name: "Private AWS common data"
+  datadir: "/%{::awskit_confdir}"
+  path: "common.yaml"
 
 - name: "AWS region-level data"
   path: "%{::aws_region}/common.yaml"
@@ -204,6 +237,11 @@ Now, you can push your changes directly to the master's Gitea server:
 git commit -m "some commit"
 git push awskit production
 ```
+
+## Troubleshooting Tips
+1. If you see a "Syntax error" at calculate_termination_date.pp it means you're running Puppet 5. You need Puppet 6. On your mac, run `brew cask install puppet-agent-6`
+2. Make sure to create the [elastic ip](https://github.com/puppetlabs-seteam/awskit/tree/docker#configure-hiera) and VPC in AWS for the master and other requisite service before starting.
+3. When in doubt run the provision task in debug mode. Read the [provision.sh](https://github.com/puppetlabs-seteam/awskit/blob/docker/tasks/provision.sh) for more details on how to turn that on.
 
 ## References
 

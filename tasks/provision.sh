@@ -33,7 +33,7 @@ EOU
 exit -2
 }
 
-if [ "$(whoami)" == "root" ]; then
+if [[ ! -f /.dockerenv ]] && [[ "$(whoami)" == "root" ]]; then
    echo "Please run this as a non-root user."
    exit -3
 fi
